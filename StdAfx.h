@@ -26,8 +26,8 @@
 #include <mshtml.h>
 
 
-#include <CBool.h>
-#include <CInt.h>
+#include "../MyUtility/CBool.h"
+#include "../MyUtility/CInt.h"
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
 
