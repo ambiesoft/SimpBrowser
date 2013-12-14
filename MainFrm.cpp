@@ -7,6 +7,7 @@
 #include "MainFrm.h"
 #include "SimpBrowserDoc.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -149,3 +150,9 @@ void CMainFrame::OnClose()
 }
 
 
+
+//DEL void CMainFrame::OnOpenClipboard() 
+//DEL {
+//DEL 	tstring url;
+//DEL 	GetClipboardTexts(*this, url);
+//DEL }

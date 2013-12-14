@@ -57,6 +57,7 @@ protected:
 	afx_msg void OnFileReopen();
 	afx_msg void OnAboutBlank();
 	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnOpenClipboard();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

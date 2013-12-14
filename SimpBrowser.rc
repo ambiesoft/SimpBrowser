@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// “ú–{Œê resources
+// Japanese resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -58,12 +58,12 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // “ú–{Œê resources
+#endif    // Japanese resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ‰pŒê (±ÒØ¶) resources
+// English (U.S.) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -90,6 +90,7 @@ IDR_MAINFRAME MENU PRELOAD DISCARDABLE
 BEGIN
     POPUP "&File"
     BEGIN
+        MENUITEM "Open URL in &Clipboard",      ID_OPEN_CLIPBOARD
         MENUITEM "&Reopen",                     ID_FILE_REOPEN
         MENUITEM "Reset to Blank",              ID_ABOUT_BLANK
         MENUITEM SEPARATOR
@@ -341,7 +342,7 @@ BEGIN
     ID_STATUS_SETFORM       "SetForm"
 END
 
-#endif    // ‰pŒê (±ÒØ¶) resources
+#endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

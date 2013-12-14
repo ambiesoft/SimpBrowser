@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_COMMAND(ID_FILE_REOPEN, OnFileReopen)
 	ON_COMMAND(ID_ABOUT_BLANK, OnAboutBlank)
 	ON_WM_TIMER()
+	ON_COMMAND(ID_OPEN_CLIPBOARD, OnOpenClipboard)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_DEBUG_TEST, OnSetForm)
 END_MESSAGE_MAP()
@@ -345,3 +346,12 @@ void CSimpBrowserView::OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR 
 		m_nTimerID = SetTimer(1, 1000, NULL);
 	}
 }
+
+void CSimpBrowserView::OnOpenClipboard() 
+{
+	tstring url;
+	GetClipboardTexts(*this, url);
+	Navigate2(url.c_str());
+}
+
+

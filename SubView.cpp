@@ -5,6 +5,8 @@
 #include "SimpBrowser.h"
 #include "SubView.h"
 
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -38,7 +40,6 @@ void CSubView::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CSubView, CHtmlView)
 	//{{AFX_MSG_MAP(CSubView)
-		// メモ: ClassWizard はこの位置にメッセージ マップ マクロを追加します。
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -116,3 +117,9 @@ BOOL CSubView::PreTranslateMessage(MSG* pMsg)
 	
 	return CHtmlView::PreTranslateMessage(pMsg);
 }
+
+//DEL void CSubView::OnOpenClipboard() 
+//DEL {
+//DEL 	tstring url;
+//DEL 	GetClipboardTexts(*this, url);	
+//DEL }

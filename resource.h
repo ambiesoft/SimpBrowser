@@ -9,6 +9,7 @@
 #define IDR_SIMPBRTYPE                  129
 #define ID_FILE_REOPEN                  32771
 #define ID_ABOUT_BLANK                  32772
+#define ID_OPEN_CLIPBOARD               32773
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -17,7 +18,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32773
+#define _APS_NEXT_COMMAND_VALUE         32774
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           103
 #endif

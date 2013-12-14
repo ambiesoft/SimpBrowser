@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CSubView
+LastClass=CSimpBrowserView
 LastTemplate=CHtmlView
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "SimpBrowser.h"
@@ -14,7 +14,7 @@ Class2=CSimpBrowserDoc
 Class3=CSimpBrowserView
 Class4=CMainFrame
 
-ResourceCount=4
+ResourceCount=6
 Resource1=IDR_MAINFRAME
 Resource2=IDR_MAINFRAME (âpåÍ (±“ÿ∂))
 Class5=CAboutDlg
@@ -22,6 +22,8 @@ Resource3=IDD_ABOUTBOX
 Class6=CSubDocument
 Class7=CSubView
 Resource4=IDD_ABOUTBOX (âpåÍ (±“ÿ∂))
+Resource5=IDR_MAINFRAME (English (U.S.))
+Resource6=IDD_ABOUTBOX (English (U.S.))
 
 [CLS:CSimpBrowserApp]
 Type=0
@@ -53,7 +55,7 @@ ImplementationFile=MainFrm.cpp
 Filter=T
 BaseClass=CFrameWnd
 VirtualFilter=fWC
-LastObject=ID_ABOUT_BLANK
+LastObject=ID_OPEN_CLIPBOARD
 
 
 
@@ -169,4 +171,51 @@ ImplementationFile=SubView.cpp
 BaseClass=CHtmlView
 Filter=C
 VirtualFilter=7VWC
+
+[MNU:IDR_MAINFRAME (English (U.S.))]
+Type=1
+Class=CMainFrame
+Command1=ID_OPEN_CLIPBOARD
+Command2=ID_FILE_REOPEN
+Command3=ID_ABOUT_BLANK
+Command4=ID_FILE_NEW
+Command5=ID_FILE_OPEN
+Command6=ID_FILE_SAVE
+Command7=ID_FILE_SAVE_AS
+Command8=ID_FILE_MRU_FILE1
+Command9=ID_APP_EXIT
+Command10=ID_EDIT_UNDO
+Command11=ID_EDIT_CUT
+Command12=ID_EDIT_COPY
+Command13=ID_EDIT_PASTE
+Command14=ID_VIEW_STATUS_BAR
+Command15=ID_APP_ABOUT
+CommandCount=15
+
+[ACL:IDR_MAINFRAME (English (U.S.))]
+Type=1
+Class=?
+Command1=ID_FILE_NEW
+Command2=ID_FILE_OPEN
+Command3=ID_FILE_SAVE
+Command4=ID_EDIT_UNDO
+Command5=ID_EDIT_CUT
+Command6=ID_EDIT_COPY
+Command7=ID_EDIT_PASTE
+Command8=ID_EDIT_UNDO
+Command9=ID_EDIT_CUT
+Command10=ID_EDIT_COPY
+Command11=ID_EDIT_PASTE
+Command12=ID_NEXT_PANE
+Command13=ID_PREV_PANE
+CommandCount=13
+
+[DLG:IDD_ABOUTBOX (English (U.S.))]
+Type=1
+Class=?
+ControlCount=4
+Control1=IDC_STATIC,static,1342177283
+Control2=IDC_STATIC,static,1342308480
+Control3=IDC_STATIC,static,1342308352
+Control4=IDOK,button,1342373889
 
