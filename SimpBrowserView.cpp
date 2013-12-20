@@ -78,7 +78,9 @@ void CSimpBrowserView::OnInitialUpdate()
 	else
 	{
 		string url;
-		if(GetClipboardTextsA(m_hWnd, url))
+		GetClipboardTextsA(m_hWnd, url);
+		CString u(url.c_str());
+		if(u.Find("http")==0)
 		{
 			Navigate2(url.c_str());
 		}

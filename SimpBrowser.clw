@@ -30,6 +30,8 @@ Type=0
 HeaderFile=SimpBrowser.h
 ImplementationFile=SimpBrowser.cpp
 Filter=N
+BaseClass=CWinApp
+VirtualFilter=AC
 
 [CLS:CSimpBrowserDoc]
 Type=0

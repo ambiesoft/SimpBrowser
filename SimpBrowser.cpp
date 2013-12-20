@@ -397,3 +397,62 @@ void CSimpBrowserApp::OnAppAbout()
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp メッセージ ハンドラ
+BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
+{
+	BOOL& yeswindow = *((BOOL*)lParam);
+	TCHAR szThis[MAX_PATH];
+	GetModuleFileName(NULL, szThis, sizeof(szThis));
+	strlwr(szThis);
+
+	TCHAR szT[MAX_PATH];
+	if(IsWindowVisible(hwnd) && GetFileNameFromHwnd(hwnd, szT, sizeof(szT)))
+	{
+		strlwr(szT);
+		if(lstrcmp(szThis,szT)==0)
+		{
+			yeswindow=TRUE;
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+
+void loopmessage()
+{
+	MSG m;
+	if(GetMessage(&m, NULL, NULL, NULL))
+	{
+		TranslateMessage(&m);
+		DispatchMessage(&m);
+	}
+}
+
+void CSimpBrowserApp::WaitDownloadWindow()
+{
+	for(;;)
+	{
+		BOOL yeswindow = FALSE;
+		if(!EnumWindows(ewproc, (LPARAM)&yeswindow))
+		{
+			Sleep(1);
+			loopmessage();
+			continue;
+		}
+
+		if(yeswindow)
+		{
+			Sleep(1);
+			loopmessage();
+			continue;
+		}
+
+		break;
+	} 
+}
+int CSimpBrowserApp::ExitInstance() 
+{
+
+	WaitDownloadWindow();
+	return CWinApp::ExitInstance();
+}

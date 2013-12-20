@@ -31,6 +31,7 @@
 #include "../MyUtility/CInt.h"
 #include "../MyUtility/GetClipboardTexts.h"
 #include "../MyUtility/tstring.h"
+#include "../MyUtility/GetFileNameFromHwnd.h"
 
 using namespace std;
 //{{AFX_INSERT_LOCATION}}

@@ -46,11 +46,15 @@ public:
 	CBool m_bNoNewWin;
 	CSimpBrowserApp();
 
+private:
+	void WaitDownloadWindow();
+
 // オーバーライド
 	// ClassWizard は仮想関数のオーバーライドを生成します。
 	//{{AFX_VIRTUAL(CSimpBrowserApp)
 	public:
 	virtual BOOL InitInstance();
+	virtual int ExitInstance();
 	//}}AFX_VIRTUAL
 
 // インプリメンテーション

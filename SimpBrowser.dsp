@@ -97,6 +97,11 @@ SOURCE=..\MyUtility\GetClipboardTexts.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\MyUtility\GetFileNameFromHwnd.cpp
+# SUBTRACT CPP /YX /Yc /Yu
+# End Source File
+# Begin Source File
+
 SOURCE=.\MainFrm.cpp
 # End Source File
 # Begin Source File
