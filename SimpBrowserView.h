@@ -58,6 +58,8 @@ protected:
 	afx_msg void OnAboutBlank();
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnOpenClipboard();
+	afx_msg void OnBrowserSilent();
+	afx_msg void OnUpdateBrowserSilent(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

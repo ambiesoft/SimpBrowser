@@ -29,6 +29,8 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_COMMAND(ID_ABOUT_BLANK, OnAboutBlank)
 	ON_WM_TIMER()
 	ON_COMMAND(ID_OPEN_CLIPBOARD, OnOpenClipboard)
+	ON_COMMAND(IDM_BROWSER_SILENT, OnBrowserSilent)
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_SILENT, OnUpdateBrowserSilent)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_DEBUG_TEST, OnSetForm)
 END_MESSAGE_MAP()
@@ -73,14 +75,25 @@ void CSimpBrowserView::OnInitialUpdate()
 	{
 		Navigate2(theApp.m_strUrl);
 	}
+	else
+	{
+		string url;
+		if(GetClipboardTextsA(m_hWnd, url))
+		{
+			Navigate2(url.c_str());
+		}
+		else
+		{
+			Navigate2("http://google.com");
+		}
+	}
 
-	CString strServer;
-	DWORD d;
-	CString s;
-	unsigned short p;
-	AfxParseURL(theApp.m_strUrl, d, strServer, s, p);
-
-	GetDocument()->SetTitle(strServer);
+//	CString strServer;
+//	DWORD d;
+//	CString s;
+//	unsigned short p;
+//	AfxParseURL(theApp.m_strUrl, d, strServer, s, p);
+//	GetDocument()->SetTitle(strServer);
 
 }
 
@@ -355,3 +368,13 @@ void CSimpBrowserView::OnOpenClipboard()
 }
 
 
+
+void CSimpBrowserView::OnBrowserSilent() 
+{
+	theApp.m_bSilentArg = !theApp.m_bSilentArg;	
+}
+
+void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI) 
+{
+	pCmdUI->SetCheck(theApp.m_bSilentArg);	
+}

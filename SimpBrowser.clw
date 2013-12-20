@@ -55,7 +55,7 @@ ImplementationFile=MainFrm.cpp
 Filter=T
 BaseClass=CFrameWnd
 VirtualFilter=fWC
-LastObject=ID_OPEN_CLIPBOARD
+LastObject=IDM_BROWSER_SILENT
 
 
 
@@ -184,13 +184,10 @@ Command6=ID_FILE_SAVE
 Command7=ID_FILE_SAVE_AS
 Command8=ID_FILE_MRU_FILE1
 Command9=ID_APP_EXIT
-Command10=ID_EDIT_UNDO
-Command11=ID_EDIT_CUT
-Command12=ID_EDIT_COPY
-Command13=ID_EDIT_PASTE
-Command14=ID_VIEW_STATUS_BAR
-Command15=ID_APP_ABOUT
-CommandCount=15
+Command10=IDM_BROWSER_SILENT
+Command11=ID_VIEW_STATUS_BAR
+Command12=ID_APP_ABOUT
+CommandCount=12
 
 [ACL:IDR_MAINFRAME (English (U.S.))]
 Type=1
