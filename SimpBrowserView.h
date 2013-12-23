@@ -50,7 +50,9 @@ public:
 #endif
 
 protected:
-
+	LPDISPATCH GetBrowserApp() {
+		return m_pBrowserApp;
+	}
 // 生成されたメッセージ マップ関数
 protected:
 	//{{AFX_MSG(CSimpBrowserView)

@@ -40,7 +40,6 @@ END_MESSAGE_MAP()
 
 CSimpBrowserView::CSimpBrowserView()
 {
-	// TODO: ‚±‚ÌêŠ‚É\’z—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
 
 }
 
@@ -126,7 +125,7 @@ CSimpBrowserDoc* CSimpBrowserView::GetDocument() // ”ñƒfƒoƒbƒO ƒo[ƒWƒ‡ƒ“‚ÍƒCƒ“ƒ
 BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar) 
 {
 	// TODO: ‚±‚ÌˆÊ’u‚ÉŒÅ—L‚Ìˆ—‚ð’Ç‰Á‚·‚é‚©A‚Ü‚½‚ÍŠî–{ƒNƒ‰ƒX‚ðŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢
-	if( dispid == DISPID_AMBIENT_DLCONTROL)
+	if(0)// dispid == DISPID_AMBIENT_DLCONTROL)
 	{
 		V_VT(pvar) = VT_I4;
 
@@ -160,7 +159,7 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel) 
 {
 	if ( theApp.m_bNoNewWin )
-	{
+	{1
 		*Cancel = TRUE;
 		return;
 	}
@@ -172,7 +171,7 @@ void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel)
 	if ( !pFrame )
 		return;
 
-	CSubView* pView = (CSubView*)pFrame->m_pMyView;
+	CSimpBrowserView* pView = (CSimpBrowserView*)pFrame->m_pMyView;
 	if ( !pView )
 		return;
 

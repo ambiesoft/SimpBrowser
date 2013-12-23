@@ -41,6 +41,8 @@ CSimpBrowserApp::CSimpBrowserApp()
 	
 	m_nStartSizeX = -1;
 	m_nStartSizeY = -1;
+
+	m_nNewWin = -1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -331,12 +333,12 @@ BOOL CSimpBrowserApp::InitInstance()
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 
-	m_pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CSubDocument),
-		RUNTIME_CLASS(CMainFrame),       // メイン SDI フレーム ウィンドウ
-		RUNTIME_CLASS(CSubView));
-	AddDocTemplate(m_pDocTemplate);
+//	m_pDocTemplate = new CSingleDocTemplate(
+//		IDR_MAINFRAME,
+//		RUNTIME_CLASS(CSubDocument),
+//		RUNTIME_CLASS(CMainFrame),       // メイン SDI フレーム ウィンドウ
+//		RUNTIME_CLASS(CSubView));
+//	AddDocTemplate(m_pDocTemplate);
 
 	return TRUE;
 }
