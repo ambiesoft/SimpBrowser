@@ -1,4 +1,4 @@
-// SubView.cpp : �C���v�������e�[�V���� �t�@�C��
+﻿// SubView.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -21,7 +21,7 @@ IMPLEMENT_DYNCREATE(CSubView, CHtmlView)
 CSubView::CSubView()
 {
 	//{{AFX_DATA_INIT(CSubView)
-		// ����: ClassWizard �͂��̈ʒu�Ƀ����o�̏�����������ǉ����܂��B
+		// メモ: ClassWizard はこの位置にメンバの初期化処理を追加します。
 	//}}AFX_DATA_INIT
 }
 
@@ -33,7 +33,7 @@ void CSubView::DoDataExchange(CDataExchange* pDX)
 {
 	CHtmlView::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSubView)
-		// ����: ClassWizard �͂��̈ʒu�� DDX �� DDV �̌Ăяo���R�[�h��ǉ����܂��B
+		// メモ: ClassWizard はこの位置に DDX と DDV の呼び出しコードを追加します。
 	//}}AFX_DATA_MAP
 }
 
@@ -67,7 +67,7 @@ void CSubView::Dump(CDumpContext& dc) const
 
 BOOL CSubView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar) 
 {
-	// TODO: ���̈ʒu�ɌŗL�̏�����ǉ����邩�A�܂��͊�{�N���X���Ăяo���Ă�������
+	// TODO: この位置に固有の処理を追加するか、または基本クラスを呼び出してください
 	if( dispid == DISPID_AMBIENT_DLCONTROL)
 	{
 		V_VT(pvar) = VT_I4;
@@ -101,7 +101,7 @@ BOOL CSubView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT*
 
 //DEL void CSubView::OnQuit() 
 //DEL {
-//DEL 	// TODO: ���̈ʒu�ɌŗL�̏�����ǉ����邩�A�܂��͊�{�N���X���Ăяo���Ă�������
+//DEL 	// TODO: この位置に固有の処理を追加するか、または基本クラスを呼び出してください
 //DEL 	
 //DEL 	CHtmlView::OnQuit();
 //DEL }

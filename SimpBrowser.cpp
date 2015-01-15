@@ -1,4 +1,4 @@
-// SimpBrowser.cpp : ƒAƒvƒŠƒP[ƒVƒ‡ƒ“—pƒNƒ‰ƒX‚Ì‹@”\’è‹`‚ğs‚¢‚Ü‚·B
+ï»¿// SimpBrowser.cpp : ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã‚¯ãƒ©ã‚¹ã®æ©Ÿèƒ½å®šç¾©ã‚’è¡Œã„ã¾ã™ã€‚
 //
 
 #include "stdafx.h"
@@ -23,16 +23,16 @@ static char THIS_FILE[] = __FILE__;
 BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	//{{AFX_MSG_MAP(CSimpBrowserApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-		// ƒƒ‚ - ClassWizard ‚Í‚±‚ÌˆÊ’u‚Éƒ}ƒbƒsƒ“ƒO—p‚Ìƒ}ƒNƒ‚ğ’Ç‰Á‚Ü‚½‚Ííœ‚µ‚Ü‚·B
-		//        ‚±‚ÌˆÊ’u‚É¶¬‚³‚ê‚éƒR[ƒh‚ğ•ÒW‚µ‚È‚¢‚Å‚­‚¾‚³‚¢B
+		// ãƒ¡ãƒ¢ - ClassWizard ã¯ã“ã®ä½ç½®ã«ãƒãƒƒãƒ”ãƒ³ã‚°ç”¨ã®ãƒã‚¯ãƒ­ã‚’è¿½åŠ ã¾ãŸã¯å‰Šé™¤ã—ã¾ã™ã€‚
+		//        ã“ã®ä½ç½®ã«ç”Ÿæˆã•ã‚Œã‚‹ã‚³ãƒ¼ãƒ‰ã‚’ç·¨é›†ã—ãªã„ã§ãã ã•ã„ã€‚
 	//}}AFX_MSG_MAP
-	// •W€‚Ìƒtƒ@ƒCƒ‹Šî–{ƒhƒLƒ…ƒƒ“ƒg ƒRƒ}ƒ“ƒh
+	// æ¨™æº–ã®ãƒ•ã‚¡ã‚¤ãƒ«åŸºæœ¬ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ ã‚³ãƒãƒ³ãƒ‰
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserApp ƒNƒ‰ƒX‚Ì\’z
+// CSimpBrowserApp ã‚¯ãƒ©ã‚¹ã®æ§‹ç¯‰
 
 CSimpBrowserApp::CSimpBrowserApp()
 {
@@ -46,12 +46,12 @@ CSimpBrowserApp::CSimpBrowserApp()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// —Bˆê‚Ì CSimpBrowserApp ƒIƒuƒWƒFƒNƒg
+// å”¯ä¸€ã® CSimpBrowserApp ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 CSimpBrowserApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserApp ƒNƒ‰ƒX‚Ì‰Šú‰»
+// CSimpBrowserApp ã‚¯ãƒ©ã‚¹ã®åˆæœŸåŒ–
 
 enum COMMAND_OPTIONS {
 	UNKNOWN_OPTION = -1,
@@ -173,21 +173,21 @@ COMMAND_OPTIONS GetOption(LPCTSTR p, CString& strArgValue1, CString& strArgValue
 
 BOOL CSimpBrowserApp::InitInstance()
 {
-	// •W€“I‚È‰Šú‰»ˆ—
-	// ‚à‚µ‚±‚ê‚ç‚Ì‹@”\‚ğg—p‚¹‚¸AÀsƒtƒ@ƒCƒ‹‚ÌƒTƒCƒY‚ğ¬‚³‚­
-	// ‚µ‚½‚¯‚ê‚ÎˆÈ‰º‚Ì“Á’è‚Ì‰Šú‰»ƒ‹[ƒ`ƒ“‚Ì’†‚©‚ç•s•K—v‚È‚à‚Ì
-	// ‚ğíœ‚µ‚Ä‚­‚¾‚³‚¢B
+	// æ¨™æº–çš„ãªåˆæœŸåŒ–å‡¦ç†
+	// ã‚‚ã—ã“ã‚Œã‚‰ã®æ©Ÿèƒ½ã‚’ä½¿ç”¨ã›ãšã€å®Ÿè¡Œãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µã‚¤ã‚ºã‚’å°ã•ã
+	// ã—ãŸã‘ã‚Œã°ä»¥ä¸‹ã®ç‰¹å®šã®åˆæœŸåŒ–ãƒ«ãƒ¼ãƒãƒ³ã®ä¸­ã‹ã‚‰ä¸å¿…è¦ãªã‚‚ã®
+	// ã‚’å‰Šé™¤ã—ã¦ãã ã•ã„ã€‚
 
-	// İ’è‚ª•Û‘¶‚³‚ê‚é‰º‚ÌƒŒƒWƒXƒgƒŠ ƒL[‚ğ•ÏX‚µ‚Ü‚·B
-	// TODO: ‚±‚Ì•¶š—ñ‚ğA‰ïĞ–¼‚Ü‚½‚ÍŠ‘®‚È‚Ç“KØ‚È‚à‚Ì‚É
-	// •ÏX‚µ‚Ä‚­‚¾‚³‚¢B
+	// è¨­å®šãŒä¿å­˜ã•ã‚Œã‚‹ä¸‹ã®ãƒ¬ã‚¸ã‚¹ãƒˆãƒª ã‚­ãƒ¼ã‚’å¤‰æ›´ã—ã¾ã™ã€‚
+	// TODO: ã“ã®æ–‡å­—åˆ—ã‚’ã€ä¼šç¤¾åã¾ãŸã¯æ‰€å±ãªã©é©åˆ‡ãªã‚‚ã®ã«
+	// å¤‰æ›´ã—ã¦ãã ã•ã„ã€‚
 	// SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	// LoadStdProfileSettings();  // •W€‚Ì INI ƒtƒ@ƒCƒ‹‚ÌƒIƒvƒVƒ‡ƒ“‚ğƒ[ÄŞ‚µ‚Ü‚· (MRU ‚ğŠÜ‚Ş)
+	// LoadStdProfileSettings();  // æ¨™æº–ã® INI ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’ãƒ­ãƒ¼ï¾„ï¾ã—ã¾ã™ (MRU ã‚’å«ã‚€)
 
 	if ( __argc > 1 )
 	{
-		LPTSTR* pArg = __argv+1;
+		LPTSTR* pArg = __targv+1;
 		for ( ;*pArg; ++pArg)
 		{
 			CString strArgValue1;
@@ -305,30 +305,30 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 		}
 	}
-	// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“—p‚ÌƒhƒLƒ…ƒƒ“ƒg ƒeƒ“ƒvƒŒ[ƒg‚ğ“o˜^‚µ‚Ü‚·BƒhƒLƒ…ƒƒ“ƒg ƒeƒ“ƒvƒŒ[ƒg
-	//  ‚ÍƒhƒLƒ…ƒƒ“ƒgAƒtƒŒ[ƒ€ ƒEƒBƒ“ƒhƒE‚Æƒrƒ…[‚ğŒ‹‡‚·‚é‚½‚ß‚É‹@”\‚µ‚Ü‚·B
+	// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ç™»éŒ²ã—ã¾ã™ã€‚ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆ ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
+	//  ã¯ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã€ãƒ•ãƒ¬ãƒ¼ãƒ  ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã¨ãƒ“ãƒ¥ãƒ¼ã‚’çµåˆã™ã‚‹ãŸã‚ã«æ©Ÿèƒ½ã—ã¾ã™ã€‚
 
 	
 	m_pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CSimpBrowserDoc),
-		RUNTIME_CLASS(CMainFrame),       // ƒƒCƒ“ SDI ƒtƒŒ[ƒ€ ƒEƒBƒ“ƒhƒE
+		RUNTIME_CLASS(CMainFrame),       // ãƒ¡ã‚¤ãƒ³ SDI ãƒ•ãƒ¬ãƒ¼ãƒ  ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 		RUNTIME_CLASS(CSimpBrowserView));
 	AddDocTemplate(m_pDocTemplate);
 
 
-	// DDEAfile open ‚È‚Ç•W€‚ÌƒVƒFƒ‹ ƒRƒ}ƒ“ƒh‚ÌƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ğ‰ğÍ‚µ‚Ü‚·B
+	// DDEã€file open ãªã©æ¨™æº–ã®ã‚·ã‚§ãƒ« ã‚³ãƒãƒ³ãƒ‰ã®ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã‚’è§£æã—ã¾ã™ã€‚
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
-	// ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚ÅƒfƒBƒXƒpƒbƒ` ƒRƒ}ƒ“ƒh‚ğw’è‚µ‚Ü‚·B
+	// ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã§ãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒ ã‚³ãƒãƒ³ãƒ‰ã‚’æŒ‡å®šã—ã¾ã™ã€‚
 //	if (!ProcessShellCommand(cmdInfo))
 //		return FALSE;
 
 //	if (!AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, NULL, NULL))
 		OnFileNew();
 
-	// ƒƒCƒ“ ƒEƒBƒ“ƒhƒE‚ª‰Šú‰»‚³‚ê‚½‚Ì‚ÅA•\¦‚ÆXV‚ğs‚¢‚Ü‚·B
+	// ãƒ¡ã‚¤ãƒ³ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒåˆæœŸåŒ–ã•ã‚ŒãŸã®ã§ã€è¡¨ç¤ºã¨æ›´æ–°ã‚’è¡Œã„ã¾ã™ã€‚
 	((CMainFrame*)m_pMainWnd)->m_bMainWin = TRUE;
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
@@ -336,7 +336,7 @@ BOOL CSimpBrowserApp::InitInstance()
 //	m_pDocTemplate = new CSingleDocTemplate(
 //		IDR_MAINFRAME,
 //		RUNTIME_CLASS(CSubDocument),
-//		RUNTIME_CLASS(CMainFrame),       // ƒƒCƒ“ SDI ƒtƒŒ[ƒ€ ƒEƒBƒ“ƒhƒE
+//		RUNTIME_CLASS(CMainFrame),       // ãƒ¡ã‚¤ãƒ³ SDI ãƒ•ãƒ¬ãƒ¼ãƒ  ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 //		RUNTIME_CLASS(CSubView));
 //	AddDocTemplate(m_pDocTemplate);
 
@@ -345,28 +345,28 @@ BOOL CSimpBrowserApp::InitInstance()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ìƒo[ƒWƒ‡ƒ“î•ñ‚Åg‚í‚ê‚é CAboutDlg ƒ_ƒCƒAƒƒO
+// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã§ä½¿ã‚ã‚Œã‚‹ CAboutDlg ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 class CAboutDlg : public CDialog
 {
 public:
 	CAboutDlg();
 
-// ƒ_ƒCƒAƒƒO ƒf[ƒ^
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ‡ãƒ¼ã‚¿
 	//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	//}}AFX_DATA
 
-	// ClassWizard ‰¼‘zŠÖ”‚ÌƒI[ƒo[ƒ‰ƒCƒh‚ğ¶¬‚µ‚Ü‚·B
+	// ClassWizard ä»®æƒ³é–¢æ•°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 	//{{AFX_VIRTUAL(CAboutDlg)
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ‚ÌƒTƒ|[ƒg
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ã®ã‚µãƒãƒ¼ãƒˆ
 	//}}AFX_VIRTUAL
 
-// ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“
+// ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³
 protected:
 	//{{AFX_MSG(CAboutDlg)
-		// ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰‚Í‚ ‚è‚Ü‚¹‚ñB
+		// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -386,11 +386,11 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰‚Í‚ ‚è‚Ü‚¹‚ñB
+		// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-// ƒ_ƒCƒAƒƒO‚ğÀs‚·‚é‚½‚ß‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“ ƒRƒ}ƒ“ƒh
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’å®Ÿè¡Œã™ã‚‹ãŸã‚ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ ã‚³ãƒãƒ³ãƒ‰
 void CSimpBrowserApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
@@ -398,18 +398,18 @@ void CSimpBrowserApp::OnAppAbout()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserApp ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CSimpBrowserApp ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
 {
 	BOOL& yeswindow = *((BOOL*)lParam);
 	TCHAR szThis[MAX_PATH];
-	GetModuleFileName(NULL, szThis, sizeof(szThis));
-	strlwr(szThis);
+	GetModuleFileName(NULL, szThis, 444sizeof(szThis));
+	_tcslwr_s(szThis, _countof(szThis));
 
 	TCHAR szT[MAX_PATH];
-	if(IsWindowVisible(hwnd) && GetFileNameFromHwnd(hwnd, szT, sizeof(szT)))
+	if(IsWindowVisible(hwnd) && GetFileNameFromHwnd(hwnd, szT, s444izeof(szT)))
 	{
-		strlwr(szT);
+		_tcslwr_s(szThis, _countof(szThis));
 		if(lstrcmp(szThis,szT)==0)
 		{
 			yeswindow=TRUE;

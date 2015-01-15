@@ -1,4 +1,4 @@
-// SimpBrowserDoc.h : CSimpBrowserDoc �N���X�̐錾����уC���^�[�t�F�C�X�̒�`�����܂��B
+﻿// SimpBrowserDoc.h : CSimpBrowserDoc クラスの宣言およびインターフェイスの定義をします。
 //
 /////////////////////////////////////////////////////////////////////////////
 
@@ -13,25 +13,25 @@
 
 class CSimpBrowserDoc : public CDocument
 {
-protected: // �V���A���C�Y�@�\�݂̂���쐬���܂��B
+protected: // シリアライズ機能のみから作成します。
 	CSimpBrowserDoc();
 	DECLARE_DYNCREATE(CSimpBrowserDoc)
 
-// �A�g���r���[�g
+// アトリビュート
 public:
 	CBool m_bDone;
-// �I�y���[�V����
+// オペレーション
 public:
 
-//�I�[�o�[���C�h
-	// ClassWizard �͉��z�֐��̃I�[�o�[���C�h�𐶐����܂��B
+//オーバーライド
+	// ClassWizard は仮想関数のオーバーライドを生成します。
 	//{{AFX_VIRTUAL(CSimpBrowserDoc)
 	public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	//}}AFX_VIRTUAL
 
-// �C���v�������e�[�V����
+// インプリメンテーション
 public:
 	virtual ~CSimpBrowserDoc();
 #ifdef _DEBUG
@@ -41,11 +41,11 @@ public:
 
 protected:
 
-// �������ꂽ���b�Z�[�W �}�b�v�֐�
+// 生成されたメッセージ マップ関数
 protected:
 	//{{AFX_MSG(CSimpBrowserDoc)
-		// ���� - ClassWizard �͂��̈ʒu�Ƀ����o�֐���ǉ��܂��͍폜���܂��B
-		//        ���̈ʒu�ɐ��������R�[�h��ҏW���Ȃ��ł��������B
+		// メモ - ClassWizard はこの位置にメンバ関数を追加または削除します。
+		//        この位置に生成されるコードを編集しないでください。
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -53,6 +53,6 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ �͑O�s�̒��O�ɒǉ��̐錾��}�����܂��B
+// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
 
 #endif // !defined(AFX_SIMPBROWSERDOC_H__F2AEA313_F33F_4255_BD57_5EF28585B7EA__INCLUDED_)

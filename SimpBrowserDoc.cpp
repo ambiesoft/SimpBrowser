@@ -1,4 +1,4 @@
-// SimpBrowserDoc.cpp : CSimpBrowserDoc �N���X�̓���̒�`���s���܂��B
+﻿// SimpBrowserDoc.cpp : CSimpBrowserDoc クラスの動作の定義を行います。
 //
 
 #include "stdafx.h"
@@ -19,17 +19,17 @@ IMPLEMENT_DYNCREATE(CSimpBrowserDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CSimpBrowserDoc, CDocument)
 	//{{AFX_MSG_MAP(CSimpBrowserDoc)
-		// ���� - ClassWizard �͂��̈ʒu�Ƀ}�b�s���O�p�̃}�N����ǉ��܂��͍폜���܂��B
-		//        ���̈ʒu�ɐ��������R�[�h��ҏW���Ȃ��ł��������B
+		// メモ - ClassWizard はこの位置にマッピング用のマクロを追加または削除します。
+		//        この位置に生成されるコードを編集しないでください。
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserDoc �N���X�̍\�z/����
+// CSimpBrowserDoc クラスの構築/消滅
 
 CSimpBrowserDoc::CSimpBrowserDoc()
 {
-	// TODO: ���̈ʒu�ɂP�x�����Ă΂��\�z�p�̃R�[�h��ǉ����Ă��������B
+	// TODO: この位置に１度だけ呼ばれる構築用のコードを追加してください。
 
 }
 
@@ -42,8 +42,8 @@ BOOL CSimpBrowserDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: ���̈ʒu�ɍď�����������ǉ����Ă��������B
-	// (SDI �h�L�������g�͂��̃h�L�������g���ė��p���܂��B)
+	// TODO: この位置に再初期化処理を追加してください。
+	// (SDI ドキュメントはこのドキュメントを再利用します。)
 
 	return TRUE;
 }
@@ -51,22 +51,22 @@ BOOL CSimpBrowserDoc::OnNewDocument()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserDoc �V���A���C�[�[�V����
+// CSimpBrowserDoc シリアライゼーション
 
 void CSimpBrowserDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
-		// TODO: ���̈ʒu�ɕۑ��p�̃R�[�h��ǉ����Ă��������B
+		// TODO: この位置に保存用のコードを追加してください。
 	}
 	else
 	{
-		// TODO: ���̈ʒu�ɓǂݍ��ݗp�̃R�[�h��ǉ����Ă��������B
+		// TODO: この位置に読み込み用のコードを追加してください。
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserDoc �N���X�̐f�f
+// CSimpBrowserDoc クラスの診断
 
 #ifdef _DEBUG
 void CSimpBrowserDoc::AssertValid() const
@@ -81,11 +81,11 @@ void CSimpBrowserDoc::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserDoc �R�}���h
+// CSimpBrowserDoc コマンド
 
 //DEL void CSimpBrowserDoc::SetTitle(LPCTSTR lpszTitle) 
 //DEL {
-//DEL 	// TODO: ���̈ʒu�ɌŗL�̏�����ǉ����邩�A�܂��͊�{�N���X���Ăяo���Ă�������
+//DEL 	// TODO: この位置に固有の処理を追加するか、または基本クラスを呼び出してください
 //DEL 	
 //DEL 	CDocument::SetTitle(lpszTitle);
 //DEL }

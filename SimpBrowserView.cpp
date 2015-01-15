@@ -1,4 +1,4 @@
-// SimpBrowserView.cpp : CSimpBrowserView ƒNƒ‰ƒX‚Ì“®ì‚Ì’è‹`‚ğs‚¢‚Ü‚·B
+ï»¿// SimpBrowserView.cpp : CSimpBrowserView ã‚¯ãƒ©ã‚¹ã®å‹•ä½œã®å®šç¾©ã‚’è¡Œã„ã¾ã™ã€‚
 //
 
 #include "stdafx.h"
@@ -11,6 +11,8 @@
 
 #include "SubDocument.h"
 #include "SubView.h"
+
+#include "tstring.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,7 +38,7 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView ƒNƒ‰ƒX‚Ì\’z/Á–Å
+// CSimpBrowserView ã‚¯ãƒ©ã‚¹ã®æ§‹ç¯‰/æ¶ˆæ»…
 
 CSimpBrowserView::CSimpBrowserView()
 {
@@ -49,20 +51,20 @@ CSimpBrowserView::~CSimpBrowserView()
 
 BOOL CSimpBrowserView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: ‚±‚ÌˆÊ’u‚Å CREATESTRUCT cs ‚ğC³‚µ‚Ä Window ƒNƒ‰ƒX‚Ü‚½‚ÍƒXƒ^ƒCƒ‹‚ğ
-	//  C³‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO: ã“ã®ä½ç½®ã§ CREATESTRUCT cs ã‚’ä¿®æ­£ã—ã¦ Window ã‚¯ãƒ©ã‚¹ã¾ãŸã¯ã‚¹ã‚¿ã‚¤ãƒ«ã‚’
+	//  ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚
 
 	return CHtmlView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView ƒNƒ‰ƒX‚Ì•`‰æ
+// CSimpBrowserView ã‚¯ãƒ©ã‚¹ã®æç”»
 
 void CSimpBrowserView::OnDraw(CDC* pDC)
 {
 	CSimpBrowserDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
-	// TODO: ‚±‚ÌêŠ‚ÉƒlƒCƒeƒBƒu ƒf[ƒ^—p‚Ì•`‰æƒR[ƒh‚ğ’Ç‰Á‚µ‚Ü‚·B
+	// TODO: ã“ã®å ´æ‰€ã«ãƒã‚¤ãƒ†ã‚£ãƒ– ãƒ‡ãƒ¼ã‚¿ç”¨ã®æç”»ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã™ã€‚
 }
 
 void CSimpBrowserView::OnInitialUpdate()
@@ -76,16 +78,16 @@ void CSimpBrowserView::OnInitialUpdate()
 	}
 	else
 	{
-		string url;
-		GetClipboardTextsA(m_hWnd, url);
+		tstring url;
+		GetClipboardTexts(m_hWnd, url);
 		CString u(url.c_str());
-		if(u.Find("http")==0)
+		if(u.Find(_T("http"))==0)
 		{
 			Navigate2(url.c_str());
 		}
 		else
 		{
-			Navigate2("http://google.com");
+			Navigate2(_T("http://google.com"));
 		}
 	}
 
@@ -99,7 +101,7 @@ void CSimpBrowserView::OnInitialUpdate()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView ƒNƒ‰ƒX‚Ìf’f
+// CSimpBrowserView ã‚¯ãƒ©ã‚¹ã®è¨ºæ–­
 
 #ifdef _DEBUG
 void CSimpBrowserView::AssertValid() const
@@ -112,7 +114,7 @@ void CSimpBrowserView::Dump(CDumpContext& dc) const
 	CHtmlView::Dump(dc);
 }
 
-CSimpBrowserDoc* CSimpBrowserView::GetDocument() // ”ñƒfƒoƒbƒO ƒo[ƒWƒ‡ƒ“‚ÍƒCƒ“ƒ‰ƒCƒ“‚Å‚·B
+CSimpBrowserDoc* CSimpBrowserView::GetDocument() // éãƒ‡ãƒãƒƒã‚° ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¯ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ã§ã™ã€‚
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CSimpBrowserDoc)));
 	return (CSimpBrowserDoc*)m_pDocument;
@@ -120,11 +122,11 @@ CSimpBrowserDoc* CSimpBrowserView::GetDocument() // ”ñƒfƒoƒbƒO ƒo[ƒWƒ‡ƒ“‚ÍƒCƒ“ƒ
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView ƒNƒ‰ƒX‚ÌƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CSimpBrowserView ã‚¯ãƒ©ã‚¹ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar) 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉŒÅ—L‚Ìˆ—‚ğ’Ç‰Á‚·‚é‚©A‚Ü‚½‚ÍŠî–{ƒNƒ‰ƒX‚ğŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«å›ºæœ‰ã®å‡¦ç†ã‚’è¿½åŠ ã™ã‚‹ã‹ã€ã¾ãŸã¯åŸºæœ¬ã‚¯ãƒ©ã‚¹ã‚’å‘¼ã³å‡ºã—ã¦ãã ã•ã„
 	if(0)// dispid == DISPID_AMBIENT_DLCONTROL)
 	{
 		V_VT(pvar) = VT_I4;
@@ -156,11 +158,11 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 	return CHtmlView::OnAmbientProperty(pSite, dispid, pvar);
 }
 
-void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel) 
+void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* pCancel) 
 {
 	if ( theApp.m_bNoNewWin )
-	{1
-		*Cancel = TRUE;
+	{
+		*pCancel = (BOOL)TRUE;
 		return;
 	}
 

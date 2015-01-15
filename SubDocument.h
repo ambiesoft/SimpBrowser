@@ -1,37 +1,37 @@
-#if !defined(AFX_SUBDOCUMENT_H__6C76F400_DE2A_11DC_BE63_000C29D3616F__INCLUDED_)
+﻿#if !defined(AFX_SUBDOCUMENT_H__6C76F400_DE2A_11DC_BE63_000C29D3616F__INCLUDED_)
 #define AFX_SUBDOCUMENT_H__6C76F400_DE2A_11DC_BE63_000C29D3616F__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// SubDocument.h : �w�b�_�[ �t�@�C��
+// SubDocument.h : ヘッダー ファイル
 //
 
 /////////////////////////////////////////////////////////////////////////////
-// CSubDocument �h�L�������g
+// CSubDocument ドキュメント
 
 class CSubDocument : public CDocument
 {
 protected:
-	CSubDocument();           // ���I�����Ɏg�p�����v���e�N�g �R���X�g���N�^�B
+	CSubDocument();           // 動的生成に使用されるプロテクト コンストラクタ。
 	DECLARE_DYNCREATE(CSubDocument)
 
-// �A�g���r���[�g
+// アトリビュート
 public:
 
-// �I�y���[�V����
+// オペレーション
 public:
 
-// �I�[�o�[���C�h
-	// ClassWizard �͉��z�֐��̃I�[�o�[���C�h�𐶐����܂��B
+// オーバーライド
+	// ClassWizard は仮想関数のオーバーライドを生成します。
 	//{{AFX_VIRTUAL(CSubDocument)
 	public:
-	virtual void Serialize(CArchive& ar);   // �h�L�������g I/O �ɑ΂��ăI�[�o�[���C�h����܂��B
+	virtual void Serialize(CArchive& ar);   // ドキュメント I/O に対してオーバーライドされます。
 	protected:
 	virtual BOOL OnNewDocument();
 	//}}AFX_VIRTUAL
 
-// �C���v�������e�[�V����
+// インプリメンテーション
 public:
 	virtual ~CSubDocument();
 #ifdef _DEBUG
@@ -39,15 +39,15 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	// ���b�Z�[�W �}�b�v�֐��̐���
+	// メッセージ マップ関数の生成
 protected:
 	//{{AFX_MSG(CSubDocument)
-		// ���� - ClassWizard �͂��̈ʒu�Ƀ����o�֐���ǉ��܂��͍폜���܂��B
+		// メモ - ClassWizard はこの位置にメンバ関数を追加または削除します。
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ �͑O�s�̒��O�ɒǉ��̐錾��}�����܂��B
+// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
 
 #endif // !defined(AFX_SUBDOCUMENT_H__6C76F400_DE2A_11DC_BE63_000C29D3616F__INCLUDED_)

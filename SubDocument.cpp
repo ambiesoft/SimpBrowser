@@ -1,4 +1,4 @@
-// SubDocument.cpp : �C���v�������e�[�V���� �t�@�C��
+﻿// SubDocument.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -34,12 +34,12 @@ CSubDocument::~CSubDocument()
 
 BEGIN_MESSAGE_MAP(CSubDocument, CDocument)
 	//{{AFX_MSG_MAP(CSubDocument)
-		// ���� - ClassWizard �͂��̈ʒu�Ƀ}�b�s���O�p�̃}�N����ǉ��܂��͍폜���܂��B
+		// メモ - ClassWizard はこの位置にマッピング用のマクロを追加または削除します。
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSubDocument �f�f
+// CSubDocument 診断
 
 #ifdef _DEBUG
 void CSubDocument::AssertValid() const
@@ -54,19 +54,19 @@ void CSubDocument::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CSubDocument �V���A���C�Y
+// CSubDocument シリアライズ
 
 void CSubDocument::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
-		// TODO: ���̈ʒu�ɕۑ��p�̃R�[�h��ǉ����Ă�������
+		// TODO: この位置に保存用のコードを追加してください
 	}
 	else
 	{
-		// TODO: ���̈ʒu�ɓǂݍ��ݗp�̃R�[�h��ǉ����Ă�������
+		// TODO: この位置に読み込み用のコードを追加してください
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSubDocument �R�}���h
+// CSubDocument コマンド
