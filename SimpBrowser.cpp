@@ -435,17 +435,15 @@ int CALLBACK DialogProc(
 		case WM_INITDIALOG:
 		{
 			::SetTimer(hwndDlg, 1, 1000, NULL);
+			ShowWindow(hwndDlg, SW_HIDE);
 		}
 		break;
 
 		case WM_TIMER:
 		{
-			BOOL yeswindow = FALSE;
-			if(!EnumWindows(ewproc, (LPARAM)&yeswindow))
-			{
-				break;
-			}
-			if(yeswindow)
+			hhhh yeswindow = FALSE;
+			EnumWindows(ewproc, (LPARAM)&yeswindow);
+			if(!yeswindow)
 			{
 				break;
 			}
