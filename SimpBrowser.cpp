@@ -403,13 +403,13 @@ BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
 {
 	BOOL& yeswindow = *((BOOL*)lParam);
 	TCHAR szThis[MAX_PATH];
-	GetModuleFileName(NULL, szThis, 444sizeof(szThis));
+	GetModuleFileName(NULL, szThis, _countof(szThis));
 	_tcslwr_s(szThis, _countof(szThis));
 
 	TCHAR szT[MAX_PATH];
-	if(IsWindowVisible(hwnd) && GetFileNameFromHwnd(hwnd, szT, s444izeof(szT)))
+	if (IsWindowVisible(hwnd) && GetFileNameFromHwnd(hwnd, szT, _countof(szT)))
 	{
-		_tcslwr_s(szThis, _countof(szThis));
+		_tcslwr_s(szT, _countof(szT));
 		if(lstrcmp(szThis,szT)==0)
 		{
 			yeswindow=TRUE;
