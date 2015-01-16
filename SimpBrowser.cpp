@@ -1,4 +1,4 @@
-﻿// SimpBrowser.cpp : アプリケーション用クラスの機能定義を行います。
+// SimpBrowser.cpp : アプリケーション用クラスの機能定義を行います。
 //
 
 #include "stdafx.h"
@@ -17,6 +17,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#ifndef _countof
+	#define _countof(a) (sizeof(a)/sizeof(a[0]))
+#endif
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp
 
@@ -404,12 +407,12 @@ BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
 	BOOL& yeswindow = *((BOOL*)lParam);
 	TCHAR szThis[MAX_PATH];
 	GetModuleFileName(NULL, szThis, _countof(szThis));
-	_tcslwr_s(szThis, _countof(szThis));
+	_tcslwr(szThis);
 
 	TCHAR szT[MAX_PATH];
 	if (IsWindowVisible(hwnd) && GetFileNameFromHwnd(hwnd, szT, _countof(szT)))
 	{
-		_tcslwr_s(szT, _countof(szT));
+		_tcslwr(szT);
 		if(lstrcmp(szThis,szT)==0)
 		{
 			yeswindow=TRUE;
@@ -420,14 +423,57 @@ BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
 }
 
 
+
+int CALLBACK DialogProc(
+		HWND hwndDlg,
+		UINT uMsg,
+		WPARAM wParam,
+		LPARAM lParam)
+{
+	switch(uMsg)
+	{
+		case WM_INITDIALOG:
+		{
+			::SetTimer(hwndDlg, 1, 1000, NULL);
+		}
+		break;
+
+		case WM_TIMER:
+		{
+			BOOL yeswindow = FALSE;
+			if(!EnumWindows(ewproc, (LPARAM)&yeswindow))
+			{
+				break;
+			}
+			if(yeswindow)
+			{
+				break;
+			}
+			::KillTimer(hwndDlg,1);
+			PostMessage(hwndDlg, WM_CLOSE,0,0);
+		}
+		break;
+	}
+	return FALSE;
+}
+
+
 void loopmessage()
 {
-	MSG m;
-	if(GetMessage(&m, NULL, NULL, NULL))
-	{
-		TranslateMessage(&m);
-		DispatchMessage(&m);
-	}
+//	MSG m;
+//	if(GetMessage(&m, NULL, NULL, NULL))
+//	{
+//		TranslateMessage(&m);
+//		DispatchMessage(&m);
+//	}
+
+	::DialogBoxParam(NULL,
+			MAKEINTRESOURCE(IDD_DIALOG_WAIT),
+			NULL,
+			DialogProc,
+			NULL);
+
+
 }
 
 void CSimpBrowserApp::WaitDownloadWindow()

@@ -1,4 +1,4 @@
-﻿// SimpBrowser.h : SIMPBROWSER アプリケーションのメイン ヘッダー ファイル
+// SimpBrowser.h : SIMPBROWSER アプリケーションのメイン ヘッダー ファイル
 //
 
 #if !defined(AFX_SIMPBROWSER_H__8B0EEB36_9121_4122_AC7C_87797F4755DC__INCLUDED_)

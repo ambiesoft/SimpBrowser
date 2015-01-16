@@ -1,4 +1,4 @@
-﻿// SimpBrowserView.cpp : CSimpBrowserView クラスの動作の定義を行います。
+// SimpBrowserView.cpp : CSimpBrowserView クラスの動作の定義を行います。
 //
 
 #include "stdafx.h"

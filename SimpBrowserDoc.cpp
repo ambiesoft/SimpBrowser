@@ -1,4 +1,4 @@
-﻿// SimpBrowserDoc.cpp : CSimpBrowserDoc クラスの動作の定義を行います。
+// SimpBrowserDoc.cpp : CSimpBrowserDoc クラスの動作の定義を行います。
 //
 
 #include "stdafx.h"

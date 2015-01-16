@@ -1,4 +1,4 @@
-﻿// SubView.cpp : インプリメンテーション ファイル
+// SubView.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"

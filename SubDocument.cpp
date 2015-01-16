@@ -1,4 +1,4 @@
-﻿// SubDocument.cpp : インプリメンテーション ファイル
+// SubDocument.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
