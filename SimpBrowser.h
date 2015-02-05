@@ -1,4 +1,4 @@
-// SimpBrowser.h : SIMPBROWSER アプリケーションのメイン ヘッダー ファイル
+// SimpBrowser.h : SIMPBROWSER   
 //
 
 #if !defined(AFX_SIMPBROWSER_H__8B0EEB36_9121_4122_AC7C_87797F4755DC__INCLUDED_)
@@ -9,14 +9,14 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"       // メイン シンボル
+#include "resource.h"       //  
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp:
-// このクラスの動作の定義に関しては SimpBrowser.cpp ファイルを参照してください。
+//  SimpBrowser.cpp 
 //
 
 class CSimpBrowserApp : public CWinApp
@@ -24,10 +24,10 @@ class CSimpBrowserApp : public CWinApp
 public:
 	CString m_strUrl;
 	struct BOOL_COMMANDS {
-		BOOL aaa:1;
-		BOOL abb:1;
+		BOOL aaa : 1;
+		BOOL abb : 1;
 	} m_dwBoolCommands;
-	
+
 	int m_nStartPosX;
 	int m_nStartPosY;
 
@@ -49,19 +49,19 @@ public:
 private:
 	void WaitDownloadWindow();
 
-// オーバーライド
-	// ClassWizard は仮想関数のオーバーライドを生成します。
+	// 
+	// ClassWizard 
 	//{{AFX_VIRTUAL(CSimpBrowserApp)
-	public:
+public:
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	//}}AFX_VIRTUAL
 
-// インプリメンテーション
+	// 
 	//{{AFX_MSG(CSimpBrowserApp)
 	afx_msg void OnAppAbout();
-		// メモ - ClassWizard はこの位置にメンバ関数を追加または削除します。
-		//        この位置に生成されるコードを編集しないでください。
+	//  - ClassWizard 
+	//        
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -70,6 +70,6 @@ extern CSimpBrowserApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
+// Microsoft Visual C++ 
 
 #endif // !defined(AFX_SIMPBROWSER_H__8B0EEB36_9121_4122_AC7C_87797F4755DC__INCLUDED_)

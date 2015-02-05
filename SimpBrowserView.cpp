@@ -1,4 +1,4 @@
-// SimpBrowserView.cpp : CSimpBrowserView クラスの動作の定義を行います。
+// SimpBrowserView.cpp : CSimpBrowserView 
 //
 
 #include "stdafx.h"
@@ -38,7 +38,7 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView クラスの構築/消滅
+// CSimpBrowserView /
 
 CSimpBrowserView::CSimpBrowserView()
 {
@@ -51,20 +51,20 @@ CSimpBrowserView::~CSimpBrowserView()
 
 BOOL CSimpBrowserView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: この位置で CREATESTRUCT cs を修正して Window クラスまたはスタイルを
-	//  修正してください。
+	// TODO:  CREATESTRUCT cs  Window 
+	//  
 
 	return CHtmlView::PreCreateWindow(cs);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView クラスの描画
+// CSimpBrowserView 
 
 void CSimpBrowserView::OnDraw(CDC* pDC)
 {
 	CSimpBrowserDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
-	// TODO: この場所にネイティブ データ用の描画コードを追加します。
+	// TODO:  
 }
 
 void CSimpBrowserView::OnInitialUpdate()
@@ -72,16 +72,16 @@ void CSimpBrowserView::OnInitialUpdate()
 	CHtmlView::OnInitialUpdate();
 
 
-	if ( !theApp.m_strUrl.IsEmpty() )
+	if (!theApp.m_strUrl.IsEmpty())
 	{
 		Navigate2(theApp.m_strUrl);
 	}
 	else
 	{
 		tstring url;
-		GetClipboardTexts(m_hWnd, url);
+		GetClipboardText(m_hWnd, url);
 		CString u(url.c_str());
-		if(u.Find(_T("http"))==0)
+		if (u.Find(_T("http")) == 0)
 		{
 			Navigate2(url.c_str());
 		}
@@ -91,17 +91,17 @@ void CSimpBrowserView::OnInitialUpdate()
 		}
 	}
 
-//	CString strServer;
-//	DWORD d;
-//	CString s;
-//	unsigned short p;
-//	AfxParseURL(theApp.m_strUrl, d, strServer, s, p);
-//	GetDocument()->SetTitle(strServer);
+	//	CString strServer;
+	//	DWORD d;
+	//	CString s;
+	//	unsigned short p;
+	//	AfxParseURL(theApp.m_strUrl, d, strServer, s, p);
+	//	GetDocument()->SetTitle(strServer);
 
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView クラスの診断
+// CSimpBrowserView 
 
 #ifdef _DEBUG
 void CSimpBrowserView::AssertValid() const
@@ -114,7 +114,7 @@ void CSimpBrowserView::Dump(CDumpContext& dc) const
 	CHtmlView::Dump(dc);
 }
 
-CSimpBrowserDoc* CSimpBrowserView::GetDocument() // 非デバッグ バージョンはインラインです。
+CSimpBrowserDoc* CSimpBrowserView::GetDocument() //  
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CSimpBrowserDoc)));
 	return (CSimpBrowserDoc*)m_pDocument;
@@ -122,59 +122,59 @@ CSimpBrowserDoc* CSimpBrowserView::GetDocument() // 非デバッグ バージョ
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CSimpBrowserView クラスのメッセージ ハンドラ
+// CSimpBrowserView  
 
-BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar) 
+BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar)
 {
-	// TODO: この位置に固有の処理を追加するか、または基本クラスを呼び出してください
-	if(0)// dispid == DISPID_AMBIENT_DLCONTROL)
+	// TODO: 
+	if (0)// dispid == DISPID_AMBIENT_DLCONTROL)
 	{
 		V_VT(pvar) = VT_I4;
 
-		V_I4(pvar) = DLCTL_DLIMAGES | DLCTL_NO_DLACTIVEXCTLS ;
-		if ( theApp.m_bSilentArg )
+		V_I4(pvar) = DLCTL_DLIMAGES | DLCTL_NO_DLACTIVEXCTLS;
+		if (theApp.m_bSilentArg)
 			V_I4(pvar) |= DLCTL_SILENT;
 
-/**
+		/**
 		if( !m_bAllKaijo )
 		{
-			V_I4(pvar) = ((CMainFrame*)theApp.m_pMainWnd)->m_dwDLControl;
+		V_I4(pvar) = ((CMainFrame*)theApp.m_pMainWnd)->m_dwDLControl;
 		}
 		else
 		{//navigate with DL manipulation
-			V_I4(pvar) = m_dwDLControlView;
-			m_bAllKaijo = FALSE;
+		V_I4(pvar) = m_dwDLControlView;
+		m_bAllKaijo = FALSE;
 		}
-**/
+		**/
 
 		//set what ambient i am
-//		m_bImageAmbient = (V_I4(pvar) & DLCTL_DLIMAGES) != 0 ;
-//		m_bJavaAmbient = (V_I4(pvar) & DLCTL_NO_JAVA) == 0 ;
-//		m_bScriptAmbient = (V_I4(pvar) & DLCTL_NO_SCRIPTS) == 0 ;
-//		m_bActivexAmbient = (V_I4(pvar) & (DLCTL_NO_DLACTIVEXCTLS|DLCTL_NO_RUNACTIVEXCTLS))==0;
+		//		m_bImageAmbient = (V_I4(pvar) & DLCTL_DLIMAGES) != 0 ;
+		//		m_bJavaAmbient = (V_I4(pvar) & DLCTL_NO_JAVA) == 0 ;
+		//		m_bScriptAmbient = (V_I4(pvar) & DLCTL_NO_SCRIPTS) == 0 ;
+		//		m_bActivexAmbient = (V_I4(pvar) & (DLCTL_NO_DLACTIVEXCTLS|DLCTL_NO_RUNACTIVEXCTLS))==0;
 
 		return TRUE;
-	}	
+	}
 	return CHtmlView::OnAmbientProperty(pSite, dispid, pvar);
 }
 
-void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* pCancel) 
+void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* pCancel)
 {
-	if ( theApp.m_bNoNewWin )
+	if (theApp.m_bNoNewWin)
 	{
 		*pCancel = (BOOL)TRUE;
 		return;
 	}
 
-	if ( theApp.m_nNewWin == 0 )
+	if (theApp.m_nNewWin == 0)
 		return;
 
-	CMainFrame* pFrame =(CMainFrame*)theApp.m_pDocTemplate->CreateNewFrame(NULL,NULL);
-	if ( !pFrame )
+	CMainFrame* pFrame = (CMainFrame*)theApp.m_pDocTemplate->CreateNewFrame(NULL, NULL);
+	if (!pFrame)
 		return;
 
 	CSimpBrowserView* pView = (CSimpBrowserView*)pFrame->m_pMyView;
-	if ( !pView )
+	if (!pView)
 		return;
 
 	pView->GetBrowserApp()->QueryInterface(IID_IDispatch, (void**)ppDisp);
@@ -184,9 +184,9 @@ void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* pCancel)
 	pFrame->UpdateWindow();
 }
 
-void CSimpBrowserView::OnDocumentComplete(LPCTSTR lpszURL) 
+void CSimpBrowserView::OnDocumentComplete(LPCTSTR lpszURL)
 {
-	if ( !GetDocument()->m_bDone )
+	if (!GetDocument()->m_bDone)
 		OnSetForm();
 }
 
@@ -198,78 +198,78 @@ _COM_SMARTPTR_TYPEDEF(IHTMLInputElement, __uuidof(IHTMLInputElement));
 
 void CSimpBrowserView::OnSetForm()
 {
-	if ( !m_pBrowserApp )
+	if (!m_pBrowserApp)
 		return;
 
 	READYSTATE state = READYSTATE_UNINITIALIZED;
-	if( FAILED(m_pBrowserApp->get_ReadyState(&state)) )
+	if (FAILED(m_pBrowserApp->get_ReadyState(&state)))
 		return;
 
-	if(state != READYSTATE_COMPLETE)
+	if (state != READYSTATE_COMPLETE)
 		return;
 
 	CWaitCursor wc;
 
 	LPDISPATCH pDoc = GetHtmlDocument();
 	IHTMLDocument2Ptr pHtmlDoc = pDoc;
-	if ( NULL==pHtmlDoc )
-		return ;
+	if (NULL == pHtmlDoc)
+		return;
 
 	IHTMLElementCollectionPtr pElems;
 	pHtmlDoc->get_all(&pElems);
-	if ( NULL==pElems )
-		return ;
+	if (NULL == pElems)
+		return;
 
 	long length;
 	pElems->get_length(&length);
 
-	for ( long i=0 ; i < length; ++i )
+	for (long i = 0; i < length; ++i)
 	{
 		variant_t v1(i);
 		variant_t v2;
 
 		IDispatchPtr pDisp;
 		pElems->item(v1, v2, &pDisp);
-		if ( NULL==pDisp )
+		if (NULL == pDisp)
 			continue;
 
 		IHTMLInputTextElementPtr pInputText = pDisp;
 		IHTMLOptionButtonElementPtr pButtonElement = pDisp;
-		if ( NULL==pInputText && NULL==pButtonElement )
+		if (NULL == pInputText && NULL == pButtonElement)
 			continue;
 
 		BSTR pType = NULL;
-		if ( pInputText )
+		if (pInputText)
 		{
 			pInputText->get_type(&pType);
 		}
-		else if ( pButtonElement )
+		else if (pButtonElement)
 		{
 			pButtonElement->get_type(&pType);
 		}
 
-		if ( !pType )
+		if (!pType)
 			continue;
 
 		bstr_t bstrType(pType, false);
-//		if ( wcscmp((LPCWSTR)bstrType, L"button")==0 )
-//			continue;
+		//		if ( wcscmp((LPCWSTR)bstrType, L"button")==0 )
+		//			continue;
 
 		TRACE("Type :");
 		TRACE((LPCTSTR)bstrType);
 		TRACE("\r\n");
 
 		BSTR pB = NULL;
-		if ( pInputText )
+		if (pInputText)
 		{
 			pInputText->get_name(&pB);
 		}
-		else if ( pButtonElement )
+		else if (pButtonElement)
 		{
 			pButtonElement->get_name(&pB);
 		}
 
-		if ( !pB )
+		if (!pB)
 			continue;
 
 		bstr_t bstrName(pB, false);
@@ -282,12 +282,12 @@ void CSimpBrowserView::OnSetForm()
 			POSITION pos = theApp.m_strmInputTexts.GetStartPosition();
 			CString strKey;
 			CString strValue;
-			while( pos )
+			while (pos)
 			{
 				theApp.m_strmInputTexts.GetNextAssoc(pos, strKey, strValue);
-				if ( lstrcmpiW((LPCWSTR)bstrType, L"text")==0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey))==0 )
+				if (lstrcmpiW((LPCWSTR)bstrType, L"text") == 0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey)) == 0)
 				{
-					pInputText->put_value( bstr_t((LPCTSTR)strValue) );
+					pInputText->put_value(bstr_t((LPCTSTR)strValue));
 					GetDocument()->m_bDone = TRUE;
 				}
 			}
@@ -296,12 +296,12 @@ void CSimpBrowserView::OnSetForm()
 			POSITION pos = theApp.m_strmInputPass.GetStartPosition();
 			CString strKey;
 			CString strValue;
-			while( pos )
+			while (pos)
 			{
 				theApp.m_strmInputPass.GetNextAssoc(pos, strKey, strValue);
-				if ( lstrcmpiW((LPCWSTR)bstrType, L"password")==0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey))==0 )
+				if (lstrcmpiW((LPCWSTR)bstrType, L"password") == 0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey)) == 0)
 				{
-					pInputText->put_value( bstr_t((LPCTSTR)strValue) );
+					pInputText->put_value(bstr_t((LPCTSTR)strValue));
 					GetDocument()->m_bDone = TRUE;
 				}
 			}
@@ -310,42 +310,42 @@ void CSimpBrowserView::OnSetForm()
 			POSITION pos = theApp.m_strmInputChecks.GetStartPosition();
 			CString strKey;
 			void* nValue;
-			while( pos )
+			while (pos)
 			{
 				theApp.m_strmInputChecks.GetNextAssoc(pos, strKey, nValue);
-				if ( lstrcmpiW((LPCWSTR)bstrType, L"checkbox")==0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey))==0 )
+				if (lstrcmpiW((LPCWSTR)bstrType, L"checkbox") == 0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey)) == 0)
 				{
-					if ( nValue==(void*)0 )
+					if (nValue == (void*)0)
 						pButtonElement->put_checked(VARIANT_FALSE);
-					else if ( nValue==(void*)1) 
+					else if (nValue == (void*)1)
 						pButtonElement->put_checked(VARIANT_TRUE);
-					
+
 					GetDocument()->m_bDone = TRUE;
 				}
 			}
 		}
 	}
-	return ;
+	return;
 }
 
-void CSimpBrowserView::OnFileReopen() 
+void CSimpBrowserView::OnFileReopen()
 {
 	GetDocument()->m_bDone = FALSE;
 
 	Navigate2(theApp.m_strUrl);
 }
 
-void CSimpBrowserView::OnAboutBlank() 
+void CSimpBrowserView::OnAboutBlank()
 {
-	Navigate2(_T("about:blank"));	
+	Navigate2(_T("about:blank"));
 }
 
-void CSimpBrowserView::OnTimer(UINT nIDEvent) 
+void CSimpBrowserView::OnTimer(UINT nIDEvent)
 {
-	if ( GetDocument()->m_bDone )
+	if (GetDocument()->m_bDone)
 	{
 		KillTimer(m_nTimerID);
-		m_nTimerID=0;
+		m_nTimerID = 0;
 	}
 	else
 	{
@@ -354,30 +354,30 @@ void CSimpBrowserView::OnTimer(UINT nIDEvent)
 	CHtmlView::OnTimer(nIDEvent);
 }
 
-void CSimpBrowserView::OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTargetFrameName, CByteArray& baPostedData, LPCTSTR lpszHeaders, BOOL* pbCancel) 
+void CSimpBrowserView::OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTargetFrameName, CByteArray& baPostedData, LPCTSTR lpszHeaders, BOOL* pbCancel)
 {
-	CHtmlView::OnBeforeNavigate2(lpszURL, nFlags,	lpszTargetFrameName, baPostedData, lpszHeaders, pbCancel);
-	if ( !GetDocument()->m_bDone && m_nTimerID == 0 )
+	CHtmlView::OnBeforeNavigate2(lpszURL, nFlags, lpszTargetFrameName, baPostedData, lpszHeaders, pbCancel);
+	if (!GetDocument()->m_bDone && m_nTimerID == 0)
 	{
 		m_nTimerID = SetTimer(1, 1000, NULL);
 	}
 }
 
-void CSimpBrowserView::OnOpenClipboard() 
+void CSimpBrowserView::OnOpenClipboard()
 {
 	tstring url;
-	GetClipboardTexts(*this, url);
+	GetClipboardText(*this, url);
 	Navigate2(url.c_str());
 }
 
 
 
-void CSimpBrowserView::OnBrowserSilent() 
+void CSimpBrowserView::OnBrowserSilent()
 {
-	theApp.m_bSilentArg = !theApp.m_bSilentArg;	
+	theApp.m_bSilentArg = !theApp.m_bSilentArg;
 }
 
-void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI) 
+void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(theApp.m_bSilentArg);	
+	pCmdUI->SetCheck(theApp.m_bSilentArg);
 }
