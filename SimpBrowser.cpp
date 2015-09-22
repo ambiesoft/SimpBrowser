@@ -399,7 +399,9 @@ void CSimpBrowserApp::OnAppAbout()
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp  
-BOOL CALLBACK ewproc(HWND hwnd, LPARAM lParam)
+
+
+BOOL CALLBACK ewproc_old(HWND hwnd, LPARAM lParam)
 {
 	BOOL& yeswindow = *((BOOL*)lParam);
 	TCHAR szThis[MAX_PATH];
@@ -419,7 +421,58 @@ BOOL CALLBACK ewproc(HWND hwnd, LPARAM lParam)
 	return TRUE;
 }
 
+struct EWPROCST
+{
+	std::vector<HWND> vHwnds;
+	DWORD dwPID;
+};
 
+
+BOOL CALLBACK ecwproc(HWND hwnd, LPARAM lParam)
+{
+	int& count = *((int*)lParam);
+	++count;
+	return TRUE;
+}
+
+int GetChildWindowCount(HWND hwnd)
+{
+	int count = 0;
+	EnumChildWindows(hwnd, ecwproc, (LPARAM)&count);
+	return count;
+}
+
+BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
+{
+	if(!IsWindowVisible(hwnd))
+		return TRUE;
+
+	EWPROCST& ewst = *((EWPROCST*)lParam);
+
+	DWORD dwPIDwin = 0;
+	GetWindowThreadProcessId(hwnd, &dwPIDwin);
+	
+	if(ewst.dwPID==dwPIDwin)
+	{
+		TCHAR szT[256];
+		szT[0]=0;
+		if(0!=GetClassName(hwnd, szT, sizeof(szT)/sizeof(szT[0])))
+		{
+			_strlwr(szT);
+			// if(lstrcmpi("Internet Explorer_Hidden", szT)!=0)
+			if(strpbrk(szT, "hidden") == NULL )
+			{
+				// if(lstrcmp("#32770",szT)==0)
+				int ccount = GetChildWindowCount(hwnd);
+				if(ccount >= 3)  // assuming hidden windows does not have child windows.
+				{
+					ewst.vHwnds.push_back(hwnd);
+				}
+			}
+		}
+	}
+	return TRUE;
+}
 
 int CALLBACK DialogProc(
 	HWND hwndDlg,
@@ -427,30 +480,63 @@ int CALLBACK DialogProc(
 	WPARAM wParam,
 	LPARAM lParam)
 {
+	static EWPROCST ewst_;
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
 	{
-		::SetTimer(hwndDlg, 1, 1000, NULL);
+		ewst_.dwPID = GetCurrentProcessId();
+
+		if(!EnumWindows(ewproc, (LPARAM)&ewst_))
+		{
+			EndDialog(hwndDlg, IDOK);
+			break;
+		}
+
+		if(ewst_.vHwnds.size()==0)
+		{
+			EndDialog(hwndDlg, IDOK);
+			break;
+		}
+
+		::SetTimer(hwndDlg, 1, 5000, NULL);
 		ShowWindow(hwndDlg, SW_HIDE);
 	}
 	break;
+
+	//case WM_TIMER:
+	//{
+	//	ShowWindow(hwndDlg, SW_HIDE);
+
+	//	BOOL yeswindow = FALSE;
+	//	EnumWindows(ewproc, (LPARAM)&yeswindow);
+	//	if (!yeswindow)
+	//	{
+	//		::KillTimer(hwndDlg, 1);
+	//		// PostMessage(hwndDlg, WM_CLOSE, 0, 0);
+	//		EndDialog(hwndDlg, IDOK);
+	//	}
+	//}
+	//break;
 
 	case WM_TIMER:
 	{
 		ShowWindow(hwndDlg, SW_HIDE);
-
-		BOOL yeswindow = FALSE;
-		EnumWindows(ewproc, (LPARAM)&yeswindow);
-		if (yeswindow)
+		for(std::vector<HWND>::iterator it = ewst_.vHwnds.begin(); it != ewst_.vHwnds.end() ; ++it)
 		{
-			break;
+			if(IsWindow(*it) && IsWindowVisible(*it))
+			{
+				return 0;
+			}
 		}
+
 		::KillTimer(hwndDlg, 1);
-		// PostMessage(hwndDlg, WM_CLOSE, 0, 0);
 		EndDialog(hwndDlg, IDOK);
 	}
 	break;
+
+
+
 	}
 	return FALSE;
 }

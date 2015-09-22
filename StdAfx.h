@@ -23,6 +23,7 @@
 
 
 #include <string>
+#include <vector>
 
 #include "../MyUtility/CBool.h"
 #include "../MyUtility/CInt.h"
