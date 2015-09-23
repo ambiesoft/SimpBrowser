@@ -256,9 +256,9 @@ void CSimpBrowserView::OnSetForm()
 		//		if ( wcscmp((LPCWSTR)bstrType, L"button")==0 )
 		//			continue;
 
-		TRACE("Type :");
+		TRACE(_T("Type :"));
 		TRACE((LPCTSTR)bstrType);
-		TRACE("\r\n");
+		TRACE(_T("\r\n"));
 
 		BSTR pB = NULL;
 		if (pInputText)
@@ -275,9 +275,9 @@ void CSimpBrowserView::OnSetForm()
 
 		bstr_t bstrName(pB, false);
 
-		TRACE("Name :");
+		TRACE(_T("Name :"));
 		TRACE((LPCTSTR)bstrName);
-		TRACE("\r\n");
+		TRACE(_T("\r\n"));
 
 		{
 			POSITION pos = theApp.m_strmInputTexts.GetStartPosition();
