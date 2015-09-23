@@ -12,7 +12,6 @@
 #include "SubDocument.h"
 #include "SubView.h"
 
-#include "tstring.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
