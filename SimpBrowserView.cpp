@@ -127,7 +127,7 @@ CSimpBrowserDoc* CSimpBrowserView::GetDocument() //
 BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar)
 {
 	// TODO: 
-	if (0)// dispid == DISPID_AMBIENT_DLCONTROL)
+	if ( dispid == DISPID_AMBIENT_DLCONTROL)
 	{
 		V_VT(pvar) = VT_I4;
 
@@ -188,6 +188,8 @@ void CSimpBrowserView::OnDocumentComplete(LPCTSTR lpszURL)
 {
 	if (!GetDocument()->m_bDone)
 		OnSetForm();
+
+	updateTitle();
 }
 
 
@@ -380,4 +382,41 @@ void CSimpBrowserView::OnBrowserSilent()
 void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(theApp.m_bSilentArg);
+}
+
+bstr_t CSimpBrowserView::GetLocationURL() const
+{
+	ASSERT(m_pBrowserApp != NULL);
+
+	BSTR bstr;
+	m_pBrowserApp->get_LocationURL(&bstr);
+	bstr_t retVal(bstr,false);
+	return retVal;
+}
+
+void CSimpBrowserView::updateTitle()
+{
+	IDispatchPtr pdisp(GetHtmlDocument(),false);
+	IHTMLDocument2Ptr pdoc = pdisp;
+	if(NULL==pdoc)
+		return;
+	
+	BSTR btitle=NULL;
+
+	if(SUCCEEDED(pdoc->get_title(&btitle)) && btitle && btitle[0])
+	{
+		bstr_t bstrTitle(btitle,false);
+		GetDocument()->SetTitle(bstrTitle);
+	}
+	else
+	{
+		GetDocument()->SetTitle(GetLocationURL());
+	}
+}
+
+void CSimpBrowserView::OnProgressChange(long nProgress, long nProgressMax) 
+{
+	CHtmlView::OnProgressChange(nProgress, nProgressMax);
+
+	updateTitle();
 }

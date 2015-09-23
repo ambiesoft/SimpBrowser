@@ -150,9 +150,3 @@ void CMainFrame::OnClose()
 }
 
 
-
-//DEL void CMainFrame::OnOpenClipboard() 
-//DEL {
-//DEL 	tstring url;
-//DEL 	GetClipboardTexts(*this, url);
-//DEL }

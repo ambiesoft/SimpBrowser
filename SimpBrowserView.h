@@ -25,19 +25,22 @@ public:
 	// 
 	// ClassWizard 
 	//{{AFX_VIRTUAL(CSimpBrowserView)
-public:
+	public:
 	virtual void OnDraw(CDC* pDC);  // 
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL OnAmbientProperty(COleControlSite* pSite, DISPID dispid, VARIANT* pvar);
 	virtual void OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel);
 	virtual void OnDocumentComplete(LPCTSTR lpszURL);
 	virtual void OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTargetFrameName, CByteArray& baPostedData, LPCTSTR lpszHeaders, BOOL* pbCancel);
-protected:
+	virtual void OnProgressChange(long nProgress, long nProgressMax);
+	protected:
 	virtual void OnInitialUpdate(); // ‚P
 	//}}AFX_VIRTUAL
+	
 	void OnSetForm();
+	void updateTitle();
+	bstr_t GetLocationURL() const;
 
-	// 
 public:
 	virtual ~CSimpBrowserView();
 #ifdef _DEBUG

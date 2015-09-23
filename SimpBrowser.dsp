@@ -92,7 +92,12 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\MyUtility\GetClipboardTexts.cpp
+SOURCE=..\MyUtility\CreateFolderIniPath.cpp
+# SUBTRACT CPP /YX /Yc /Yu
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\GetClipboardText.cpp
 # SUBTRACT CPP /YX /Yc /Yu
 # End Source File
 # Begin Source File
@@ -140,6 +145,18 @@ SOURCE=.\SubView.cpp
 # Begin Source File
 
 SOURCE=..\MyUtility\CBool.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\CreateFolderIniPath.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\GetClipboardText.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\GetFileNameFromHwnd.h
 # End Source File
 # Begin Source File
 

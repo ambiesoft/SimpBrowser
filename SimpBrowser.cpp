@@ -171,19 +171,42 @@ COMMAND_OPTIONS GetOption(LPCTSTR p, CString& strArgValue1, CString& strArgValue
 	return UNKNOWN_OPTION;
 }
 
+BOOL CSimpBrowserApp::SaveIni()
+{
+	BOOL bFailed = FALSE;
+	bFailed |= !WriteProfileInt(SEC_OPTION, ENT_SILENT, m_bSilentArg ? 1 : 0);
+	return !bFailed;
+}
+BOOL CSimpBrowserApp::LoadIni()
+{
+	m_bSilentArg = !!GetProfileInt(SEC_OPTION, ENT_SILENT, 0);
+	return TRUE;
+}
 BOOL CSimpBrowserApp::InitInstance()
 {
-	// 
-	// 
-	// 
-	// 
 
-	//  
-	// TODO: 
-	// 
-	// SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	{
+		TCHAR szT[MAX_PATH];
 
-	// LoadStdProfileSettings();  //  INI ÄÞ (MRU )
+		try
+		{
+			CreateFolderIniPath(NULL, _T("SimpBrowser.ini"), szT, I18N(_T("%s is not found. Exiting.")));
+		}
+		catch(tstring& error)
+		{
+			AfxMessageBox(error.c_str());
+			return FALSE;
+		}
+
+		free((void*)m_pszProfileName);
+		m_pszProfileName = _tcsdup(szT);
+	}
+
+	if(!LoadIni())
+	{
+		AfxMessageBox(I18N(_T("Failed to load ini")));
+		return FALSE;
+	}
 
 	if (__argc > 1)
 	{
@@ -572,9 +595,12 @@ void CSimpBrowserApp::WaitDownloadWindow()
 	//	break;
 	//}
 }
+
 int CSimpBrowserApp::ExitInstance()
 {
-
 	WaitDownloadWindow();
+	if(!SaveIni())
+		AfxMessageBox(I18N(_T("Failed to save ini")));
+
 	return CWinApp::ExitInstance();
 }

@@ -19,6 +19,9 @@
 //  SimpBrowser.cpp 
 //
 
+#define SEC_OPTION _T("option")
+#define ENT_SILENT _T("silent")
+
 class CSimpBrowserApp : public CWinApp
 {
 public:
@@ -48,6 +51,8 @@ public:
 
 private:
 	void WaitDownloadWindow();
+	BOOL SaveIni();
+	BOOL LoadIni();
 
 	// 
 	// ClassWizard 

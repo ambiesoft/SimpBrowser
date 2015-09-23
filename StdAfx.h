@@ -30,8 +30,11 @@
 #include "../MyUtility/GetClipboardText.h"
 #include "../MyUtility/tstring.h"
 #include "../MyUtility/GetFileNameFromHwnd.h"
-
+#include "../MyUtility/CreateFolderIniPath.h"
 using namespace std;
+
+#define I18N(t) t
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ 
 
