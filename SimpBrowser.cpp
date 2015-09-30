@@ -8,6 +8,8 @@
 #include "SubDocument.h"
 #include "SubView.h"
 
+#pragma comment(lib, "wininet.lib")
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -75,8 +77,10 @@ LPCTSTR strStartWith(LPCTSTR p1, LPCTSTR p2)
 	return p1 + _tcslen(p2);
 }
 
-COMMAND_OPTIONS GetOption(LPCTSTR p, CString& strArgValue1, CString& strArgValue2)
+COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgValue2)
 {
+	LPCTSTR p = *pp;
+
 	if (!p || p[0] == 0)
 		return UNKNOWN_OPTION;
 
@@ -168,11 +172,9 @@ COMMAND_OPTIONS GetOption(LPCTSTR p, CString& strArgValue1, CString& strArgValue
 		}
 		else if (memcmp(p + 1, _T("proxy"), lstrlen(_T("proxy")) * sizeof(TCHAR)) == 0)
 		{
-			LPCTSTR pCur = p + lstrlen(_T("proxy")) + 2;
-			for (; *pCur != 0 && *pCur != _T(' ') && *pCur != _T('\t'); ++pCur)
-			{
-				strArgValue1 += *pCur;
-			}
+			++pp;
+			strArgValue1 = *pp;
+			
 			return PROXY_ARG;
 		}
 	}
@@ -213,9 +215,9 @@ BOOL CSimpBrowserApp::LoadIni()
 
 
 
-void ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
+BOOL ChangeProxySetting(int useproxy, LPCTSTR server, LPCTSTR bypass)
 {
-	String^ error = String::Empty;
+	tstring error;
 	switch (useproxy)
 	{
 	case 0:
@@ -224,7 +226,7 @@ void ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 		pi.dwAccessType = INTERNET_OPEN_TYPE_PRECONFIG;
 		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
 		{
-			error = getLastErrorString(GetLastError());
+			error = GetLastErrorString(GetLastError());
 		}
 	}
 	break;
@@ -235,7 +237,7 @@ void ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 		pi.dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
 		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
 		{
-			error = getLastErrorString(GetLastError());
+			error = GetLastErrorString(GetLastError());
 		}
 	}
 	break;
@@ -248,44 +250,44 @@ void ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 		pi.lpszProxyBypass = bypass;
 		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
 		{
-			error = getLastErrorString(GetLastError());
+			error = GetLastErrorString(GetLastError());
 		}
 	}
 	break;
 
 	default:
-		error = TO_I18NS(L"Invalid Proxy Settings");
+		error = I18N(L"Invalid Proxy Settings");
 		break;
 	}
 
-	if (!String::IsNullOrEmpty(error))
+	if (error.size() != 0)
 	{
-		System::Windows::Forms::MessageBox::Show(TO_I18NS(L"Proxy Settings Failed.") + L"\r\n" + error,
-			System::Windows::Forms::Application::ProductName,
-			System::Windows::Forms::MessageBoxButtons::OK,
-			System::Windows::Forms::MessageBoxIcon::Error);
+		tstring message = I18N(L"Proxy Settings Failed.");
+		message += L"\r\n" + error;
+		AfxMessageBox(message.c_str());
 	}
 
-	if (String::IsNullOrEmpty(error))
-	{
-		ProxyInfo::useproxy = useproxy;
-		if (useproxy == 2)
-		{
-			try
-			{
-				String^ t = gcnew String(server);
-				ProxyInfo::proxyserver = gcnew Uri(L"http://" + t);
-			}
-			catch (System::Exception^ ex)
-			{
-				System::Windows::Forms::MessageBox::Show(TO_I18NS(L"Proxy Settings Failed.") + L"\n" + error + L"\n" + ex->Message,
-					System::Windows::Forms::Application::ProductName,
-					System::Windows::Forms::MessageBoxButtons::OK,
-					System::Windows::Forms::MessageBoxIcon::Error);
-			}
-		}
-		//ProxyInfo::proxybypass = gcnew String(bypass);
-	}
+//	if (error.size() != 0)
+//	{
+//		ProxyInfo::useproxy = useproxy;
+//		if (useproxy == 2)
+//		{
+//			try
+//			{
+//				String^ t = gcnew String(server);
+//				ProxyInfo::proxyserver = gcnew Uri(L"http://" + t);
+//			}
+//			catch (System::Exception^ ex)
+//			{
+//				System::Windows::Forms::MessageBox::Show(TO_I18NS(L"Proxy Settings Failed.") + L"\n" + error + L"\n" + ex->Message,
+//					System::Windows::Forms::Application::ProductName,
+//					System::Windows::Forms::MessageBoxButtons::OK,
+//					System::Windows::Forms::MessageBoxIcon::Error);
+//			}
+//		}
+//	}
+
+	return error.size()==0;
 }
 
 
@@ -345,7 +347,7 @@ BOOL CSimpBrowserApp::InitInstance()
 		{
 			CString strArgValue1;
 			CString strArgValue2;
-			const COMMAND_OPTIONS option = GetOption(*pArg, strArgValue1, strArgValue2);
+			const COMMAND_OPTIONS option = GetOption(pArg, strArgValue1, strArgValue2);
 			switch (option)
 			{
 			default:
@@ -459,7 +461,11 @@ BOOL CSimpBrowserApp::InitInstance()
 			case PROXY_ARG:
 			{
 				m_strProxy = strArgValue1;
-				InternetSetOption(
+				if(!m_strProxy.IsEmpty())
+				{
+					if(!ChangeProxySetting(2, m_strProxy, _T("")))
+						return FALSE;
+				}
 			}
 			break;
 

@@ -31,6 +31,7 @@
 #include "../MyUtility/tstring.h"
 #include "../MyUtility/GetFileNameFromHwnd.h"
 #include "../MyUtility/CreateFolderIniPath.h"
+#include "../MyUtility/GetLastErrorString.h"
 using namespace std;
 
 #define I18N(t) t

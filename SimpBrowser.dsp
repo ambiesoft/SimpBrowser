@@ -165,6 +165,11 @@ SOURCE=..\MyUtility\GetFileNameFromHwnd.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\MyUtility\GetLastErrorString.cpp
+# SUBTRACT CPP /YX /Yc /Yu
+# End Source File
+# Begin Source File
+
 SOURCE=.\MainFrm.cpp
 # End Source File
 # Begin Source File
@@ -215,6 +220,10 @@ SOURCE=..\MyUtility\GetClipboardText.h
 # Begin Source File
 
 SOURCE=..\MyUtility\GetFileNameFromHwnd.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\MyUtility\GetLastErrorString.h
 # End Source File
 # Begin Source File
 
