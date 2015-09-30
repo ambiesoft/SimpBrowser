@@ -192,6 +192,126 @@ BOOL CSimpBrowserApp::LoadIni()
 	m_bSilentArg = !!GetProfileInt(SEC_OPTION, ENT_SILENT, 0);
 	return TRUE;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
+{
+	String^ error = String::Empty;
+	switch (useproxy)
+	{
+	case 0:
+	{
+		INTERNET_PROXY_INFO pi = { 0 };
+		pi.dwAccessType = INTERNET_OPEN_TYPE_PRECONFIG;
+		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
+		{
+			error = getLastErrorString(GetLastError());
+		}
+	}
+	break;
+
+	case 1:
+	{
+		INTERNET_PROXY_INFO pi = { 0 };
+		pi.dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
+		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
+		{
+			error = getLastErrorString(GetLastError());
+		}
+	}
+	break;
+
+	case 2:
+	{
+		INTERNET_PROXY_INFO pi = { 0 };
+		pi.dwAccessType = INTERNET_OPEN_TYPE_PROXY;
+		pi.lpszProxy = server;
+		pi.lpszProxyBypass = bypass;
+		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
+		{
+			error = getLastErrorString(GetLastError());
+		}
+	}
+	break;
+
+	default:
+		error = TO_I18NS(L"Invalid Proxy Settings");
+		break;
+	}
+
+	if (!String::IsNullOrEmpty(error))
+	{
+		System::Windows::Forms::MessageBox::Show(TO_I18NS(L"Proxy Settings Failed.") + L"\r\n" + error,
+			System::Windows::Forms::Application::ProductName,
+			System::Windows::Forms::MessageBoxButtons::OK,
+			System::Windows::Forms::MessageBoxIcon::Error);
+	}
+
+	if (String::IsNullOrEmpty(error))
+	{
+		ProxyInfo::useproxy = useproxy;
+		if (useproxy == 2)
+		{
+			try
+			{
+				String^ t = gcnew String(server);
+				ProxyInfo::proxyserver = gcnew Uri(L"http://" + t);
+			}
+			catch (System::Exception^ ex)
+			{
+				System::Windows::Forms::MessageBox::Show(TO_I18NS(L"Proxy Settings Failed.") + L"\n" + error + L"\n" + ex->Message,
+					System::Windows::Forms::Application::ProductName,
+					System::Windows::Forms::MessageBoxButtons::OK,
+					System::Windows::Forms::MessageBoxIcon::Error);
+			}
+		}
+		//ProxyInfo::proxybypass = gcnew String(bypass);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 BOOL CSimpBrowserApp::InitInstance()
 {
 
