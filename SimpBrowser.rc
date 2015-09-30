@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Japanese resources
+// “ú–{Œê resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
 #ifdef _WIN32
@@ -58,12 +58,12 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // Japanese resources
+#endif    // “ú–{Œê resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// ‰pŒê (±ÒØ¶) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
@@ -351,9 +351,10 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_STATUS_SETFORM       "SetForm"
+    ID_STATUS_PROXY         "PreConfig"
 END
 
-#endif    // English (U.S.) resources
+#endif    // ‰pŒê (±ÒØ¶) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

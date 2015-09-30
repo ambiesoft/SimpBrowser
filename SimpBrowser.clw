@@ -14,7 +14,7 @@ Class2=CSimpBrowserDoc
 Class3=CSimpBrowserView
 Class4=CMainFrame
 
-ResourceCount=7
+ResourceCount=8
 Resource1=IDD_ABOUTBOX
 Resource2=IDR_MAINFRAME (âpåÍ (±“ÿ∂))
 Class5=CAboutDlg
@@ -25,6 +25,7 @@ Resource4=IDD_ABOUTBOX (âpåÍ (±“ÿ∂))
 Resource5=IDR_MAINFRAME (English (U.S.))
 Resource6=IDD_ABOUTBOX (English (U.S.))
 Resource7=IDD_DIALOG_WAIT
+Resource8=IDD_DIALOG_WAIT (âpåÍ (±“ÿ∂))
 
 [CLS:CSimpBrowserApp]
 Type=0
@@ -116,21 +117,19 @@ CommandCount=13
 [MNU:IDR_MAINFRAME (âpåÍ (±“ÿ∂))]
 Type=1
 Class=CMainFrame
-Command1=ID_FILE_REOPEN
-Command2=ID_ABOUT_BLANK
-Command3=ID_FILE_NEW
-Command4=ID_FILE_OPEN
-Command5=ID_FILE_SAVE
-Command6=ID_FILE_SAVE_AS
-Command7=ID_FILE_MRU_FILE1
-Command8=ID_APP_EXIT
-Command9=ID_EDIT_UNDO
-Command10=ID_EDIT_CUT
-Command11=ID_EDIT_COPY
-Command12=ID_EDIT_PASTE
-Command13=ID_VIEW_STATUS_BAR
-Command14=ID_APP_ABOUT
-CommandCount=14
+Command1=ID_OPEN_CLIPBOARD
+Command2=ID_FILE_REOPEN
+Command3=ID_ABOUT_BLANK
+Command4=ID_FILE_NEW
+Command5=ID_FILE_OPEN
+Command6=ID_FILE_SAVE
+Command7=ID_FILE_SAVE_AS
+Command8=ID_FILE_MRU_FILE1
+Command9=ID_APP_EXIT
+Command10=IDM_BROWSER_SILENT
+Command11=ID_VIEW_STATUS_BAR
+Command12=ID_APP_ABOUT
+CommandCount=12
 
 [ACL:IDR_MAINFRAME (âpåÍ (±“ÿ∂))]
 Type=1
@@ -221,5 +220,9 @@ Control4=IDOK,button,1342373889
 [DLG:IDD_DIALOG_WAIT]
 Type=1
 Class=?
+ControlCount=0
+
+[DLG:IDD_DIALOG_WAIT (âpåÍ (±“ÿ∂))]
+Type=1
 ControlCount=0
 

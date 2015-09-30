@@ -212,19 +212,39 @@ BOOL CSimpBrowserApp::LoadIni()
 
 
 
+typedef struct {
+
+    //
+    // dwAccessType - INTERNET_OPEN_TYPE_DIRECT, INTERNET_OPEN_TYPE_PROXY, or
+    // INTERNET_OPEN_TYPE_PRECONFIG (set only)
+    //
+
+    DWORD dwAccessType;
+
+    //
+    // lpszProxy - proxy server list
+    //
+
+    LPCSTR lpszProxy;
+
+    //
+    // lpszProxyBypass - proxy bypass list
+    //
+
+    LPCSTR lpszProxyBypass;
+} INTERNET_PROXY_INFOA;
 
 
-
-BOOL ChangeProxySetting(int useproxy, LPCTSTR server, LPCTSTR bypass)
+BOOL ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 {
 	tstring error;
 	switch (useproxy)
 	{
 	case 0:
 	{
-		INTERNET_PROXY_INFO pi = { 0 };
+		INTERNET_PROXY_INFOA pi = { 0 };
 		pi.dwAccessType = INTERNET_OPEN_TYPE_PRECONFIG;
-		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
+		if (!InternetSetOptionA(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
 		{
 			error = GetLastErrorString(GetLastError());
 		}
@@ -233,9 +253,9 @@ BOOL ChangeProxySetting(int useproxy, LPCTSTR server, LPCTSTR bypass)
 
 	case 1:
 	{
-		INTERNET_PROXY_INFO pi = { 0 };
+		INTERNET_PROXY_INFOA pi = { 0 };
 		pi.dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
-		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
+		if (!InternetSetOptionA(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
 		{
 			error = GetLastErrorString(GetLastError());
 		}
@@ -244,11 +264,11 @@ BOOL ChangeProxySetting(int useproxy, LPCTSTR server, LPCTSTR bypass)
 
 	case 2:
 	{
-		INTERNET_PROXY_INFO pi = { 0 };
+		INTERNET_PROXY_INFOA pi = { 0 };
 		pi.dwAccessType = INTERNET_OPEN_TYPE_PROXY;
 		pi.lpszProxy = server;
 		pi.lpszProxyBypass = bypass;
-		if (!InternetSetOption(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
+		if (!InternetSetOptionA(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
 		{
 			error = GetLastErrorString(GetLastError());
 		}
@@ -256,36 +276,16 @@ BOOL ChangeProxySetting(int useproxy, LPCTSTR server, LPCTSTR bypass)
 	break;
 
 	default:
-		error = I18N(L"Invalid Proxy Settings");
+		error = I18N(_T("Invalid Proxy Settings"));
 		break;
 	}
 
 	if (error.size() != 0)
 	{
-		tstring message = I18N(L"Proxy Settings Failed.");
-		message += L"\r\n" + error;
+		tstring message = I18N(_T("Proxy Settings Failed."));
+		message += _T("\r\n") + error;
 		AfxMessageBox(message.c_str());
 	}
-
-//	if (error.size() != 0)
-//	{
-//		ProxyInfo::useproxy = useproxy;
-//		if (useproxy == 2)
-//		{
-//			try
-//			{
-//				String^ t = gcnew String(server);
-//				ProxyInfo::proxyserver = gcnew Uri(L"http://" + t);
-//			}
-//			catch (System::Exception^ ex)
-//			{
-//				System::Windows::Forms::MessageBox::Show(TO_I18NS(L"Proxy Settings Failed.") + L"\n" + error + L"\n" + ex->Message,
-//					System::Windows::Forms::Application::ProductName,
-//					System::Windows::Forms::MessageBoxButtons::OK,
-//					System::Windows::Forms::MessageBoxIcon::Error);
-//			}
-//		}
-//	}
 
 	return error.size()==0;
 }
@@ -460,10 +460,10 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case PROXY_ARG:
 			{
-				m_strProxy = strArgValue1;
-				if(!m_strProxy.IsEmpty())
+				if(!strArgValue1.IsEmpty())
 				{
-					if(!ChangeProxySetting(2, m_strProxy, _T("")))
+					m_strProxy = (LPCTSTR)strArgValue1;
+					if(!ChangeProxySetting(2, m_strProxy, ""))
 						return FALSE;
 				}
 			}

@@ -52,6 +52,8 @@ protected:
 	afx_msg void OnClose();
 	//}}AFX_MSG
 	void OnUpdateSetForm(CCmdUI* pCmdUI);
+	void OnUpdateProxy(CCmdUI* pCmdUI);
+	
 	DECLARE_MESSAGE_MAP()
 };
 

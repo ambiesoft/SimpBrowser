@@ -38,7 +38,7 @@ public:
 	int m_nStartSizeY;
 
 	CInt m_nNewWin;
-	CString m_strProxy;
+	bstr_t m_strProxy;
 
 	CSingleDocTemplate* m_pDocTemplate;
 
@@ -50,6 +50,11 @@ public:
 	CBool m_bNoNewWin;
 	CSimpBrowserApp();
 
+	LPCTSTR GetProxyString() const {
+		if(m_strProxy.length()==0)
+			return _T("PreConfig");
+		return m_strProxy;
+	}
 private:
 	void WaitDownloadWindow();
 	BOOL SaveIni();

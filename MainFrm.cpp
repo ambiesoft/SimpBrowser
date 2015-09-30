@@ -25,11 +25,13 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CLOSE()
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(ID_STATUS_SETFORM, OnUpdateSetForm)
+	ON_UPDATE_COMMAND_UI(ID_STATUS_PROXY, OnUpdateProxy)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
 {
-	ID_SEPARATOR,           // ステータス ライン インジケータ
+	ID_SEPARATOR,
+	ID_STATUS_PROXY,
 	ID_STATUS_SETFORM,
 };
 
@@ -39,9 +41,14 @@ void CMainFrame::OnUpdateSetForm(CCmdUI* pCmdUI)
 		pCmdUI->SetText(_T("Done!"));
 }
 
+void CMainFrame::OnUpdateProxy(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetText(theApp.GetProxyString());
+}
+
 int CMainFrame::m_nFrameCount;
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame クラスの構築/消滅
+// CMainFrame
 
 CMainFrame::CMainFrame()
 {
