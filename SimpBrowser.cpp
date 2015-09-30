@@ -64,6 +64,7 @@ enum COMMAND_OPTIONS {
 	STARTPOS_ARG,
 	STARTSIZE_ARG,
 	NEWWIN_ARG,
+	PROXY_ARG,
 };
 
 LPCTSTR strStartWith(LPCTSTR p1, LPCTSTR p2)
@@ -164,6 +165,15 @@ COMMAND_OPTIONS GetOption(LPCTSTR p, CString& strArgValue1, CString& strArgValue
 				strArgValue1 += *pCur;
 			}
 			return NEWWIN_ARG;
+		}
+		else if (memcmp(p + 1, _T("proxy"), lstrlen(_T("proxy")) * sizeof(TCHAR)) == 0)
+		{
+			LPCTSTR pCur = p + lstrlen(_T("proxy")) + 2;
+			for (; *pCur != 0 && *pCur != _T(' ') && *pCur != _T('\t'); ++pCur)
+			{
+				strArgValue1 += *pCur;
+			}
+			return PROXY_ARG;
 		}
 	}
 
@@ -325,6 +335,15 @@ BOOL CSimpBrowserApp::InitInstance()
 				m_nNewWin = _ttoi(strArgValue1);
 			}
 			break;
+
+			case PROXY_ARG:
+			{
+				m_strProxy = strArgValue1;
+				InternetSetOption(
+			}
+			break;
+
+
 			}
 		}
 	}

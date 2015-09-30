@@ -80,8 +80,6 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	if( !CFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
-	// TODO: この位置で CREATESTRUCT cs を修正して、Window クラスやスタイルを
-	//       修正してください。
 
 	if ( theApp.m_nStartPosX >= 0 && theApp.m_nStartPosY >= 0 )
 	{
@@ -99,7 +97,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame クラスの診断
+// CMainFrame
 
 #ifdef _DEBUG
 void CMainFrame::AssertValid() const
@@ -134,7 +132,6 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 
 void CMainFrame::OnClose() 
 {
-	// TODO: この位置にメッセージ ハンドラ用のコードを追加するかまたはデフォルトの処理を呼び出してください
 	if ( m_bMainWin )
 	{
 		if ( m_nFrameCount > 1 )

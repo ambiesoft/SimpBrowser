@@ -38,6 +38,7 @@ public:
 	int m_nStartSizeY;
 
 	CInt m_nNewWin;
+	CString m_strProxy;
 
 	CSingleDocTemplate* m_pDocTemplate;
 
