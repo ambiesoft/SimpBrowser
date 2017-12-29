@@ -135,4 +135,17 @@
       <Filter>3 Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="History.txt">
+      <Filter>4 Dist Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE">
+      <Filter>4 Dist Files</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>4 Dist Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
