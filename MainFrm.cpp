@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include "SimpBrowser.h"
 
+#include "SimpBrowserView.h"
 #include "MainFrm.h"
+
 #include "SimpBrowserDoc.h"
 
 
@@ -26,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(ID_STATUS_SETFORM, OnUpdateSetForm)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_PROXY, OnUpdateProxy)
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -130,9 +133,10 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	// default create client will create a view if asked for it
 	if (pContext != NULL && pContext->m_pNewViewClass != NULL)
 	{
-		m_pMyView = (CView*)CreateView(pContext, AFX_IDW_PANE_FIRST);
+		m_pMyView = (CSimpBrowserView*)CreateView(pContext, AFX_IDW_PANE_FIRST);
 		if(!m_pMyView)
 			return FALSE;
+		m_pMyView->m_pMyFrame = this;
 	}
 	return TRUE;
 }
@@ -148,9 +152,29 @@ void CMainFrame::OnClose()
 			if ( IDYES != MessageBox(strMessage, _T("SimpBrowser"), MB_ICONQUESTION|MB_YESNO) )
 				return;
 		}
+
+		BOOL bSaveOK = true;
+		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_WIDTH, theApp.m_nStartSizeX);
+		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_HEIGHT, theApp.m_nStartSizeY);
+		if (!bSaveOK)
+		{
+			AfxMessageBox(I18N(_T("Failed to save ini.")));
+		}
 	}
 	
 	CFrameWnd::OnClose();
 }
 
 
+
+
+void CMainFrame::OnSize(UINT nType, int cx, int cy)
+{
+	CFrameWnd::OnSize(nType, cx, cy);
+
+	if (nType == SIZE_RESTORED)
+	{
+		theApp.m_nStartSizeX = cx;
+		theApp.m_nStartSizeY = cy;
+	}
+}

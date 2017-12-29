@@ -20,7 +20,9 @@
 //
 
 #define SEC_OPTION _T("option")
-#define ENT_SILENT _T("silent")
+#define KEY_SILENT _T("silent")
+#define KEY_WIDTH _T("width")
+#define KEY_HEIGHT _T("Height")
 
 class CSimpBrowserApp : public CWinApp
 {

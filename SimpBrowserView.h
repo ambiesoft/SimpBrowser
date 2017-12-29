@@ -7,12 +7,15 @@
 
 
 
+class CMainFrame;
+
 class CSimpBrowserView : public CHtmlView
 {
 protected: // 
 	CSimpBrowserView();
 	DECLARE_DYNCREATE(CSimpBrowserView)
 
+	CMainFrame* m_pMyFrame;
 	// 
 public:
 	CSimpBrowserDoc* GetDocument();
