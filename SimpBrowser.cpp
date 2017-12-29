@@ -1,4 +1,7 @@
 #include "stdafx.h"
+
+#include "../lsMisc/stdwin32/stdwin32.h"
+
 #include "SimpBrowser.h"
 
 #include "MainFrm.h"
@@ -322,16 +325,24 @@ BOOL CSimpBrowserApp::InitInstance()
 
 		try
 		{
-			CreateFolderIniPath(NULL, _T("SimpBrowser.ini"), szT, I18N(_T("%s is not found. Exiting.")));
+			if (!GetFolderIniDir(NULL, szT, _countof(szT), _T("Ambiesoft"), AfxGetAppName()))
+			{
+				AfxMessageBox(I18N(L"Failed to get ini folder"));
+				return FALSE;
+			}
+			CString iniFile = AfxGetAppName();
+			iniFile += L".ini";
+			wstring full = stdwin32::stdCombinePath(szT, iniFile);
+
+			free((void*)m_pszProfileName);
+			m_pszProfileName = _tcsdup(full.c_str());
+			// CreateFolderIniPath(NULL, _T("SimpBrowser.ini"), szT, I18N(_T("%s is not found. Exiting.")));
 		}
 		catch(tstring& error)
 		{
 			AfxMessageBox(error.c_str());
 			return FALSE;
 		}
-
-		free((void*)m_pszProfileName);
-		m_pszProfileName = _tcsdup(szT);
 	}
 
 	if(!LoadIni())

@@ -25,16 +25,18 @@
 #include <string>
 #include <vector>
 
-#include "../MyUtility/CBool.h"
-#include "../MyUtility/CInt.h"
-#include "../MyUtility/GetClipboardText.h"
-#include "../MyUtility/tstring.h"
-#include "../MyUtility/GetFileNameFromHwnd.h"
-#include "../MyUtility/CreateFolderIniPath.h"
-#include "../MyUtility/GetLastErrorString.h"
-using namespace std;
+#include "../lsMisc/CBool.h"
+#include "../lsMisc/CInt.h"
+#include "../lsMisc/GetClipboardText.h"
+#include "../lsMisc/tstring.h"
+#include "../lsMisc/GetFileNameFromHwnd.h"
+#include "../lsMisc/CreateFolderIniPath.h"
+#include "../lsMisc/GetLastErrorString.h"
 
 #define I18N(t) t
+
+using namespace std;
+using namespace Ambiesoft;
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ 

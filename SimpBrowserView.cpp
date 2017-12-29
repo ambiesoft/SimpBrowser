@@ -175,6 +175,10 @@ void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* pCancel)
 	CSimpBrowserView* pView = (CSimpBrowserView*)pFrame->m_pMyView;
 	if (!pView)
 		return;
+	ASSERT(pView->m_pDocument == NULL);
+	GetDocument()->AddView(pView);
+	pView->m_pDocument = GetDocument();
+	
 
 	pView->GetBrowserApp()->QueryInterface(IID_IDispatch, (void**)ppDisp);
 
