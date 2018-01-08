@@ -4,8 +4,9 @@
 #include "stdafx.h"
 #include "SimpBrowser.h"
 
-#include "SimpBrowserView.h"
 #include "MainFrm.h"
+#include "SimpBrowserView.h"
+
 
 #include "SimpBrowserDoc.h"
 
@@ -97,7 +98,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		cs.y = theApp.m_nStartPosY;
 	}
 
-	if ( theApp.m_nStartSizeX >= 0 && theApp.m_nStartSizeY >= 0 )
+	if ( theApp.m_nStartSizeX > 0 && theApp.m_nStartSizeY > 0 )
 	{
 		cs.cx = theApp.m_nStartSizeX;
 		cs.cy = theApp.m_nStartSizeY;
@@ -136,7 +137,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 		m_pMyView = (CSimpBrowserView*)CreateView(pContext, AFX_IDW_PANE_FIRST);
 		if(!m_pMyView)
 			return FALSE;
-		m_pMyView->m_pMyFrame = this;
+		((CSimpBrowserView*)m_pMyView)->m_pMyFrame = this;
 	}
 	return TRUE;
 }

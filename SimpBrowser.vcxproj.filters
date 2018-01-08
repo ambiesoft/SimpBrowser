@@ -63,6 +63,12 @@
     <ClCompile Include="..\lsMisc\stdwin32\stdwin32.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lsMisc\BrowserEmulation.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\Registory.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpBrowser.rc">
@@ -119,6 +125,12 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\BrowserEmulation.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\Registory.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

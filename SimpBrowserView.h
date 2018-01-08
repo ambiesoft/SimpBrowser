@@ -8,21 +8,22 @@
 
 
 class CMainFrame;
+class CSimpBrowserDoc;
 
 class CSimpBrowserView : public CHtmlView
 {
-protected: // 
+protected:
 	CSimpBrowserView();
 	DECLARE_DYNCREATE(CSimpBrowserView)
 
-	CMainFrame* m_pMyFrame;
-	// 
+	void* m_pMyFrame;
+	
 public:
 	CSimpBrowserDoc* GetDocument();
 
 private:
 	CInt m_nTimerID;
-	// 
+	
 public:
 
 	// 

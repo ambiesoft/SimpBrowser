@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "../lsMisc/stdwin32/stdwin32.h"
+#include "../lsMisc/BrowserEmulation.h"
 
 #include "SimpBrowser.h"
 
@@ -70,6 +71,8 @@ enum COMMAND_OPTIONS {
 	STARTSIZE_ARG,
 	NEWWIN_ARG,
 	PROXY_ARG,
+	BROWSEREMULATION_ARG,
+	HELP_ARG,
 };
 
 LPCTSTR strStartWith(LPCTSTR p1, LPCTSTR p2)
@@ -80,6 +83,32 @@ LPCTSTR strStartWith(LPCTSTR p1, LPCTSTR p2)
 	return p1 + _tcslen(p2);
 }
 
+CString getHelpString()
+{
+	CString ret;
+	wstring exe = stdwin32::stdGetFileName(stdwin32::stdGetModuleFileName());
+	ret += exe.c_str();
+	ret += L" ";
+
+
+	ret += L"[-it:A=B] [-ip:A=B] [-ic:A=L] [-silent] [-nonewwin] [-h] [-startpos POS] [-startsize SIZE] [-newwin NEWWIN] [-proxy PROXY] [-browseremulation BE]";
+	ret += L"\r\n";
+	ret += L"\r\n";
+
+	ret += L"  -it" L"\r\n";
+	ret += L"    Put text in input area on page." L"\r\n";
+	ret += L"    A is id of html input element, B is value" L"\r\n";
+
+
+	ret += L"  -startpos" L"\r\n";
+	ret += L"    Start position of the window, ex) 100,00" L"\r\n";
+
+	ret += L"  -startsize" L"\r\n";
+	ret += L"    Start size of the window, ex) 640,480" L"\r\n";
+
+
+	return ret;
+}
 COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgValue2)
 {
 	LPCTSTR p = *pp;
@@ -146,6 +175,10 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 		{
 			return NONEWWIN_ARG;
 		}
+		else if (lstrcmp(p + 1, _T("h")) == 0)
+		{
+			return HELP_ARG;
+		}
 		else if (memcmp(p + 1, _T("startpos"), lstrlen(_T("startpos")) * sizeof(TCHAR)) == 0)
 		{
 			LPCTSTR pCur = p + lstrlen(_T("startpos")) + 2;
@@ -179,6 +212,12 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 			strArgValue1 = *pp;
 			
 			return PROXY_ARG;
+		}
+		else if (memcmp(p + 1, _T("browseremulation"), lstrlen(_T("browseremulation")) * sizeof(TCHAR)) == 0)
+		{
+			++pp;
+			strArgValue1 = *pp;
+			return BROWSEREMULATION_ARG;
 		}
 	}
 
@@ -484,8 +523,35 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			break;
 
-
+			case BROWSEREMULATION_ARG:
+			{
+				wstring exe = stdwin32::stdGetModuleFileName();
+				exe = stdwin32::stdGetFileName(exe);
+					
+				if (strArgValue1.IsEmpty())
+				{
+					AfxMessageBox(I18N(L"browseremulation value must be specified."),
+						MB_ICONERROR);
+					return FALSE;
+				}
+				int be = StrToInt(strArgValue1);
+				
+				if (!SetBrowserEmulation(exe.c_str(), be))
+				{
+					AfxMessageBox(I18N(L"Failed to set browser emulation."));
+				}
 			}
+			break;
+
+			case HELP_ARG:
+			{
+				CString message = getHelpString();
+				AfxMessageBox(message, MB_ICONINFORMATION);
+				return FALSE;
+			}
+			break;
+
+			} // switch
 		}
 	}
 	//   

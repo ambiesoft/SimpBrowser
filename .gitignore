@@ -1,7 +1,11 @@
 *.aps
 SimpBrowser.sdf
 SimpBrowser.v12.suo
+Debug/
 UnicodeDebug/
 UnicodeRelease/
 ipch/
+
+SimpBrowser.vcxproj.user
+
 
