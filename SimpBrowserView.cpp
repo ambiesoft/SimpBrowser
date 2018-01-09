@@ -9,8 +9,8 @@
 #include "SimpBrowserDoc.h"
 #include "SimpBrowserView.h"
 
-#include "SubDocument.h"
-#include "SubView.h"
+//#include "SubDocument.h"
+//#include "SubView.h"
 
 
 #ifdef _DEBUG
@@ -156,6 +156,8 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 		//		m_bScriptAmbient = (V_I4(pvar) & DLCTL_NO_SCRIPTS) == 0 ;
 		//		m_bActivexAmbient = (V_I4(pvar) & (DLCTL_NO_DLACTIVEXCTLS|DLCTL_NO_RUNACTIVEXCTLS))==0;
 
+		//V_I4(pvar) |= DLCTL_NO_SCRIPTS;
+		//V_I4(pvar) |= DLCTL_DLIMAGES;
 		return TRUE;
 	}
 	return CHtmlView::OnAmbientProperty(pSite, dispid, pvar);
@@ -413,12 +415,18 @@ void CSimpBrowserView::updateTitle()
 	if(SUCCEEDED(pdoc->get_title(&btitle)) && btitle && btitle[0])
 	{
 		bstr_t bstrTitle(btitle,false);
-		GetDocument()->SetTitle(bstrTitle);
+		// GetDocument()->SetTitle(bstrTitle);
+		// m_pMyFrame->SetTitle(bstrTitle);
+		m_pMyFrame->SetWindowText(bstrTitle);
 	}
 	else
 	{
-		GetDocument()->SetTitle(GetLocationURL());
+		// GetDocument()->SetTitle(GetLocationURL());
+		// m_pMyFrame->SetTitle(GetLocationURL());
+		m_pMyFrame->SetWindowText(GetLocationURL());
 	}
+	// m_pMyFrame->OnUpdateFrameTitle(TRUE);
+	
 }
 
 void CSimpBrowserView::OnProgressChange(long nProgress, long nProgressMax) 

@@ -33,12 +33,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SubDocument.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SubView.cpp">
-      <Filter>2 Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\lsMisc\CreateFolderIniPath.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
@@ -92,12 +86,6 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
-      <Filter>1 Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SubDocument.h">
-      <Filter>1 Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SubView.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\CBool.h">

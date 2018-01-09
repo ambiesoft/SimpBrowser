@@ -332,8 +332,6 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="SubDocument.cpp" />
-    <ClCompile Include="SubView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpBrowser.rc" />
@@ -356,8 +354,6 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClInclude Include="SimpBrowserDoc.h" />
     <ClInclude Include="SimpBrowserView.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="SubDocument.h" />
-    <ClInclude Include="SubView.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\SimpBrowser.ico" />

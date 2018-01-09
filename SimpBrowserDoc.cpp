@@ -89,3 +89,11 @@ void CSimpBrowserDoc::Dump(CDumpContext& dc) const
 //DEL 	
 //DEL 	CDocument::SetTitle(lpszTitle);
 //DEL }
+
+
+void CSimpBrowserDoc::SetTitle(LPCTSTR lpszTitle)
+{
+	// TODO: Add your specialized code here and/or call the base class
+
+	// CDocument::SetTitle(lpszTitle);
+}

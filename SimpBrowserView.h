@@ -16,7 +16,7 @@ protected:
 	CSimpBrowserView();
 	DECLARE_DYNCREATE(CSimpBrowserView)
 
-	void* m_pMyFrame;
+	CMainFrame* m_pMyFrame;
 	
 public:
 	CSimpBrowserDoc* GetDocument();

@@ -9,8 +9,8 @@
 #include "SimpBrowserDoc.h"
 #include "SimpBrowserView.h"
 
-#include "SubDocument.h"
-#include "SubView.h"
+//#include "SubDocument.h"
+//#include "SubView.h"
 
 #pragma comment(lib, "wininet.lib")
 
