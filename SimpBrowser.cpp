@@ -2,6 +2,7 @@
 
 #include "../lsMisc/stdwin32/stdwin32.h"
 #include "../lsMisc/BrowserEmulation.h"
+#include "../lsMisc/OpenCommon.h"
 
 #include "SimpBrowser.h"
 
@@ -47,6 +48,8 @@ CSimpBrowserApp::CSimpBrowserApp()
 
 	m_nStartSizeX = -1;
 	m_nStartSizeY = -1;
+
+	m_nBrowserEmulation = -1;
 
 	m_nNewWin = -1;
 }
@@ -238,6 +241,7 @@ BOOL CSimpBrowserApp::LoadIni()
 	m_nStartSizeX = GetProfileInt(SEC_OPTION, KEY_WIDTH, 0);
 	m_nStartSizeY = GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0);
 
+	m_nBrowserEmulation = GetProfileInt(SEC_OPTION, KEY_BROWSEREMULATION, -1);
 	return TRUE;
 }
 
@@ -525,21 +529,13 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case BROWSEREMULATION_ARG:
 			{
-				wstring exe = stdwin32::stdGetModuleFileName();
-				exe = stdwin32::stdGetFileName(exe);
-					
 				if (strArgValue1.IsEmpty())
 				{
 					AfxMessageBox(I18N(L"browseremulation value must be specified."),
 						MB_ICONERROR);
 					return FALSE;
 				}
-				int be = StrToInt(strArgValue1);
-				
-				if (!SetBrowserEmulation(exe.c_str(), be))
-				{
-					AfxMessageBox(I18N(L"Failed to set browser emulation."));
-				}
+				m_nBrowserEmulation = StrToInt(strArgValue1);
 			}
 			break;
 
@@ -554,9 +550,21 @@ BOOL CSimpBrowserApp::InitInstance()
 			} // switch
 		}
 	}
-	//   
-	//   
 
+
+	wstring exe = stdwin32::stdGetModuleFileName();
+	exe = stdwin32::stdGetFileName(exe);
+	if (m_nBrowserEmulation == -1)
+	{
+		UnsetBrowserEmulation(exe.c_str());
+	}
+	else if (m_nBrowserEmulation >= 0)
+	{
+		if (!SetBrowserEmulation(exe.c_str(), m_nBrowserEmulation))
+		{
+			AfxMessageBox(I18N(L"Failed to set browser emulation."));
+		}
+	}
 
 	m_pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
@@ -830,5 +838,24 @@ int CSimpBrowserApp::ExitInstance()
 	if(!SaveIni())
 		AfxMessageBox(I18N(_T("Failed to save ini")));
 
+	if (m_bRestart)
+	{
+		CString cmd = GetCommandLine();
+		if (!OpenCommon(NULL, cmd))
+		{
+			CString message;
+			message = I18N(_T("Failed to launch app."));
+			message += _T("\n\n");
+			message += cmd;
+			
+			AfxMessageBox(message);
+		}
+	}
 	return CWinApp::ExitInstance();
+}
+
+void CSimpBrowserApp::RestartApp()
+{
+	m_bRestart = true;
+	AfxGetMainWnd()->SendMessage(WM_CLOSE);
 }

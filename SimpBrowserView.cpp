@@ -34,6 +34,11 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_SILENT, OnUpdateBrowserSilent)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_DEBUG_TEST, OnSetForm)
+	ON_COMMAND(ID_BROWSEREMULATION_NOTHING, &CSimpBrowserView::OnBrowseremulationNothing)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_NOTHING, &CSimpBrowserView::OnUpdateBrowseremulationNothing)
+	ON_COMMAND(ID_BROWSEREMULATION_11000, &CSimpBrowserView::OnBrowseremulation11000)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_11000, &CSimpBrowserView::OnUpdateBrowseremulation11000)
+	ON_WM_DROPFILES()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -66,6 +71,30 @@ void CSimpBrowserView::OnDraw(CDC* pDC)
 	// TODO:  
 }
 
+CString convertUrl(const CString& url)
+{
+	LPCTSTR pT = url;
+	LPCTSTR pExt = PathFindExtension(pT);
+	TCHAR szBuff[4096];
+	CString ret = url;
+	if (pExt && lstrcmpi(pExt, _T(".url")) == 0)
+	{
+		DWORD dwGot = GetPrivateProfileString(
+			_T("InternetShortcut"),
+			_T("URL"),
+			_T(""),
+			szBuff,
+			_countof(szBuff),
+			url);
+
+		if (dwGot < _countof(szBuff))
+		{
+			// valid
+			ret = szBuff;
+		}
+	}
+	return ret;
+}
 void CSimpBrowserView::OnInitialUpdate()
 {
 	CHtmlView::OnInitialUpdate();
@@ -73,7 +102,23 @@ void CSimpBrowserView::OnInitialUpdate()
 
 	if (!theApp.m_strUrl.IsEmpty())
 	{
-		Navigate2(theApp.m_strUrl);
+		PARSEDURL pu;
+		pu.cbSize = sizeof(pu);
+		HRESULT hr = ParseURL(theApp.m_strUrl, &pu);
+		if (SUCCEEDED(hr))
+		{
+			//_tprintf(TEXT("Protocol = %.*s\n"), pu.cchProtocol, pu.pszProtocol);
+			//_tprintf(TEXT("Suffix   = %.*s\n"), pu.cchSuffix, pu.pszSuffix);
+			//_tprintf(TEXT("Scheme   = %d\n"), pu.nScheme);
+			//_tprintf(TEXT("\n"));
+			Navigate2(theApp.m_strUrl);
+		}
+		else
+		{
+			// not url
+			CString url = convertUrl(theApp.m_strUrl);
+			Navigate2(url);
+		}
 	}
 	else
 	{
@@ -101,6 +146,7 @@ void CSimpBrowserView::OnInitialUpdate()
 	//	AfxParseURL(theApp.m_strUrl, d, strServer, s, p);
 	//	GetDocument()->SetTitle(strServer);
 
+	DragAcceptFiles();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -434,4 +480,55 @@ void CSimpBrowserView::OnProgressChange(long nProgress, long nProgressMax)
 	CHtmlView::OnProgressChange(nProgress, nProgressMax);
 
 	updateTitle();
+}
+
+void CSimpBrowserView::OnBrowserEmulationCommon(int mode)
+{
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_BROWSEREMULATION, mode))
+	{
+		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		return;
+	}
+
+	if (IDYES == AfxMessageBox(I18N(_T("Restart the application for the change to take effect. Do you want to restart now?")),
+		MB_ICONQUESTION | MB_YESNO))
+	{
+		theApp.RestartApp();
+		return;
+	}
+}
+void CSimpBrowserView::OnBrowseremulationNothing()
+{
+	OnBrowserEmulationCommon(-1);
+}
+
+
+void CSimpBrowserView::OnUpdateBrowseremulationNothing(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == -1 ? 1:0);
+}
+
+
+void CSimpBrowserView::OnBrowseremulation11000()
+{
+	OnBrowserEmulationCommon(11000);
+}
+
+
+void CSimpBrowserView::OnUpdateBrowseremulation11000(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == 11000 ? 1 : 0);
+}
+
+
+void CSimpBrowserView::OnDropFiles(HDROP hDropInfo)
+{
+	// TODO: Add your message handler code here and/or call default
+	TCHAR filename[MAX_PATH] = { 0 };
+	DragQueryFile(hDropInfo, 0, filename, MAX_PATH);
+
+	CString url = convertUrl(filename);
+	Navigate2(url);
+
+	CHtmlView::OnDropFiles(hDropInfo);
 }

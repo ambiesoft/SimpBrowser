@@ -23,6 +23,7 @@
 #define KEY_SILENT _T("silent")
 #define KEY_WIDTH _T("width")
 #define KEY_HEIGHT _T("Height")
+#define KEY_BROWSEREMULATION _T("BrowserEmulation")
 
 class CSimpBrowserApp : public CWinApp
 {
@@ -39,8 +40,12 @@ public:
 	int m_nStartSizeX;
 	int m_nStartSizeY;
 
+	int m_nBrowserEmulation;
+
 	CInt m_nNewWin;
 	bstr_t m_strProxy;
+
+	CBool m_bRestart;
 
 	CSingleDocTemplate* m_pDocTemplate;
 
@@ -57,6 +62,8 @@ public:
 			return _T("PreConfig");
 		return m_strProxy;
 	}
+
+	void RestartApp();
 private:
 	void WaitDownloadWindow();
 	BOOL SaveIni();

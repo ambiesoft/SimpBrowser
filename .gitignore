@@ -1,13 +1,12 @@
-SimpBrowser.opensdf
-
+*.opensdf
 *.aps
-SimpBrowser.sdf
-SimpBrowser.v12.suo
+*.sdf
+*.suo
 Debug/
 UnicodeDebug/
 UnicodeRelease/
 ipch/
 
-SimpBrowser.vcxproj.user
+*.vcxproj.user
 
 

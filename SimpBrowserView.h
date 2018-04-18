@@ -56,7 +56,9 @@ protected:
 	LPDISPATCH GetBrowserApp() {
 		return m_pBrowserApp;
 	}
-	//  
+	void OnBrowserEmulationCommon(int mode);
+
+	  
 protected:
 	//{{AFX_MSG(CSimpBrowserView)
 	afx_msg void OnFileReopen();
@@ -67,6 +69,12 @@ protected:
 	afx_msg void OnUpdateBrowserSilent(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBrowseremulationNothing();
+	afx_msg void OnUpdateBrowseremulationNothing(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation11000();
+	afx_msg void OnUpdateBrowseremulation11000(CCmdUI *pCmdUI);
+	afx_msg void OnDropFiles(HDROP hDropInfo);
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

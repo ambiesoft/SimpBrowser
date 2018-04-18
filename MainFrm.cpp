@@ -84,6 +84,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	pMenu->AppendMenu(MF_STRING, ID_DEBUG_TEST, _T("Debug"));
 #endif
 
+	DragAcceptFiles();
+
 	return 0;
 }
 
@@ -179,3 +181,7 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
 		theApp.m_nStartSizeY = cy;
 	}
 }
+
+
+
+
