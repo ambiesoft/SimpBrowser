@@ -1,6 +1,6 @@
 {
     "name": "SimpBrowser",
-    "solution": "SimpBrowser.sln",
+    "solution": "SimpBrowser2013.sln",
     "targetproject": "SimpBrowser",
     "configuration": "UnicodeRelease",
     "targets": [
