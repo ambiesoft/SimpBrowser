@@ -66,6 +66,9 @@
     <ClCompile Include="..\lsMisc\OpenCommon.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lsMisc\CreateProcessCommon.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpBrowser.rc">
@@ -125,6 +128,9 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\OpenCommon.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\CreateProcessCommon.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

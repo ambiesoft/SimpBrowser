@@ -3,6 +3,7 @@
 #include "../lsMisc/stdwin32/stdwin32.h"
 #include "../lsMisc/BrowserEmulation.h"
 #include "../lsMisc/OpenCommon.h"
+#include "../lsMisc/CreateProcessCommon.h"
 
 #include "SimpBrowser.h"
 
@@ -841,7 +842,7 @@ int CSimpBrowserApp::ExitInstance()
 	if (m_bRestart)
 	{
 		CString cmd = GetCommandLine();
-		if (!OpenCommon(NULL, cmd))
+		if (!CreateProcessCommon(cmd))
 		{
 			CString message;
 			message = I18N(_T("Failed to launch app."));
