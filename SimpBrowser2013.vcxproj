@@ -105,7 +105,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <ObjectFileName>.\UnicodeRelease\</ObjectFileName>
       <ProgramDataBaseFileName>.\UnicodeRelease\</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;../lsMisc/stlsoft/include</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Midl>
@@ -191,7 +191,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
       <WarningLevel>Level3</WarningLevel>
       <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;UNICODE;_WIN32_WINNT=_WIN32_WINNT_MAXVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>.\UnicodeDebug\</AssemblerListingLocation>
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -318,7 +318,9 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClCompile Include="..\lsMisc\OpenCommon.cpp" />
     <ClCompile Include="..\lsMisc\Registory.cpp" />
     <ClCompile Include="..\lsMisc\stdwin32\stdwin32.cpp" />
+    <ClCompile Include="..\lsMisc\UrlEncode.cpp" />
     <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp" />
+    <ClCompile Include="EnterUrlDialog.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="SimpBrowser.cpp" />
     <ClCompile Include="SimpBrowserDoc.cpp" />
@@ -350,7 +352,9 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\OpenCommon.h" />
     <ClInclude Include="..\lsMisc\Registory.h" />
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h" />
+    <ClInclude Include="..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />
+    <ClInclude Include="EnterUrlDialog.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SimpBrowser.h" />

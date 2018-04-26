@@ -32,6 +32,7 @@
 #include "../lsMisc/GetFileNameFromHwnd.h"
 #include "../lsMisc/CreateFolderIniPath.h"
 #include "../lsMisc/GetLastErrorString.h"
+#include <afxcontrolbars.h>
 
 #define I18N(t) t
 

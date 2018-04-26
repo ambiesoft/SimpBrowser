@@ -75,6 +75,9 @@ public:
 	afx_msg void OnBrowseremulation11000();
 	afx_msg void OnUpdateBrowseremulation11000(CCmdUI *pCmdUI);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnUpdateBrowserNoscript(CCmdUI *pCmdUI);
+	afx_msg void OnBrowserNoscript();
+	afx_msg void OnFileNew();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

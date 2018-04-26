@@ -69,6 +69,12 @@
     <ClCompile Include="..\lsMisc\CreateProcessCommon.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EnterUrlDialog.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\UrlEncode.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpBrowser.rc">
@@ -131,6 +137,12 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\CreateProcessCommon.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterUrlDialog.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\UrlEncode.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

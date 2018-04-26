@@ -35,8 +35,6 @@ BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	//        
 	//}}AFX_MSG_MAP
 	//  
-	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -70,6 +68,7 @@ enum COMMAND_OPTIONS {
 	INPUTPASSWORD_ARG,
 	INPUTCHECKBOX_ARG,
 	SILENT_ARG,
+	NOSCRIPT_ARG,
 	NONEWWIN_ARG,
 	STARTPOS_ARG,
 	STARTSIZE_ARG,
@@ -95,7 +94,7 @@ CString getHelpString()
 	ret += L" ";
 
 
-	ret += L"[-it:A=B] [-ip:A=B] [-ic:A=L] [-silent] [-nonewwin] [-h] [-startpos POS] [-startsize SIZE] [-newwin NEWWIN] [-proxy PROXY] [-browseremulation BE]";
+	ret += L"[-it:A=B] [-ip:A=B] [-ic:A=L] [-silent] [-noscript] [-nonewwin] [-h] [-startpos POS] [-startsize SIZE] [-newwin NEWWIN] [-proxy PROXY] [-browseremulation BE]";
 	ret += L"\r\n";
 	ret += L"\r\n";
 
@@ -175,6 +174,10 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 		{
 			return SILENT_ARG;
 		}
+		else if (lstrcmp(p + 1, _T("noscript")) == 0)
+		{
+			return NOSCRIPT_ARG;
+		}
 		else if (lstrcmp(p + 1, _T("nonewwin")) == 0)
 		{
 			return NONEWWIN_ARG;
@@ -233,12 +236,13 @@ BOOL CSimpBrowserApp::SaveIni()
 {
 	BOOL bFailed = FALSE;
 	bFailed |= !WriteProfileInt(SEC_OPTION, KEY_SILENT, m_bSilentArg ? 1 : 0);
+	bFailed |= !WriteProfileInt(SEC_OPTION, KEY_NOSCRIPT, m_bNoScript ? 1 : 0);
 	return !bFailed;
 }
 BOOL CSimpBrowserApp::LoadIni()
 {
 	m_bSilentArg = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 0);
-
+	m_bNoScript = !!GetProfileInt(SEC_OPTION, KEY_NOSCRIPT, 0);
 	m_nStartSizeX = GetProfileInt(SEC_OPTION, KEY_WIDTH, 0);
 	m_nStartSizeY = GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0);
 
@@ -474,6 +478,12 @@ BOOL CSimpBrowserApp::InitInstance()
 			case SILENT_ARG:
 			{
 				m_bSilentArg = TRUE;
+			}
+			break;
+
+			case NOSCRIPT_ARG:
+			{
+				m_bNoScript = TRUE;
 			}
 			break;
 

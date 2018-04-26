@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "../lsMisc/UrlEncode.h"
 
 #include "SimpBrowser.h"
 
@@ -9,6 +10,7 @@
 #include "SimpBrowserDoc.h"
 #include "SimpBrowserView.h"
 
+#include "EnterUrlDialog.h"
 //#include "SubDocument.h"
 //#include "SubView.h"
 
@@ -39,6 +41,9 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_COMMAND(ID_BROWSEREMULATION_11000, &CSimpBrowserView::OnBrowseremulation11000)
 	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_11000, &CSimpBrowserView::OnUpdateBrowseremulation11000)
 	ON_WM_DROPFILES()
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_NOSCRIPT, &CSimpBrowserView::OnUpdateBrowserNoscript)
+	ON_COMMAND(IDM_BROWSER_NOSCRIPT, &CSimpBrowserView::OnBrowserNoscript)
+	ON_COMMAND(ID_FILE_NEW, &CSimpBrowserView::OnFileNew)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -184,17 +189,8 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 		if (theApp.m_bSilentArg)
 			V_I4(pvar) |= DLCTL_SILENT;
 
-		/**
-		if( !m_bAllKaijo )
-		{
-		V_I4(pvar) = ((CMainFrame*)theApp.m_pMainWnd)->m_dwDLControl;
-		}
-		else
-		{//navigate with DL manipulation
-		V_I4(pvar) = m_dwDLControlView;
-		m_bAllKaijo = FALSE;
-		}
-		**/
+		if (theApp.m_bNoScript)
+			V_I4(pvar) |= DLCTL_NO_SCRIPTS;
 
 		//set what ambient i am
 		//		m_bImageAmbient = (V_I4(pvar) & DLCTL_DLIMAGES) != 0 ;
@@ -531,4 +527,47 @@ void CSimpBrowserView::OnDropFiles(HDROP hDropInfo)
 	Navigate2(url);
 
 	CHtmlView::OnDropFiles(hDropInfo);
+}
+
+
+void CSimpBrowserView::OnUpdateBrowserNoscript(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bNoScript);
+}
+
+
+void CSimpBrowserView::OnBrowserNoscript()
+{
+	theApp.m_bNoScript = !theApp.m_bNoScript;
+}
+
+
+#if 1 // check WINVER,_WIN32_*.
+#define STRING2(x) #x
+#define STRING(x) STRING2(x)
+#pragma message("WINVER        : " STRING(WINVER))
+#pragma message("_WIN32_WINNT  : " STRING(_WIN32_WINNT))
+//  #pragma message("_WIN32_WINDOWS: " STRING(_WIN32_WINDOWS)) // Windows9x only
+#pragma message("_WIN32_IE     : " STRING(_WIN32_IE))
+#endif
+void CSimpBrowserView::OnFileNew()
+{
+	CEnterUrlDialog dlg(this);
+	if (IDOK != dlg.DoModal())
+		return;
+
+	CString url = dlg.GetUrl();
+	PARSEDURL pu;
+	pu.cbSize = sizeof(pu);
+	HRESULT hr = ParseURL(url, &pu);
+	if (SUCCEEDED(hr))
+	{
+		Navigate2(url);
+	}
+	else
+	{
+		CString nav;
+		nav.Format(L"https://google.com/search?q=%s", Ambiesoft::UrlEncodeW(url).c_str());
+		Navigate2(nav);
+	}
 }
