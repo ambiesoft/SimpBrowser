@@ -21,6 +21,9 @@
 #define ID_BROWSEREMULATION_11000       32777
 #define ID_EDIT_NOSCRIPT                32778
 #define IDM_BROWSER_NOSCRIPT            32779
+#define ID_URL                          32780
+#define ID_EDIT_NOACTIVEX               32781
+#define IDM_BROWSER_NOACTIVEX           32782
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -29,7 +32,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
-#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_COMMAND_VALUE         32783
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           104
 #endif

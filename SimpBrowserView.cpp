@@ -44,6 +44,10 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_NOSCRIPT, &CSimpBrowserView::OnUpdateBrowserNoscript)
 	ON_COMMAND(IDM_BROWSER_NOSCRIPT, &CSimpBrowserView::OnBrowserNoscript)
 	ON_COMMAND(ID_FILE_NEW, &CSimpBrowserView::OnFileNew)
+	ON_UPDATE_COMMAND_UI(ID_URL, &CSimpBrowserView::OnUpdateUrl)
+	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_NOACTIVEX, &CSimpBrowserView::OnUpdateBrowserNoactivex)
+	ON_COMMAND(IDM_BROWSER_NOACTIVEX, &CSimpBrowserView::OnBrowserNoactivex)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -191,6 +195,9 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 
 		if (theApp.m_bNoScript)
 			V_I4(pvar) |= DLCTL_NO_SCRIPTS;
+
+		if (theApp.m_bActiveX)
+			V_I4(pvar) |= DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS;
 
 		//set what ambient i am
 		//		m_bImageAmbient = (V_I4(pvar) & DLCTL_DLIMAGES) != 0 ;
@@ -414,6 +421,9 @@ void CSimpBrowserView::OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR 
 	{
 		m_nTimerID = SetTimer(1, 1000, NULL);
 	}
+
+	if (lpszTargetFrameName == NULL || lpszTargetFrameName[0] == 0)
+		m_pMyFrame->SetUrl(lpszURL);
 }
 
 void CSimpBrowserView::OnOpenClipboard()
@@ -428,6 +438,12 @@ void CSimpBrowserView::OnOpenClipboard()
 void CSimpBrowserView::OnBrowserSilent()
 {
 	theApp.m_bSilentArg = !theApp.m_bSilentArg;
+
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_SILENT, theApp.m_bSilentArg ? 1 : 0))
+	{
+		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		return;
+	}
 }
 
 void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI)
@@ -539,24 +555,28 @@ void CSimpBrowserView::OnUpdateBrowserNoscript(CCmdUI *pCmdUI)
 void CSimpBrowserView::OnBrowserNoscript()
 {
 	theApp.m_bNoScript = !theApp.m_bNoScript;
+
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOSCRIPT, theApp.m_bNoScript ? 1 : 0))
+	{
+		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		return;
+	}
 }
 
 
-#if 1 // check WINVER,_WIN32_*.
-#define STRING2(x) #x
-#define STRING(x) STRING2(x)
-#pragma message("WINVER        : " STRING(WINVER))
-#pragma message("_WIN32_WINNT  : " STRING(_WIN32_WINNT))
-//  #pragma message("_WIN32_WINDOWS: " STRING(_WIN32_WINDOWS)) // Windows9x only
-#pragma message("_WIN32_IE     : " STRING(_WIN32_IE))
-#endif
-void CSimpBrowserView::OnFileNew()
+int CSimpBrowserView::ShowUrlDialog(CString& str)
 {
 	CEnterUrlDialog dlg(this);
-	if (IDOK != dlg.DoModal())
-		return;
+	dlg.m_strUrl = str;
+	int nRet = dlg.DoModal();
+	if (IDOK != nRet)
+		return nRet;
 
-	CString url = dlg.GetUrl();
+	str = dlg.m_strUrl;
+	return nRet;
+}
+bool CSimpBrowserView::NavigateOrSearch(const CString& url)
+{
 	PARSEDURL pu;
 	pu.cbSize = sizeof(pu);
 	HRESULT hr = ParseURL(url, &pu);
@@ -569,5 +589,54 @@ void CSimpBrowserView::OnFileNew()
 		CString nav;
 		nav.Format(L"https://google.com/search?q=%s", Ambiesoft::UrlEncodeW(url).c_str());
 		Navigate2(nav);
+	}
+	return true;
+}
+void CSimpBrowserView::OnFileNew()
+{
+	CString url;
+	if (IDOK != ShowUrlDialog(url))
+		return;
+
+	NavigateOrSearch(url);
+}
+
+
+void CSimpBrowserView::OnUpdateUrl(CCmdUI *pCmdUI)
+{
+	static _bstr_t lastUrl;
+	_bstr_t url = GetLocationURL();
+	if (url == lastUrl)
+		return;
+
+	pCmdUI->SetText(url);
+	lastUrl = url;
+}
+
+
+void CSimpBrowserView::OnUrl()
+{
+	CString url = (LPCWSTR)GetLocationURL();
+	if (IDOK != ShowUrlDialog(url))
+		return;
+
+	NavigateOrSearch(url);
+}
+
+
+void CSimpBrowserView::OnUpdateBrowserNoactivex(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bActiveX);
+}
+
+
+void CSimpBrowserView::OnBrowserNoactivex()
+{
+	theApp.m_bActiveX = !theApp.m_bActiveX;
+
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOACTIVEX, theApp.m_bActiveX ? 1 : 0))
+	{
+		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		return;
 	}
 }

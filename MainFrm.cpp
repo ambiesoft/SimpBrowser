@@ -184,4 +184,27 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
 
 
 
+//HMENU GetMenuFromID(HMENU parent, UINT id)
+//{
+//	int count = ::GetMenuItemCount(parent);
+//	for (int i = 0; i < count; ++i)
+//	{
+//		UINT idT = ::GetMenuItemID(parent, i);
+//		if (idT == id)
+//		{
+//			return ::getmen
+//		}
+//	}
+//	return NULL;
+//}
+void CMainFrame::SetUrl(LPCTSTR lpszURL)
+{
+	//HMENU hMenuUrl = GetMenuFromID(GetMenu()->m_hMenu, ID_URL);
+	//ASSERT(hMenuUrl);
 
+	MENUITEMINFO mii = { 0 };
+	mii.cbSize = sizeof(mii);
+	mii.fMask = MIIM_STRING;
+	mii.dwTypeData = (LPTSTR)lpszURL;
+	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
+}

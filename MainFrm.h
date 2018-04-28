@@ -24,7 +24,7 @@ public:
 	CView* m_pMyView;
 	// 
 public:
-
+	void SetUrl(LPCTSTR lpszURL);
 	// 
 	// ClassWizard 
 	//{{AFX_VIRTUAL(CMainFrame)

@@ -69,6 +69,7 @@ enum COMMAND_OPTIONS {
 	INPUTCHECKBOX_ARG,
 	SILENT_ARG,
 	NOSCRIPT_ARG,
+	NOACTIVEX_ARG,
 	NONEWWIN_ARG,
 	STARTPOS_ARG,
 	STARTSIZE_ARG,
@@ -178,6 +179,10 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 		{
 			return NOSCRIPT_ARG;
 		}
+		else if (lstrcmp(p + 1, _T("noactivex")) == 0)
+		{
+			return NOACTIVEX_ARG;
+		}
 		else if (lstrcmp(p + 1, _T("nonewwin")) == 0)
 		{
 			return NONEWWIN_ARG;
@@ -235,14 +240,15 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 BOOL CSimpBrowserApp::SaveIni()
 {
 	BOOL bFailed = FALSE;
-	bFailed |= !WriteProfileInt(SEC_OPTION, KEY_SILENT, m_bSilentArg ? 1 : 0);
-	bFailed |= !WriteProfileInt(SEC_OPTION, KEY_NOSCRIPT, m_bNoScript ? 1 : 0);
+	
+	
 	return !bFailed;
 }
 BOOL CSimpBrowserApp::LoadIni()
 {
 	m_bSilentArg = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 0);
 	m_bNoScript = !!GetProfileInt(SEC_OPTION, KEY_NOSCRIPT, 0);
+	m_bActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
 	m_nStartSizeX = GetProfileInt(SEC_OPTION, KEY_WIDTH, 0);
 	m_nStartSizeY = GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0);
 
@@ -484,6 +490,12 @@ BOOL CSimpBrowserApp::InitInstance()
 			case NOSCRIPT_ARG:
 			{
 				m_bNoScript = TRUE;
+			}
+			break;
+
+			case NOACTIVEX_ARG:
+			{
+				m_bActiveX = TRUE;
 			}
 			break;
 

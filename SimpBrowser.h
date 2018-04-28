@@ -22,6 +22,7 @@
 #define SEC_OPTION _T("option")
 #define KEY_SILENT _T("silent")
 #define KEY_NOSCRIPT _T("noscript")
+#define KEY_NOACTIVEX _T("noactivex")
 #define KEY_WIDTH _T("width")
 #define KEY_HEIGHT _T("Height")
 #define KEY_BROWSEREMULATION _T("BrowserEmulation")
@@ -57,6 +58,7 @@ public:
 	CBool m_bSilentArg;
 	CBool m_bNoNewWin;
 	CBool m_bNoScript;
+	CBool m_bActiveX;
 	CSimpBrowserApp();
 
 	LPCTSTR GetProxyString() const {

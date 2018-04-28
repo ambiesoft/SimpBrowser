@@ -22,6 +22,8 @@ public:
 	CSimpBrowserDoc* GetDocument();
 
 private:
+	int ShowUrlDialog(CString& str);
+	bool NavigateOrSearch(const CString& url);
 	CInt m_nTimerID;
 	
 public:
@@ -78,6 +80,10 @@ public:
 	afx_msg void OnUpdateBrowserNoscript(CCmdUI *pCmdUI);
 	afx_msg void OnBrowserNoscript();
 	afx_msg void OnFileNew();
+	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
+	afx_msg void OnUrl();
+	afx_msg void OnUpdateBrowserNoactivex(CCmdUI *pCmdUI);
+	afx_msg void OnBrowserNoactivex();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 
