@@ -159,6 +159,10 @@ void CMainFrame::OnClose()
 		BOOL bSaveOK = true;
 		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_WIDTH, theApp.m_nStartSizeX);
 		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_HEIGHT, theApp.m_nStartSizeY);
+
+		//bSaveOK &= Profile::WriteInt(SEC_OPTION, KEY_WIDTH, theApp.m_nStartSizeX, theApp.m_pszProfileName);
+		//bSaveOK &= Profile::WriteInt(SEC_OPTION, KEY_HEIGHT, theApp.m_nStartSizeY, theApp.m_pszProfileName);
+
 		if (!bSaveOK)
 		{
 			AfxMessageBox(I18N(_T("Failed to save ini.")));

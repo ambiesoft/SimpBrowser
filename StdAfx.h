@@ -32,6 +32,9 @@
 #include "../lsMisc/GetFileNameFromHwnd.h"
 #include "../lsMisc/CreateFolderIniPath.h"
 #include "../lsMisc/GetLastErrorString.h"
+
+#include "../profile/cpp/Profile/include/ambiesoft.profile.h"
+
 #include <afxcontrolbars.h>
 
 #define I18N(t) t

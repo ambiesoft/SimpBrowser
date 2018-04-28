@@ -16,7 +16,7 @@
         "README.md",
         "SimpBrowser.exe"
     ],
-    "TotalFileCount": 4,
+    "TotalFileCount": "exact",
     "archivedir": "C:\\Linkout",
     "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/SimpBrowser/",
     "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=SimpBrowser/{}",
