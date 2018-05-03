@@ -69,7 +69,9 @@ enum COMMAND_OPTIONS {
 	INPUTCHECKBOX_ARG,
 	SILENT_ARG,
 	NOSCRIPT_ARG,
+	NO_NOSCRIPT_ARG,
 	NOACTIVEX_ARG,
+	NO_NOACTIVEX_ARG,
 	NONEWWIN_ARG,
 	STARTPOS_ARG,
 	STARTSIZE_ARG,
@@ -179,9 +181,17 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 		{
 			return NOSCRIPT_ARG;
 		}
+		else if (lstrcmp(p + 1, _T("no-noscript")) == 0)
+		{
+			return NO_NOSCRIPT_ARG;
+		}
 		else if (lstrcmp(p + 1, _T("noactivex")) == 0)
 		{
 			return NOACTIVEX_ARG;
+		}
+		else if (lstrcmp(p + 1, _T("no-noactivex")) == 0)
+		{
+			return NO_NOACTIVEX_ARG;
 		}
 		else if (lstrcmp(p + 1, _T("nonewwin")) == 0)
 		{
@@ -493,9 +503,20 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			break;
 
+			case NO_NOSCRIPT_ARG:
+			{
+				m_bNoScript = !TRUE;
+			}
+			break;
+
 			case NOACTIVEX_ARG:
 			{
 				m_bActiveX = TRUE;
+			}
+			break;
+			case NO_NOACTIVEX_ARG:
+			{
+				m_bActiveX = !TRUE;
 			}
 			break;
 
