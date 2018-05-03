@@ -258,7 +258,7 @@ BOOL CSimpBrowserApp::LoadIni()
 {
 	m_bSilentArg = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 0);
 	m_bNoScript = !!GetProfileInt(SEC_OPTION, KEY_NOSCRIPT, 0);
-	m_bActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
+	m_NobActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
 	m_nStartSizeX = GetProfileInt(SEC_OPTION, KEY_WIDTH, 0);
 	m_nStartSizeY = GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0);
 
@@ -511,12 +511,12 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case NOACTIVEX_ARG:
 			{
-				m_bActiveX = TRUE;
+				m_NobActiveX = TRUE;
 			}
 			break;
 			case NO_NOACTIVEX_ARG:
 			{
-				m_bActiveX = !TRUE;
+				m_NobActiveX = !TRUE;
 			}
 			break;
 

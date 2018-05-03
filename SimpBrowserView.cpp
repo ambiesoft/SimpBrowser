@@ -196,7 +196,7 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 		if (theApp.m_bNoScript)
 			V_I4(pvar) |= DLCTL_NO_SCRIPTS;
 
-		if (theApp.m_bActiveX)
+		if (theApp.m_NobActiveX)
 			V_I4(pvar) |= DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS;
 
 		//set what ambient i am
@@ -626,15 +626,15 @@ void CSimpBrowserView::OnUrl()
 
 void CSimpBrowserView::OnUpdateBrowserNoactivex(CCmdUI *pCmdUI)
 {
-	pCmdUI->SetCheck(theApp.m_bActiveX);
+	pCmdUI->SetCheck(theApp.m_NobActiveX);
 }
 
 
 void CSimpBrowserView::OnBrowserNoactivex()
 {
-	theApp.m_bActiveX = !theApp.m_bActiveX;
+	theApp.m_NobActiveX = !theApp.m_NobActiveX;
 
-	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOACTIVEX, theApp.m_bActiveX ? 1 : 0))
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOACTIVEX, theApp.m_NobActiveX ? 1 : 0))
 	{
 		AfxMessageBox(I18N(_T("Failed save to ini.")));
 		return;

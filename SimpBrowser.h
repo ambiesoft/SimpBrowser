@@ -58,7 +58,7 @@ public:
 	CBool m_bSilentArg;
 	CBool m_bNoNewWin;
 	CBool m_bNoScript;
-	CBool m_bActiveX;
+	CBool m_NobActiveX;
 	CSimpBrowserApp();
 
 	LPCTSTR GetProxyString() const {
