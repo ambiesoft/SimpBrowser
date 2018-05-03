@@ -6,6 +6,7 @@
 #define ID_DEBUG_TEST                   101
 #define ID_STATUS_SETFORM               102
 #define ID_STATUS_PROXY                 103
+#define ID_STATUS_AMBIENT               104
 #define IDR_MAINFRAME                   128
 #define IDR_SIMPBRTYPE                  129
 #define IDD_DIALOG_WAIT                 130
@@ -34,6 +35,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32783
 #define _APS_NEXT_CONTROL_VALUE         1001
-#define _APS_NEXT_SYMED_VALUE           104
+#define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

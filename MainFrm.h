@@ -9,6 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+class CSimpBrowserView;
 class CMainFrame : public CFrameWnd
 {
 
@@ -21,7 +22,7 @@ protected:
 	static int m_nFrameCount;
 public:
 	CBool m_bMainWin;
-	CView* m_pMyView;
+	CSimpBrowserView* m_pMyView;
 	// 
 public:
 	void SetUrl(LPCTSTR lpszURL);
@@ -53,7 +54,8 @@ protected:
 	//}}AFX_MSG
 	void OnUpdateSetForm(CCmdUI* pCmdUI);
 	void OnUpdateProxy(CCmdUI* pCmdUI);
-	
+	void OnUpdateAmbient(CCmdUI* pCmdUI);
+
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);

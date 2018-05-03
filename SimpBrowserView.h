@@ -26,8 +26,13 @@ private:
 	bool NavigateOrSearch(const CString& url);
 	CInt m_nTimerID;
 	
-public:
+	CBool m_bImageAmbient;
+	CBool m_bJavaAmbient;
+	CBool m_bScriptAmbient;
+	CBool m_bActivexAmbient;
 
+public:
+	CString GetAmbientString();
 	// 
 	// ClassWizard 
 	//{{AFX_VIRTUAL(CSimpBrowserView)
@@ -84,6 +89,7 @@ public:
 	afx_msg void OnUrl();
 	afx_msg void OnUpdateBrowserNoactivex(CCmdUI *pCmdUI);
 	afx_msg void OnBrowserNoactivex();
+	virtual void OnDownloadComplete();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

@@ -4,6 +4,7 @@
 *.sdf
 *.suo
 Debug/
+Release/
 UnicodeDebug/
 UnicodeRelease/
 ipch/

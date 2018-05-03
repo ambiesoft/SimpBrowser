@@ -1,4 +1,4 @@
-// MainFrm.cpp : CMainFrame クラスの動作の定義を行います。
+// MainFrm.cpp : CMainFrame
 //
 
 #include "stdafx.h"
@@ -29,6 +29,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(ID_STATUS_SETFORM, OnUpdateSetForm)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_PROXY, OnUpdateProxy)
+	ON_UPDATE_COMMAND_UI(ID_STATUS_AMBIENT, OnUpdateAmbient)
 	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
@@ -37,6 +38,7 @@ static UINT indicators[] =
 	ID_SEPARATOR,
 	ID_STATUS_PROXY,
 	ID_STATUS_SETFORM,
+	ID_STATUS_AMBIENT,
 };
 
 void CMainFrame::OnUpdateSetForm(CCmdUI* pCmdUI)
@@ -50,13 +52,18 @@ void CMainFrame::OnUpdateProxy(CCmdUI* pCmdUI)
 	pCmdUI->SetText(theApp.GetProxyString());
 }
 
+void CMainFrame::OnUpdateAmbient(CCmdUI* pCmdUI)
+{
+	CString str = m_pMyView->GetAmbientString();
+	pCmdUI->SetText(str);
+}
+
 int CMainFrame::m_nFrameCount;
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame
 
 CMainFrame::CMainFrame()
 {
-	// TODO: この位置にメンバの初期化処理コードを追加してください。
 	m_pMyView = NULL;
 	m_nFrameCount++;
 }
@@ -76,7 +83,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		  sizeof(indicators)/sizeof(UINT)))
 	{
 		TRACE0("Failed to create status bar\n");
-		return -1;      // 作成に失敗
+		return -1;
 	}
 
 #ifdef _DEBUG
@@ -206,9 +213,20 @@ void CMainFrame::SetUrl(LPCTSTR lpszURL)
 	//HMENU hMenuUrl = GetMenuFromID(GetMenu()->m_hMenu, ID_URL);
 	//ASSERT(hMenuUrl);
 
-	MENUITEMINFO mii = { 0 };
-	mii.cbSize = sizeof(mii);
-	mii.fMask = MIIM_STRING;
-	mii.dwTypeData = (LPTSTR)lpszURL;
-	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
+	//{
+	//	MENUITEMINFO mii = { 0 };
+	//	mii.cbSize = sizeof(mii);
+	//	mii.fMask = MIIM_STRING;
+	//	mii.dwTypeData = (LPTSTR)L"";
+	//	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
+	//}
+	{
+		MENUITEMINFO mii = { 0 };
+		mii.cbSize = sizeof(mii);
+		mii.fMask = MIIM_STRING;
+		mii.dwTypeData = (LPTSTR)lpszURL;
+		VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
+	}
+
+	DrawMenuBar();
 }

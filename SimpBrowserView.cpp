@@ -189,29 +189,47 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 	{
 		V_VT(pvar) = VT_I4;
 
-		V_I4(pvar) = DLCTL_DLIMAGES | DLCTL_NO_DLACTIVEXCTLS;
-		if (theApp.m_bSilentArg)
-			V_I4(pvar) |= DLCTL_SILENT;
+		V_I4(pvar) = DLCTL_DLIMAGES;
 
+		if (theApp.m_bSilent)
+			V_I4(pvar) |= DLCTL_SILENT;
+		else
+			V_I4(pvar) &= ~DLCTL_SILENT;
+
+		
 		if (theApp.m_bNoScript)
 			V_I4(pvar) |= DLCTL_NO_SCRIPTS;
+		else
+			V_I4(pvar) &= ~DLCTL_NO_SCRIPTS;
 
-		if (theApp.m_NobActiveX)
-			V_I4(pvar) |= DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS;
+
+		if (theApp.m_NoActiveX)
+			V_I4(pvar) |= (DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS);
+		else
+			V_I4(pvar) &= ~(DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS);
+
 
 		//set what ambient i am
-		//		m_bImageAmbient = (V_I4(pvar) & DLCTL_DLIMAGES) != 0 ;
-		//		m_bJavaAmbient = (V_I4(pvar) & DLCTL_NO_JAVA) == 0 ;
-		//		m_bScriptAmbient = (V_I4(pvar) & DLCTL_NO_SCRIPTS) == 0 ;
-		//		m_bActivexAmbient = (V_I4(pvar) & (DLCTL_NO_DLACTIVEXCTLS|DLCTL_NO_RUNACTIVEXCTLS))==0;
+		m_bImageAmbient = (V_I4(pvar) & DLCTL_DLIMAGES) != 0 ;
+		m_bJavaAmbient = (V_I4(pvar) & DLCTL_NO_JAVA) == 0 ;
+		m_bScriptAmbient = (V_I4(pvar) & DLCTL_NO_SCRIPTS) == 0 ;
+		m_bActivexAmbient = (V_I4(pvar) & (DLCTL_NO_DLACTIVEXCTLS|DLCTL_NO_RUNACTIVEXCTLS))==0;
 
-		//V_I4(pvar) |= DLCTL_NO_SCRIPTS;
-		//V_I4(pvar) |= DLCTL_DLIMAGES;
 		return TRUE;
 	}
 	return CHtmlView::OnAmbientProperty(pSite, dispid, pvar);
 }
 
+CString CSimpBrowserView::GetAmbientString()
+{
+	CString str;
+	str += m_bImageAmbient ? L"I" : L" ";
+	str += m_bScriptAmbient ? L"S" : L" ";
+	str += m_bJavaAmbient ? L"J" : L" ";
+	str += m_bActivexAmbient ? L"A" : L" ";
+
+	return str;
+}
 void CSimpBrowserView::OnNewWindow2(LPDISPATCH* ppDisp, BOOL* pCancel)
 {
 	if (theApp.m_bNoNewWin)
@@ -437,9 +455,9 @@ void CSimpBrowserView::OnOpenClipboard()
 
 void CSimpBrowserView::OnBrowserSilent()
 {
-	theApp.m_bSilentArg = !theApp.m_bSilentArg;
+	theApp.m_bSilent = !theApp.m_bSilent;
 
-	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_SILENT, theApp.m_bSilentArg ? 1 : 0))
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_SILENT, theApp.m_bSilent ? 1 : 0))
 	{
 		AfxMessageBox(I18N(_T("Failed save to ini.")));
 		return;
@@ -448,7 +466,7 @@ void CSimpBrowserView::OnBrowserSilent()
 
 void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(theApp.m_bSilentArg);
+	pCmdUI->SetCheck(theApp.m_bSilent);
 }
 
 bstr_t CSimpBrowserView::GetLocationURL() const
@@ -490,7 +508,7 @@ void CSimpBrowserView::updateTitle()
 void CSimpBrowserView::OnProgressChange(long nProgress, long nProgressMax) 
 {
 	CHtmlView::OnProgressChange(nProgress, nProgressMax);
-
+	m_pMyFrame->SetUrl(GetLocationURL());
 	updateTitle();
 }
 
@@ -626,17 +644,24 @@ void CSimpBrowserView::OnUrl()
 
 void CSimpBrowserView::OnUpdateBrowserNoactivex(CCmdUI *pCmdUI)
 {
-	pCmdUI->SetCheck(theApp.m_NobActiveX);
+	pCmdUI->SetCheck(theApp.m_NoActiveX);
 }
 
 
 void CSimpBrowserView::OnBrowserNoactivex()
 {
-	theApp.m_NobActiveX = !theApp.m_NobActiveX;
+	theApp.m_NoActiveX.toggle();
 
-	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOACTIVEX, theApp.m_NobActiveX ? 1 : 0))
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOACTIVEX, theApp.m_NoActiveX ? 1 : 0))
 	{
 		AfxMessageBox(I18N(_T("Failed save to ini.")));
 		return;
 	}
+}
+
+
+void CSimpBrowserView::OnDownloadComplete()
+{
+	m_pMyFrame->SetUrl(GetLocationURL());
+	CHtmlView::OnDownloadComplete();
 }

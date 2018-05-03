@@ -1,8 +1,8 @@
 {
     "name": "SimpBrowser",
     "solution": "SimpBrowser2013.sln",
-    "targetproject": "SimpBrowser",
-    "configuration": "UnicodeRelease",
+    "targetproject": "SimpBrowser2013",
+    "configuration": "Release",
     "targets": [
         {
             "outdir": "c:\\Linkout\\SimpBrowser",
@@ -14,6 +14,7 @@
         "History.txt",
         "LICENSE",
         "README.md",
+        "SimpBrowser.pdb",
         "SimpBrowser.exe"
     ],
     "TotalFileCount": "exact",

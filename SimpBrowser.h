@@ -55,10 +55,10 @@ public:
 	CMapStringToString m_strmInputPass;
 	CMapStringToPtr m_strmInputChecks;
 
-	CBool m_bSilentArg;
+	CBool m_bSilent;
 	CBool m_bNoNewWin;
 	CBool m_bNoScript;
-	CBool m_NobActiveX;
+	CBool m_NoActiveX;
 	CSimpBrowserApp();
 
 	LPCTSTR GetProxyString() const {

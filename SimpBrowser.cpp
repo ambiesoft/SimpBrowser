@@ -68,6 +68,7 @@ enum COMMAND_OPTIONS {
 	INPUTPASSWORD_ARG,
 	INPUTCHECKBOX_ARG,
 	SILENT_ARG,
+	NO_SILENT_ARG,
 	NOSCRIPT_ARG,
 	NO_NOSCRIPT_ARG,
 	NOACTIVEX_ARG,
@@ -177,6 +178,10 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 		{
 			return SILENT_ARG;
 		}
+		else if (lstrcmp(p + 1, _T("no-silent")) == 0)
+		{
+			return NO_SILENT_ARG;
+		}
 		else if (lstrcmp(p + 1, _T("noscript")) == 0)
 		{
 			return NOSCRIPT_ARG;
@@ -256,9 +261,9 @@ BOOL CSimpBrowserApp::SaveIni()
 }
 BOOL CSimpBrowserApp::LoadIni()
 {
-	m_bSilentArg = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 0);
+	m_bSilent = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 0);
 	m_bNoScript = !!GetProfileInt(SEC_OPTION, KEY_NOSCRIPT, 0);
-	m_NobActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
+	m_NoActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
 	m_nStartSizeX = GetProfileInt(SEC_OPTION, KEY_WIDTH, 0);
 	m_nStartSizeY = GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0);
 
@@ -493,7 +498,12 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case SILENT_ARG:
 			{
-				m_bSilentArg = TRUE;
+				m_bSilent = TRUE;
+			}
+			break;
+			case NO_SILENT_ARG:
+			{
+				m_bSilent = !TRUE;
 			}
 			break;
 
@@ -511,12 +521,12 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case NOACTIVEX_ARG:
 			{
-				m_NobActiveX = TRUE;
+				m_NoActiveX = TRUE;
 			}
 			break;
 			case NO_NOACTIVEX_ARG:
 			{
-				m_NobActiveX = !TRUE;
+				m_NoActiveX = !TRUE;
 			}
 			break;
 
