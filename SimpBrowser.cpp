@@ -98,7 +98,7 @@ CString getHelpString()
 	ret += L" ";
 
 
-	ret += L"[-it:A=B] [-ip:A=B] [-ic:A=L] [-silent] [-noscript] [-nonewwin] [-h] [-startpos POS] [-startsize SIZE] [-newwin NEWWIN] [-proxy PROXY] [-browseremulation BE]";
+	ret += L"[-it:A=B] [-ip:A=B] [-ic:A=L] [-silent|-no-silent] [-noscript|-no-noscript] [-noactivex|-no-noactivex] [-nonewwin] [-h] [-startpos POS] [-startsize SIZE] [-newwin NEWWIN] [-proxy PROXY] [-browseremulation BE]";
 	ret += L"\r\n";
 	ret += L"\r\n";
 
@@ -438,7 +438,7 @@ BOOL CSimpBrowserApp::InitInstance()
 			case UNKNOWN_OPTION:
 			{
 				CString message;
-				message.FormatMessage(IDS_UNKNOWN_OPTION, *pArg);
+				message.Format(IDS_UNKNOWN_OPTION, *pArg);
 				AfxMessageBox(message);
 				return -1;
 			}
