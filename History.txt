@@ -1,3 +1,6 @@
+2018/05/14 ver1.5
+Show command line option error
+
 2018/05/03 ver1.4
 status bar
 command line
