@@ -157,6 +157,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClCompile Include="..\lsMisc\GetSpecialFolderPath.cpp" />
     <ClCompile Include="..\lsMisc\OpenCommon.cpp" />
     <ClCompile Include="..\lsMisc\Registory.cpp" />
+    <ClCompile Include="..\lsMisc\SetClipboardText.cpp" />
     <ClCompile Include="..\lsMisc\stdwin32\stdwin32.cpp" />
     <ClCompile Include="..\lsMisc\UrlEncode.cpp" />
     <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp" />
@@ -186,6 +187,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\GetSpecialFolderPath.h" />
     <ClInclude Include="..\lsMisc\OpenCommon.h" />
     <ClInclude Include="..\lsMisc\Registory.h" />
+    <ClInclude Include="..\lsMisc\SetClipboardText.h" />
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h" />
     <ClInclude Include="..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />

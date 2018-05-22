@@ -24,4 +24,5 @@ public:
 	CString GetUrl() const {
 		return m_strUrl;
 	}
+	afx_msg void OnBnClickedButtonCopy();
 };

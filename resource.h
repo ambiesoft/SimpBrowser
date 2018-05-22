@@ -13,6 +13,8 @@
 #define IDD_DIALOG1                     131
 #define IDD_DIALOG_ENTERURL             131
 #define IDC_EDIT_URL                    1000
+#define IDC_BUTTON1                     1001
+#define IDC_BUTTON_COPY                 1001
 #define ID_FILE_REOPEN                  32771
 #define ID_ABOUT_BLANK                  32772
 #define ID_OPEN_CLIPBOARD               32773
@@ -34,7 +36,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1001
+#define _APS_NEXT_CONTROL_VALUE         1002
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

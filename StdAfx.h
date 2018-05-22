@@ -32,6 +32,7 @@
 #include "../lsMisc/GetFileNameFromHwnd.h"
 #include "../lsMisc/CreateFolderIniPath.h"
 #include "../lsMisc/GetLastErrorString.h"
+#include "../lsMisc/SetClipboardText.h"
 
 #include "../profile/cpp/Profile/include/ambiesoft.profile.h"
 

@@ -440,8 +440,8 @@ void CSimpBrowserView::OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR 
 		m_nTimerID = SetTimer(1, 1000, NULL);
 	}
 
-	if (lpszTargetFrameName == NULL || lpszTargetFrameName[0] == 0)
-		m_pMyFrame->SetUrl(lpszURL);
+	//if (lpszTargetFrameName == NULL || lpszTargetFrameName[0] == 0)
+	//	m_pMyFrame->SetUrl(lpszURL);
 }
 
 void CSimpBrowserView::OnOpenClipboard()
@@ -508,7 +508,7 @@ void CSimpBrowserView::updateTitle()
 void CSimpBrowserView::OnProgressChange(long nProgress, long nProgressMax) 
 {
 	CHtmlView::OnProgressChange(nProgress, nProgressMax);
-	m_pMyFrame->SetUrl(GetLocationURL());
+	// m_pMyFrame->SetUrl(GetLocationURL());
 	updateTitle();
 }
 
@@ -584,7 +584,7 @@ void CSimpBrowserView::OnBrowserNoscript()
 
 int CSimpBrowserView::ShowUrlDialog(CString& str)
 {
-	CEnterUrlDialog dlg(this);
+	CEnterUrlDialog dlg;// (this);
 	dlg.m_strUrl = str;
 	int nRet = dlg.DoModal();
 	if (IDOK != nRet)
@@ -662,6 +662,13 @@ void CSimpBrowserView::OnBrowserNoactivex()
 
 void CSimpBrowserView::OnDownloadComplete()
 {
-	m_pMyFrame->SetUrl(GetLocationURL());
+	// m_pMyFrame->SetUrl(GetLocationURL());
 	CHtmlView::OnDownloadComplete();
+}
+
+
+void CSimpBrowserView::OnNavigateComplete2(LPCTSTR strURL)
+{
+	CHtmlView::OnNavigateComplete2(strURL);
+	m_pMyFrame->SetUrl(GetLocationURL());
 }

@@ -1,3 +1,6 @@
+2018/05/23 ver1.6
+Suppress flicker of menu displaying URL
+
 2018/05/14 ver1.5
 Show command line option error
 

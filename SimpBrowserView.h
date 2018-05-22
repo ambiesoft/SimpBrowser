@@ -43,6 +43,7 @@ public:
 	virtual void OnNewWindow2(LPDISPATCH* ppDisp, BOOL* Cancel);
 	virtual void OnDocumentComplete(LPCTSTR lpszURL);
 	virtual void OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTargetFrameName, CByteArray& baPostedData, LPCTSTR lpszHeaders, BOOL* pbCancel);
+
 	virtual void OnProgressChange(long nProgress, long nProgressMax);
 	protected:
 	virtual void OnInitialUpdate(); // ‚P
@@ -90,6 +91,7 @@ public:
 	afx_msg void OnUpdateBrowserNoactivex(CCmdUI *pCmdUI);
 	afx_msg void OnBrowserNoactivex();
 	virtual void OnDownloadComplete();
+	virtual void OnNavigateComplete2(LPCTSTR strURL);
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

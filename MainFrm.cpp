@@ -220,13 +220,19 @@ void CMainFrame::SetUrl(LPCTSTR lpszURL)
 	//	mii.dwTypeData = (LPTSTR)L"";
 	//	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
 	//}
-	{
-		MENUITEMINFO mii = { 0 };
-		mii.cbSize = sizeof(mii);
-		mii.fMask = MIIM_STRING;
-		mii.dwTypeData = (LPTSTR)lpszURL;
-		VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
-	}
+
+	CString currentString;
+	GetMenu()->GetMenuString(ID_URL, currentString, 0);
+	if (lpszURL == currentString)
+		return;
+
+	
+	MENUITEMINFO mii = { 0 };
+	mii.cbSize = sizeof(mii);
+	mii.fMask = MIIM_STRING;
+	mii.dwTypeData = (LPTSTR)lpszURL;
+	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
+	
 
 	DrawMenuBar();
 }

@@ -30,7 +30,20 @@ void CEnterUrlDialog::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CEnterUrlDialog, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON_COPY, &CEnterUrlDialog::OnBnClickedButtonCopy)
 END_MESSAGE_MAP()
 
 
 // CEnterUrlDialog message handlers
+
+
+void CEnterUrlDialog::OnBnClickedButtonCopy()
+{
+	UpdateData();
+	if (!SetClipboardText(*this, m_strUrl))
+	{
+		AfxMessageBox(I18N(L"Failed to set text on the clipboard."));
+		return;
+	}
+	PostMessage(WM_CLOSE);
+}
