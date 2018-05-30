@@ -33,6 +33,10 @@
 #include "../lsMisc/CreateFolderIniPath.h"
 #include "../lsMisc/GetLastErrorString.h"
 #include "../lsMisc/SetClipboardText.h"
+#include "../lsMisc/stdwin32/stdwin32.h"
+#include "../lsMisc/BrowserEmulation.h"
+#include "../lsMisc/OpenCommon.h"
+#include "../lsMisc/CreateProcessCommon.h"
 
 #include "../profile/cpp/Profile/include/ambiesoft.profile.h"
 

@@ -223,6 +223,7 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 CString CSimpBrowserView::GetAmbientString()
 {
 	CString str;
+	str += L"Ambient: ";
 	str += m_bImageAmbient ? L"I" : L" ";
 	str += m_bScriptAmbient ? L"S" : L" ";
 	str += m_bJavaAmbient ? L"J" : L" ";
@@ -366,7 +367,6 @@ void CSimpBrowserView::OnSetForm()
 				if (lstrcmpiW((LPCWSTR)bstrType, L"text") == 0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey)) == 0)
 				{
 					pInputText->put_value(bstr_t((LPCTSTR)strValue));
-					GetDocument()->m_bDone = TRUE;
 				}
 			}
 		}
@@ -380,7 +380,6 @@ void CSimpBrowserView::OnSetForm()
 				if (lstrcmpiW((LPCWSTR)bstrType, L"password") == 0 && wcscmp(bstrName, bstr_t((LPCTSTR)strKey)) == 0)
 				{
 					pInputText->put_value(bstr_t((LPCTSTR)strValue));
-					GetDocument()->m_bDone = TRUE;
 				}
 			}
 		}
@@ -398,11 +397,11 @@ void CSimpBrowserView::OnSetForm()
 					else if (nValue == (void*)1)
 						pButtonElement->put_checked(VARIANT_TRUE);
 
-					GetDocument()->m_bDone = TRUE;
 				}
 			}
 		}
 	}
+	GetDocument()->m_bDone = TRUE;
 	return;
 }
 
@@ -435,11 +434,13 @@ void CSimpBrowserView::OnTimer(UINT nIDEvent)
 void CSimpBrowserView::OnBeforeNavigate2(LPCTSTR lpszURL, DWORD nFlags, LPCTSTR lpszTargetFrameName, CByteArray& baPostedData, LPCTSTR lpszHeaders, BOOL* pbCancel)
 {
 	CHtmlView::OnBeforeNavigate2(lpszURL, nFlags, lpszTargetFrameName, baPostedData, lpszHeaders, pbCancel);
-	if (!GetDocument()->m_bDone && m_nTimerID == 0)
+	if (theApp.HasSetForm())
 	{
-		m_nTimerID = SetTimer(1, 1000, NULL);
+		if (!GetDocument()->m_bDone && m_nTimerID == 0)
+		{
+			m_nTimerID = SetTimer(1, 1000, NULL);
+		}
 	}
-
 	//if (lpszTargetFrameName == NULL || lpszTargetFrameName[0] == 0)
 	//	m_pMyFrame->SetUrl(lpszURL);
 }

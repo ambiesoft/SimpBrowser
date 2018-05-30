@@ -1,3 +1,7 @@
+2018/05/30 ver1.7
+change status bar width
+edit help
+
 2018/05/23 ver1.6
 Suppress flicker of menu displaying URL
 

@@ -45,7 +45,7 @@ public:
 	int m_nBrowserEmulation;
 
 	CInt m_nNewWin;
-	bstr_t m_strProxy;
+	CString m_strProxy;
 
 	CBool m_bRestart;
 
@@ -59,10 +59,13 @@ public:
 	CBool m_bNoNewWin;
 	CBool m_bNoScript;
 	CBool m_NoActiveX;
+
+	CBool m_hasSetForm;
+
 	CSimpBrowserApp();
 
-	LPCTSTR GetProxyString() const {
-		if(m_strProxy.length()==0)
+	CString GetProxyString() const {
+		if(m_strProxy.IsEmpty())
 			return _T("PreConfig");
 		return m_strProxy;
 	}
@@ -88,6 +91,11 @@ public:
 	//        
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
+public:
+	BOOL HasSetForm() const {
+		return m_hasSetForm;
+	}
 };
 
 extern CSimpBrowserApp theApp;

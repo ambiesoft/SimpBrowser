@@ -1,9 +1,5 @@
 #include "stdafx.h"
 
-#include "../lsMisc/stdwin32/stdwin32.h"
-#include "../lsMisc/BrowserEmulation.h"
-#include "../lsMisc/OpenCommon.h"
-#include "../lsMisc/CreateProcessCommon.h"
 
 #include "SimpBrowser.h"
 
@@ -25,6 +21,9 @@ static char THIS_FILE[] = __FILE__;
 #ifndef _countof
 #define _countof(a) (sizeof(a)/sizeof(a[0]))
 #endif
+
+using namespace stdwin32;
+
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp
 
@@ -98,13 +97,30 @@ CString getHelpString()
 	ret += L" ";
 
 
-	ret += L"[-it:A=B] [-ip:A=B] [-ic:A=L] [-silent|-no-silent] [-noscript|-no-noscript] [-noactivex|-no-noactivex] [-nonewwin] [-h] [-startpos POS] [-startsize SIZE] [-newwin NEWWIN] [-proxy PROXY] [-browseremulation BE]";
+	ret += 
+		L"[-it:A=B] [-ip:A=B] [-ic:A=L] "
+		L"[-silent|-no-silent] "
+		L"[-noscript|-no-noscript] "
+		L"[-noactivex|-no-noactivex] "
+		L"[-nonewwin] "
+		L"[-h] "
+		L"[-startpos POS] "
+		L"[-startsize SIZE] "
+		L"[-newwin NEWWIN] "
+		L"[-proxy PROXY] "
+		L"[-browseremulation BE]";
 	ret += L"\r\n";
 	ret += L"\r\n";
 
 	ret += L"  -it" L"\r\n";
 	ret += L"    Put text in input area on page." L"\r\n";
 	ret += L"    A is id of html input element, B is value" L"\r\n";
+
+	ret += L"  -[no-]silent" L"\r\n";
+	ret += L"    [Not] suppress script error dialog." L"\r\n";
+
+	ret += L"  -[no-]noactivex" L"\r\n";
+	ret += L"    [Not] suppress ActiveX" L"\r\n";
 
 
 	ret += L"  -startpos" L"\r\n";
@@ -113,6 +129,10 @@ CString getHelpString()
 	ret += L"  -startsize" L"\r\n";
 	ret += L"    Start size of the window, ex) 640,480" L"\r\n";
 
+	ret += L"\r\n";
+	wstring t = (L"ex) " + stdGetFileName(stdGetModuleFileName()) +L" -silent -noscript http://example.com" + L"\r\n");
+	ret += CString(t.c_str());
+	ret += L"  Open http://example.com with no script errors and no script." L"\r\n";
 
 	return ret;
 }
@@ -478,6 +498,8 @@ BOOL CSimpBrowserApp::InitInstance()
 					m_strmInputPass[strArgValue1] = strArgValue2;
 				else
 					ASSERT(false);
+
+				m_hasSetForm = TRUE;
 			}
 			break;
 
@@ -493,6 +515,8 @@ BOOL CSimpBrowserApp::InitInstance()
 
 				int checked = _ttoi(strArgValue2);
 				m_strmInputChecks[strArgValue1] = (void*)checked;
+
+				m_hasSetForm = TRUE;
 			}
 			break;
 
@@ -575,8 +599,14 @@ BOOL CSimpBrowserApp::InitInstance()
 				if(!strArgValue1.IsEmpty())
 				{
 					m_strProxy = (LPCTSTR)strArgValue1;
-					if(!ChangeProxySetting(2, m_strProxy, ""))
+					if (!ChangeProxySetting(2, bstr_t(m_strProxy), ""))
+					{
+						CString message;
+						message.Format(I18N(L"Failed to set proxy as %s"), (LPCTSTR)m_strProxy);
+						AfxMessageBox(message, MB_ICONERROR);
+
 						return FALSE;
+					}
 				}
 			}
 			break;
@@ -595,8 +625,7 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case HELP_ARG:
 			{
-				CString message = getHelpString();
-				AfxMessageBox(message, MB_ICONINFORMATION);
+				AfxMessageBox(getHelpString(), MB_ICONINFORMATION);
 				return FALSE;
 			}
 			break;

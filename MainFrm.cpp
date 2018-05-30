@@ -43,13 +43,30 @@ static UINT indicators[] =
 
 void CMainFrame::OnUpdateSetForm(CCmdUI* pCmdUI)
 {
-	if ( ((CSimpBrowserDoc*)GetActiveDocument()) && ((CSimpBrowserDoc*)GetActiveDocument())->m_bDone )
-		pCmdUI->SetText(_T("Done!"));
+	CString text = L"SetForm: ";
+	if (theApp.HasSetForm())
+	{
+		if (!(CSimpBrowserDoc*)GetActiveDocument())
+			text += L"No Document";
+		else
+		{
+
+			if (((CSimpBrowserDoc*)GetActiveDocument())->m_bDone)
+				text += L"Done";
+			else
+				text += L"Undone";
+		}
+	}
+	else
+	{
+		text += L"None";
+	}
+	pCmdUI->SetText(text);
 }
 
 void CMainFrame::OnUpdateProxy(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetText(theApp.GetProxyString());
+	pCmdUI->SetText(L"Proxy: " + theApp.GetProxyString());
 }
 
 void CMainFrame::OnUpdateAmbient(CCmdUI* pCmdUI)
@@ -85,6 +102,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create status bar\n");
 		return -1;
 	}
+
+	// stretch
+	//for(int i=0 ; i < _countof(indicators); ++i)
+	//	m_wndStatusBar.SetPaneInfo(i, indicators[i], SBPS_STRETCH, 1);
+	
+	for(int i=1 ; i < _countof(indicators); ++i)
+		m_wndStatusBar.SetPaneInfo(i, indicators[i], SBPS_NORMAL, 100);
 
 #ifdef _DEBUG
 	CMenu* pMenu = GetMenu();
