@@ -30,7 +30,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_SETFORM, OnUpdateSetForm)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_PROXY, OnUpdateProxy)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_AMBIENT, OnUpdateAmbient)
-	ON_WM_SIZE()
+//	ON_WM_SIZE()
+	ON_WM_SIZING()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -59,7 +60,7 @@ void CMainFrame::OnUpdateSetForm(CCmdUI* pCmdUI)
 	}
 	else
 	{
-		text += L"None";
+		text = L"";
 	}
 	pCmdUI->SetText(text);
 }
@@ -103,10 +104,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
-	// stretch
-	//for(int i=0 ; i < _countof(indicators); ++i)
-	//	m_wndStatusBar.SetPaneInfo(i, indicators[i], SBPS_STRETCH, 1);
-	
+
 	for(int i=1 ; i < _countof(indicators); ++i)
 		m_wndStatusBar.SetPaneInfo(i, indicators[i], SBPS_NORMAL, 100);
 
@@ -125,17 +123,25 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	if( !CFrameWnd::PreCreateWindow(cs) )
 		return FALSE;
 
-	if ( theApp.m_nStartPosX >= 0 && theApp.m_nStartPosY >= 0 )
+	static bool first = true;
+	if (first)
 	{
-		cs.x = theApp.m_nStartPosX;
-		cs.y = theApp.m_nStartPosY;
+		theApp.currentPos_ = theApp.startPos();
+		theApp.currentSize_ = theApp.startSize();
+		first = false;
 	}
 
-	if ( theApp.m_nStartSizeX > 0 && theApp.m_nStartSizeY > 0 )
+	if (theApp.currentPos_.x > 0 && theApp.currentPos_.y)
 	{
-		cs.cx = theApp.m_nStartSizeX;
-		cs.cy = theApp.m_nStartSizeY;
+		cs.x = theApp.currentPos_.x;
+		cs.y = theApp.currentPos_.y;
 	}
+	if (theApp.currentSize_.cx > 0 && theApp.currentSize_.cy > 0)
+	{
+		cs.cx = theApp.currentSize_.cx;
+		cs.cy = theApp.currentSize_.cy;
+	}
+
 
 	return TRUE;
 }
@@ -156,11 +162,6 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 #endif //_DEBUG
 
-//DEL void CMainFrame::OnFileReopen() 
-//DEL {
-//DEL 	// TODO: Add your command handler code here
-//DEL 	
-//DEL }
 
 BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) 
 {
@@ -188,11 +189,8 @@ void CMainFrame::OnClose()
 		}
 
 		BOOL bSaveOK = true;
-		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_WIDTH, theApp.m_nStartSizeX);
-		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_HEIGHT, theApp.m_nStartSizeY);
-
-		//bSaveOK &= Profile::WriteInt(SEC_OPTION, KEY_WIDTH, theApp.m_nStartSizeX, theApp.m_pszProfileName);
-		//bSaveOK &= Profile::WriteInt(SEC_OPTION, KEY_HEIGHT, theApp.m_nStartSizeY, theApp.m_pszProfileName);
+		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_WIDTH, theApp.currentSize_.cx);
+		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_HEIGHT, theApp.currentSize_.cy);
 
 		if (!bSaveOK)
 		{
@@ -206,45 +204,16 @@ void CMainFrame::OnClose()
 
 
 
-void CMainFrame::OnSize(UINT nType, int cx, int cy)
+void CMainFrame::OnSizing(UINT fwSide, LPRECT pRect)
 {
-	CFrameWnd::OnSize(nType, cx, cy);
+	CFrameWnd::OnSizing(fwSide, pRect);
 
-	if (nType == SIZE_RESTORED)
-	{
-		theApp.m_nStartSizeX = cx;
-		theApp.m_nStartSizeY = cy;
-	}
+	theApp.currentSize_.SetSize(pRect->right - pRect->left, pRect->bottom - pRect->top);
 }
 
 
-
-//HMENU GetMenuFromID(HMENU parent, UINT id)
-//{
-//	int count = ::GetMenuItemCount(parent);
-//	for (int i = 0; i < count; ++i)
-//	{
-//		UINT idT = ::GetMenuItemID(parent, i);
-//		if (idT == id)
-//		{
-//			return ::getmen
-//		}
-//	}
-//	return NULL;
-//}
 void CMainFrame::SetUrl(LPCTSTR lpszURL)
 {
-	//HMENU hMenuUrl = GetMenuFromID(GetMenu()->m_hMenu, ID_URL);
-	//ASSERT(hMenuUrl);
-
-	//{
-	//	MENUITEMINFO mii = { 0 };
-	//	mii.cbSize = sizeof(mii);
-	//	mii.fMask = MIIM_STRING;
-	//	mii.dwTypeData = (LPTSTR)L"";
-	//	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
-	//}
-
 	CString currentString;
 	GetMenu()->GetMenuString(ID_URL, currentString, 0);
 	if (lpszURL == currentString)
@@ -259,4 +228,15 @@ void CMainFrame::SetUrl(LPCTSTR lpszURL)
 	
 
 	DrawMenuBar();
+}
+
+
+
+
+void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
+{
+	// TODO: Add your specialized code here and/or call the base class
+
+	// prevent title change
+	// CFrameWnd::OnUpdateFrameTitle(bAddToTitle);
 }

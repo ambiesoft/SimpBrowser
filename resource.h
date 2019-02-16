@@ -15,6 +15,8 @@
 #define IDC_EDIT_URL                    1000
 #define IDC_BUTTON1                     1001
 #define IDC_BUTTON_COPY                 1001
+#define IDC_EDIT1                       1002
+#define IDC_EDIT_HELP                   1002
 #define ID_FILE_REOPEN                  32771
 #define ID_ABOUT_BLANK                  32772
 #define ID_OPEN_CLIPBOARD               32773
@@ -27,6 +29,8 @@
 #define ID_URL                          32780
 #define ID_EDIT_NOACTIVEX               32781
 #define IDM_BROWSER_NOACTIVEX           32782
+#define ID_FORWARD                      32783
+#define ID_BACK                         32784
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -35,8 +39,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
-#define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1002
+#define _APS_NEXT_COMMAND_VALUE         32785
+#define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

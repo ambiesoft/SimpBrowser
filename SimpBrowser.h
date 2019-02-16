@@ -29,18 +29,18 @@
 
 class CSimpBrowserApp : public CWinApp
 {
+	CPoint m_startPos;
+	CSize m_startSize;
+
 public:
+	CPoint currentPos_;
+	CSize currentSize_;
+
 	CString m_strUrl;
 	struct BOOL_COMMANDS {
 		BOOL aaa : 1;
 		BOOL abb : 1;
 	} m_dwBoolCommands;
-
-	int m_nStartPosX;
-	int m_nStartPosY;
-
-	int m_nStartSizeX;
-	int m_nStartSizeY;
 
 	int m_nBrowserEmulation;
 
@@ -93,8 +93,20 @@ public:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	CString GetHelpString();
+
 	BOOL HasSetForm() const {
 		return m_hasSetForm;
+	}
+
+	CPoint startPos() const {
+		return m_startPos;
+	}
+	CSize startSize() const {
+		return m_startSize;
+	}
+	void setStartSize(const CSize& size) {
+		m_startSize = size;
 	}
 };
 

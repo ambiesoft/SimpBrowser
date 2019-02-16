@@ -1,3 +1,6 @@
+2019/02/16 ver1.8.1
+Size of newly opened window
+
 2018/05/30 ver1.7
 change status bar width
 edit help

@@ -100,7 +100,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
       <WarningLevel>Level3</WarningLevel>
       <MinimalRebuild>true</MinimalRebuild>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;UNICODE;_WIN32_WINNT=_WIN32_WINNT_MAXVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -158,9 +158,18 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClCompile Include="..\lsMisc\OpenCommon.cpp" />
     <ClCompile Include="..\lsMisc\Registory.cpp" />
     <ClCompile Include="..\lsMisc\SetClipboardText.cpp" />
+    <ClCompile Include="..\lsMisc\stdosd\stdosd.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\stdosd\stdosd_win.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\lsMisc\stdwin32\stdwin32.cpp" />
     <ClCompile Include="..\lsMisc\UrlEncode.cpp" />
     <ClCompile Include="..\lsMisc\UTF16toUTF8.cpp" />
+    <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="EnterUrlDialog.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="SimpBrowser.cpp" />
@@ -188,9 +197,11 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\OpenCommon.h" />
     <ClInclude Include="..\lsMisc\Registory.h" />
     <ClInclude Include="..\lsMisc\SetClipboardText.h" />
+    <ClInclude Include="..\lsMisc\stdosd\stdosd.h" />
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h" />
     <ClInclude Include="..\lsMisc\UrlEncode.h" />
     <ClInclude Include="..\lsMisc\UTF16toUTF8.h" />
+    <ClInclude Include="AboutDialog.h" />
     <ClInclude Include="EnterUrlDialog.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />

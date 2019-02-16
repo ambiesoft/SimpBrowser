@@ -21,6 +21,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+using namespace Ambiesoft;
+
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserView
 
@@ -48,6 +50,8 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_NOACTIVEX, &CSimpBrowserView::OnUpdateBrowserNoactivex)
 	ON_COMMAND(IDM_BROWSER_NOACTIVEX, &CSimpBrowserView::OnBrowserNoactivex)
+	ON_COMMAND(ID_BACK, &CSimpBrowserView::OnBack)
+	ON_COMMAND(ID_FORWARD, &CSimpBrowserView::OnForward)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -484,32 +488,28 @@ void CSimpBrowserView::updateTitle()
 {
 	IDispatchPtr pdisp(GetHtmlDocument(),false);
 	IHTMLDocument2Ptr pdoc = pdisp;
-	if(NULL==pdoc)
-		return;
 	
 	BSTR btitle=NULL;
-
-	if(SUCCEEDED(pdoc->get_title(&btitle)) && btitle && btitle[0])
+	CString titleToSet;
+	if(pdoc && SUCCEEDED(pdoc->get_title(&btitle)) && btitle )
 	{
 		bstr_t bstrTitle(btitle,false);
-		// GetDocument()->SetTitle(bstrTitle);
-		// m_pMyFrame->SetTitle(bstrTitle);
-		m_pMyFrame->SetWindowText(bstrTitle);
+		titleToSet = (LPCWSTR)bstrTitle;
 	}
 	else
 	{
-		// GetDocument()->SetTitle(GetLocationURL());
-		// m_pMyFrame->SetTitle(GetLocationURL());
-		m_pMyFrame->SetWindowText(GetLocationURL());
+		titleToSet = (LPCWSTR)GetLocationURL();
 	}
-	// m_pMyFrame->OnUpdateFrameTitle(TRUE);
 	
+	titleToSet += L" - ";
+	titleToSet += theApp.m_pszAppName;
+	m_pMyFrame->SetWindowText(titleToSet);
 }
 
 void CSimpBrowserView::OnProgressChange(long nProgress, long nProgressMax) 
 {
 	CHtmlView::OnProgressChange(nProgress, nProgressMax);
-	// m_pMyFrame->SetUrl(GetLocationURL());
+
 	updateTitle();
 }
 
@@ -606,7 +606,7 @@ bool CSimpBrowserView::NavigateOrSearch(const CString& url)
 	else
 	{
 		CString nav;
-		nav.Format(L"https://google.com/search?q=%s", Ambiesoft::UrlEncodeW(url).c_str());
+		nav.Format(L"https://google.com/search?q=%s", UrlDecodeWstd((LPCTSTR)url).c_str());
 		Navigate2(nav);
 	}
 	return true;
@@ -672,4 +672,16 @@ void CSimpBrowserView::OnNavigateComplete2(LPCTSTR strURL)
 {
 	CHtmlView::OnNavigateComplete2(strURL);
 	m_pMyFrame->SetUrl(GetLocationURL());
+}
+
+
+void CSimpBrowserView::OnBack()
+{
+	GoBack();
+}
+
+
+void CSimpBrowserView::OnForward()
+{
+	GoForward();
 }

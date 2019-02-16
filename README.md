@@ -1,4 +1,9 @@
 # SimpBrowser
 
-SimpBrowser is Light-weight web browser.
+SimpBrowser is light-weight web browser by using IE engine.
+
+
+# CommandLine options
+
+# Legal
 

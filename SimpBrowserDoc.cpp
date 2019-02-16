@@ -72,4 +72,7 @@ void CSimpBrowserDoc::Dump(CDumpContext& dc) const
 
 void CSimpBrowserDoc::SetTitle(LPCTSTR lpszTitle)
 {
+	//GetTitle();
+	//TRACE(L"SetTitle: %s\n", lpszTitle);
+	//CDocument::SetTitle(L"");
 }

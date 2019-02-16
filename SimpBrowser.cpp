@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+#include "../lsMisc/stdosd/stdosd.h"
 
 #include "SimpBrowser.h"
 
@@ -9,6 +10,8 @@
 
 //#include "SubDocument.h"
 //#include "SubView.h"
+
+#include "AboutDialog.h"
 
 #pragma comment(lib, "wininet.lib")
 
@@ -22,7 +25,8 @@ static char THIS_FILE[] = __FILE__;
 #define _countof(a) (sizeof(a)/sizeof(a[0]))
 #endif
 
-using namespace stdwin32;
+using namespace Ambiesoft::stdwin32;
+using namespace Ambiesoft::stdosd;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp
@@ -41,11 +45,8 @@ END_MESSAGE_MAP()
 
 CSimpBrowserApp::CSimpBrowserApp()
 {
-	m_nStartPosX = -1;
-	m_nStartPosY = -1;
-
-	m_nStartSizeX = -1;
-	m_nStartSizeY = -1;
+	m_startPos.SetPoint(-1, -1);
+	m_startSize = CSize(-1, -1);
 
 	m_nBrowserEmulation = -1;
 
@@ -89,10 +90,10 @@ LPCTSTR strStartWith(LPCTSTR p1, LPCTSTR p2)
 	return p1 + _tcslen(p2);
 }
 
-CString getHelpString()
+CString CSimpBrowserApp::GetHelpString()
 {
 	CString ret;
-	wstring exe = stdwin32::stdGetFileName(stdwin32::stdGetModuleFileName());
+	wstring exe = stdGetFileName(stdGetModuleFileName());
 	ret += exe.c_str();
 	ret += L" ";
 
@@ -281,13 +282,13 @@ BOOL CSimpBrowserApp::SaveIni()
 }
 BOOL CSimpBrowserApp::LoadIni()
 {
-	m_bSilent = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 0);
+	m_bSilent = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 1);
 	m_bNoScript = !!GetProfileInt(SEC_OPTION, KEY_NOSCRIPT, 0);
 	m_NoActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
-	m_nStartSizeX = GetProfileInt(SEC_OPTION, KEY_WIDTH, 0);
-	m_nStartSizeY = GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0);
+	m_startSize = CSize(GetProfileInt(SEC_OPTION, KEY_WIDTH, 0),
+		GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0));
 
-	m_nBrowserEmulation = GetProfileInt(SEC_OPTION, KEY_BROWSEREMULATION, -1);
+	m_nBrowserEmulation = GetProfileInt(SEC_OPTION, KEY_BROWSEREMULATION, 11000);
 	return TRUE;
 }
 
@@ -404,6 +405,11 @@ BOOL ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 
 
 
+void CSimpBrowserApp::OnAppAbout()
+{
+	CAboutDlg aboutDlg;
+	aboutDlg.DoModal();
+}
 
 
 
@@ -425,7 +431,7 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			CString iniFile = AfxGetAppName();
 			iniFile += L".ini";
-			wstring full = stdwin32::stdCombinePath(szT, iniFile);
+			wstring full = stdCombinePath(szT, (LPCTSTR)iniFile);
 
 			free((void*)m_pszProfileName);
 			m_pszProfileName = _tcsdup(full.c_str());
@@ -568,8 +574,7 @@ BOOL CSimpBrowserApp::InitInstance()
 					CString left = strArgValue1.Left(pos);
 					CString right = strArgValue1.Right(strArgValue1.GetLength() - pos - 1);
 
-					m_nStartPosX = _ttoi(left);
-					m_nStartPosY = _ttoi(right);
+					m_startPos.SetPoint(_ttoi(left), _ttoi(right));
 				}
 			}
 			break;
@@ -582,8 +587,7 @@ BOOL CSimpBrowserApp::InitInstance()
 					CString left = strArgValue1.Left(pos);
 					CString right = strArgValue1.Right(strArgValue1.GetLength() - pos - 1);
 
-					m_nStartSizeX = _ttoi(left);
-					m_nStartSizeY = _ttoi(right);
+					m_startSize = CSize(_ttoi(left), _ttoi(right));
 				}
 			}
 			break;
@@ -625,7 +629,7 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			case HELP_ARG:
 			{
-				AfxMessageBox(getHelpString(), MB_ICONINFORMATION);
+				AfxMessageBox(GetHelpString(), MB_ICONINFORMATION);
 				return FALSE;
 			}
 			break;
@@ -636,7 +640,7 @@ BOOL CSimpBrowserApp::InitInstance()
 
 
 	wstring exe = stdwin32::stdGetModuleFileName();
-	exe = stdwin32::stdGetFileName(exe);
+	exe = stdGetFileName(exe);
 	if (m_nBrowserEmulation == -1)
 	{
 		UnsetBrowserEmulation(exe.c_str());
@@ -683,59 +687,6 @@ BOOL CSimpBrowserApp::InitInstance()
 	return TRUE;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////
-//  CAboutDlg 
-
-class CAboutDlg : public CDialog
-{
-public:
-	CAboutDlg();
-
-	//  
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
-
-	// ClassWizard 
-	//{{AFX_VIRTUAL(CAboutDlg)
-protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 
-	//}}AFX_VIRTUAL
-
-	// 
-protected:
-	//{{AFX_MSG(CAboutDlg)
-	//  
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
-{
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-	//  
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-//  
-void CSimpBrowserApp::OnAppAbout()
-{
-	CAboutDlg aboutDlg;
-	aboutDlg.DoModal();
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp  

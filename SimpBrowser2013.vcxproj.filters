@@ -78,6 +78,15 @@
     <ClCompile Include="..\lsMisc\SetClipboardText.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\lsMisc\stdosd\stdosd.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\stdosd\stdosd_win.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutDialog.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -144,6 +153,12 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\SetClipboardText.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\stdosd\stdosd.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AboutDialog.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

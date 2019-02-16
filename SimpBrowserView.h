@@ -92,6 +92,8 @@ public:
 	afx_msg void OnBrowserNoactivex();
 	virtual void OnDownloadComplete();
 	virtual void OnNavigateComplete2(LPCTSTR strURL);
+	afx_msg void OnBack();
+	afx_msg void OnForward();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 
