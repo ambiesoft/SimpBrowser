@@ -21,8 +21,10 @@
 
 #define SEC_OPTION _T("option")
 #define KEY_SILENT _T("silent")
-#define KEY_NOSCRIPT _T("noscript")
-#define KEY_NOACTIVEX _T("noactivex")
+#define KEY_IMAGE _T("image")
+#define KEY_SCRIPT _T("script")
+#define KEY_JAVA _T("java")
+#define KEY_ACTIVEX _T("activex")
 #define KEY_WIDTH _T("width")
 #define KEY_HEIGHT _T("Height")
 #define KEY_BROWSEREMULATION _T("BrowserEmulation")
@@ -56,9 +58,12 @@ public:
 	CMapStringToPtr m_strmInputChecks;
 
 	CBool m_bSilent;
+	CBool m_bImage;
+	CBool m_bScript;
+	CBool m_bJava;
+	CBool m_bActiveX;
+
 	CBool m_bNoNewWin;
-	CBool m_bNoScript;
-	CBool m_NoActiveX;
 
 	CBool m_hasSetForm;
 

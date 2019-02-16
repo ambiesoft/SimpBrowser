@@ -67,18 +67,32 @@ enum COMMAND_OPTIONS {
 	INPUTTEXT_ARG,
 	INPUTPASSWORD_ARG,
 	INPUTCHECKBOX_ARG,
+	
 	SILENT_ARG,
 	NO_SILENT_ARG,
-	NOSCRIPT_ARG,
-	NO_NOSCRIPT_ARG,
-	NOACTIVEX_ARG,
-	NO_NOACTIVEX_ARG,
+	
+	IMAGE_ARG,
+	NO_IMAGE_ARG,
+
+	SCRIPT_ARG,
+	NO_SCRIPT_ARG,
+
+	JAVA_ARG,
+	NO_JAVA_ARG,
+
+	ACTIVEX_ARG,
+	NO_ACTIVEX_ARG,
+
+	NEWWIN_ARG,
 	NONEWWIN_ARG,
+	
 	STARTPOS_ARG,
 	STARTSIZE_ARG,
-	NEWWIN_ARG,
+	
 	PROXY_ARG,
+	
 	BROWSEREMULATION_ARG,
+	
 	HELP_ARG,
 };
 
@@ -100,9 +114,11 @@ CString CSimpBrowserApp::GetHelpString()
 
 	ret += 
 		L"[-it:A=B] [-ip:A=B] [-ic:A=L] "
+		L"[-image|-no-image] "
 		L"[-silent|-no-silent] "
-		L"[-noscript|-no-noscript] "
-		L"[-noactivex|-no-noactivex] "
+		L"[-script|-no-script] "
+		L"[-java|-no-java] "
+		L"[-activex|-no-activex] "
 		L"[-nonewwin] "
 		L"[-h] "
 		L"[-startpos POS] "
@@ -120,8 +136,17 @@ CString CSimpBrowserApp::GetHelpString()
 	ret += L"  -[no-]silent" L"\r\n";
 	ret += L"    [Not] suppress script error dialog." L"\r\n";
 
-	ret += L"  -[no-]noactivex" L"\r\n";
-	ret += L"    [Not] suppress ActiveX" L"\r\n";
+	ret += L"  -[no-]image" L"\r\n";
+	ret += L"    [Not] enable image" L"\r\n";
+
+	ret += L"  -[no-]script" L"\r\n";
+	ret += L"    [Not] enable JavaScript" L"\r\n";
+
+	ret += L"  -[no-]java" L"\r\n";
+	ret += L"    [Not] enable Java" L"\r\n";
+
+	ret += L"  -[no-]activex" L"\r\n";
+	ret += L"    [Not] enable ActiveX" L"\r\n";
 
 
 	ret += L"  -startpos" L"\r\n";
@@ -203,22 +228,43 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 		{
 			return NO_SILENT_ARG;
 		}
-		else if (lstrcmp(p + 1, _T("noscript")) == 0)
+
+		else if (lstrcmp(p + 1, _T("image")) == 0)
 		{
-			return NOSCRIPT_ARG;
+			return IMAGE_ARG;
 		}
-		else if (lstrcmp(p + 1, _T("no-noscript")) == 0)
+		else if (lstrcmp(p + 1, _T("no-image")) == 0)
 		{
-			return NO_NOSCRIPT_ARG;
+			return NO_IMAGE_ARG;
 		}
-		else if (lstrcmp(p + 1, _T("noactivex")) == 0)
+
+		else if (lstrcmp(p + 1, _T("script")) == 0)
 		{
-			return NOACTIVEX_ARG;
+			return SCRIPT_ARG;
 		}
-		else if (lstrcmp(p + 1, _T("no-noactivex")) == 0)
+		else if (lstrcmp(p + 1, _T("no-script")) == 0)
 		{
-			return NO_NOACTIVEX_ARG;
+			return NO_SCRIPT_ARG;
 		}
+
+		else if (lstrcmp(p + 1, _T("java")) == 0)
+		{
+			return JAVA_ARG;
+		}
+		else if (lstrcmp(p + 1, _T("no-java")) == 0)
+		{
+			return NO_JAVA_ARG;
+		}
+
+		else if (lstrcmp(p + 1, _T("activex")) == 0)
+		{
+			return ACTIVEX_ARG;
+		}
+		else if (lstrcmp(p + 1, _T("no-activex")) == 0)
+		{
+			return NO_ACTIVEX_ARG;
+		}
+
 		else if (lstrcmp(p + 1, _T("nonewwin")) == 0)
 		{
 			return NONEWWIN_ARG;
@@ -283,8 +329,10 @@ BOOL CSimpBrowserApp::SaveIni()
 BOOL CSimpBrowserApp::LoadIni()
 {
 	m_bSilent = !!GetProfileInt(SEC_OPTION, KEY_SILENT, 1);
-	m_bNoScript = !!GetProfileInt(SEC_OPTION, KEY_NOSCRIPT, 0);
-	m_NoActiveX = !!GetProfileInt(SEC_OPTION, KEY_NOACTIVEX, 0);
+	m_bImage = !!GetProfileInt(SEC_OPTION, KEY_IMAGE, 1);
+	m_bScript = !!GetProfileInt(SEC_OPTION, KEY_SCRIPT, 1);
+	m_bJava = !!GetProfileInt(SEC_OPTION, KEY_JAVA, 1);
+	m_bActiveX = !!GetProfileInt(SEC_OPTION, KEY_ACTIVEX, 1);
 	m_startSize = CSize(GetProfileInt(SEC_OPTION, KEY_WIDTH, 0),
 		GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0));
 
@@ -537,26 +585,47 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			break;
 
-			case NOSCRIPT_ARG:
+			case IMAGE_ARG:
 			{
-				m_bNoScript = TRUE;
+				m_bImage = TRUE;
+			}
+			break;
+			case NO_IMAGE_ARG:
+			{
+				m_bImage = !TRUE;
 			}
 			break;
 
-			case NO_NOSCRIPT_ARG:
+			case SCRIPT_ARG:
 			{
-				m_bNoScript = !TRUE;
+				m_bScript = TRUE;
+			}
+			break;
+			case NO_SCRIPT_ARG:
+			{
+				m_bScript = !TRUE;
 			}
 			break;
 
-			case NOACTIVEX_ARG:
+			case JAVA_ARG:
 			{
-				m_NoActiveX = TRUE;
+				m_bJava = TRUE;
 			}
 			break;
-			case NO_NOACTIVEX_ARG:
+			case NO_JAVA_ARG:
 			{
-				m_NoActiveX = !TRUE;
+				m_bJava = !TRUE;
+			}
+			break;
+
+			case ACTIVEX_ARG:
+			{
+				m_bActiveX = TRUE;
+			}
+			break;
+			case NO_ACTIVEX_ARG:
+			{
+				m_bActiveX = !TRUE;
 			}
 			break;
 
@@ -661,28 +730,15 @@ BOOL CSimpBrowserApp::InitInstance()
 	AddDocTemplate(m_pDocTemplate);
 
 
-	// DDEfile open  
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
-	//  
-	//	if (!ProcessShellCommand(cmdInfo))
-	//		return FALSE;
-
-	//	if (!AfxGetApp()->OnCmdMsg(ID_FILE_NEW, 0, NULL, NULL))
 	OnFileNew();
 
-	//  
 	((CMainFrame*)m_pMainWnd)->m_bMainWin = TRUE;
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 
-	//	m_pDocTemplate = new CSingleDocTemplate(
-	//		IDR_MAINFRAME,
-	//		RUNTIME_CLASS(CSubDocument),
-	//		RUNTIME_CLASS(CMainFrame),       //  SDI  
-	//		RUNTIME_CLASS(CSubView));
-	//	AddDocTemplate(m_pDocTemplate);
 
 	return TRUE;
 }

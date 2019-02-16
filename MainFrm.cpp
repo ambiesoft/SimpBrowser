@@ -32,6 +32,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_AMBIENT, OnUpdateAmbient)
 //	ON_WM_SIZE()
 	ON_WM_SIZING()
+	ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -211,19 +212,24 @@ void CMainFrame::OnSizing(UINT fwSide, LPRECT pRect)
 	theApp.currentSize_.SetSize(pRect->right - pRect->left, pRect->bottom - pRect->top);
 }
 
-
-void CMainFrame::SetUrl(LPCTSTR lpszURL)
+#define MAX_URL_ON_MENU 64
+void CMainFrame::SetUrl(CString strURL)
 {
+	if (strURL.GetLength() > MAX_URL_ON_MENU)
+	{
+		strURL = strURL.Left(MAX_URL_ON_MENU) + L"...";
+	}
+
 	CString currentString;
 	GetMenu()->GetMenuString(ID_URL, currentString, 0);
-	if (lpszURL == currentString)
+	if (strURL == currentString)
 		return;
 
-	
+
 	MENUITEMINFO mii = { 0 };
 	mii.cbSize = sizeof(mii);
 	mii.fMask = MIIM_STRING;
-	mii.dwTypeData = (LPTSTR)lpszURL;
+	mii.dwTypeData = (LPTSTR)(LPCTSTR)strURL;
 	VERIFY(::SetMenuItemInfo(GetMenu()->m_hMenu, ID_URL, FALSE, &mii));
 	
 
@@ -239,4 +245,10 @@ void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 
 	// prevent title change
 	// CFrameWnd::OnUpdateFrameTitle(bAddToTitle);
+}
+
+
+void CMainFrame::OnUrl()
+{
+	m_pMyView->OnUrl();
 }

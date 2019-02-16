@@ -25,7 +25,7 @@ public:
 	CSimpBrowserView* m_pMyView;
 	// 
 public:
-	void SetUrl(LPCTSTR lpszURL);
+	void SetUrl(CString strURL);
 	// 
 	// ClassWizard 
 	//{{AFX_VIRTUAL(CMainFrame)
@@ -61,6 +61,7 @@ public:
 //	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
 	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
+	afx_msg void OnUrl();
 };
 
 /////////////////////////////////////////////////////////////////////////////

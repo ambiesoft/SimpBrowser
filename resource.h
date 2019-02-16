@@ -25,12 +25,18 @@
 #define ID_BROWSEREMULATION_NOTHING     32776
 #define ID_BROWSEREMULATION_11000       32777
 #define ID_EDIT_NOSCRIPT                32778
-#define IDM_BROWSER_NOSCRIPT            32779
+#define IDM_BROWSER_NOSCRIPT_OBSOLETE   32779
 #define ID_URL                          32780
 #define ID_EDIT_NOACTIVEX               32781
-#define IDM_BROWSER_NOACTIVEX           32782
+#define IDM_BROWSER_NOACTIVEX_OBSOLETE  32782
 #define ID_FORWARD                      32783
 #define ID_BACK                         32784
+#define IDM_BROWSER_SCRIPT              32785
+#define IDM_BROWSER_ACTIVEX             32786
+#define ID_EDIT_JAVA                    32787
+#define IDM_BROWSER_JAVA                32788
+#define ID_EDIT_IMAGE                   32789
+#define IDM_BROWSER_IMAGE               32790
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -39,7 +45,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
-#define _APS_NEXT_COMMAND_VALUE         32785
+#define _APS_NEXT_COMMAND_VALUE         32791
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           105
 #endif

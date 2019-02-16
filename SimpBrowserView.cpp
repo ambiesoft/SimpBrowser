@@ -43,15 +43,19 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_COMMAND(ID_BROWSEREMULATION_11000, &CSimpBrowserView::OnBrowseremulation11000)
 	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_11000, &CSimpBrowserView::OnUpdateBrowseremulation11000)
 	ON_WM_DROPFILES()
-	ON_UPDATE_COMMAND_UI(IDM_BROWSER_NOSCRIPT, &CSimpBrowserView::OnUpdateBrowserNoscript)
-	ON_COMMAND(IDM_BROWSER_NOSCRIPT, &CSimpBrowserView::OnBrowserNoscript)
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_SCRIPT, &CSimpBrowserView::OnUpdateBrowserScript)
+	ON_COMMAND(IDM_BROWSER_SCRIPT, &CSimpBrowserView::OnBrowserScript)
 	ON_COMMAND(ID_FILE_NEW, &CSimpBrowserView::OnFileNew)
 	ON_UPDATE_COMMAND_UI(ID_URL, &CSimpBrowserView::OnUpdateUrl)
 	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
-	ON_UPDATE_COMMAND_UI(IDM_BROWSER_NOACTIVEX, &CSimpBrowserView::OnUpdateBrowserNoactivex)
-	ON_COMMAND(IDM_BROWSER_NOACTIVEX, &CSimpBrowserView::OnBrowserNoactivex)
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_ACTIVEX, &CSimpBrowserView::OnUpdateBrowserActivex)
+	ON_COMMAND(IDM_BROWSER_ACTIVEX, &CSimpBrowserView::OnBrowserActivex)
 	ON_COMMAND(ID_BACK, &CSimpBrowserView::OnBack)
 	ON_COMMAND(ID_FORWARD, &CSimpBrowserView::OnForward)
+	ON_COMMAND(IDM_BROWSER_JAVA, &CSimpBrowserView::OnBrowserJava)
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_JAVA, &CSimpBrowserView::OnUpdateBrowserJava)
+	ON_COMMAND(IDM_BROWSER_IMAGE, &CSimpBrowserView::OnBrowserImage)
+	ON_UPDATE_COMMAND_UI(IDM_BROWSER_IMAGE, &CSimpBrowserView::OnUpdateBrowserImage)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -193,24 +197,32 @@ BOOL CSimpBrowserView::OnAmbientProperty(COleControlSite* pSite, DISPID dispid, 
 	{
 		V_VT(pvar) = VT_I4;
 
-		V_I4(pvar) = DLCTL_DLIMAGES;
+		
 
 		if (theApp.m_bSilent)
 			V_I4(pvar) |= DLCTL_SILENT;
 		else
 			V_I4(pvar) &= ~DLCTL_SILENT;
 
-		
-		if (theApp.m_bNoScript)
-			V_I4(pvar) |= DLCTL_NO_SCRIPTS;
+		if (theApp.m_bImage)
+			V_I4(pvar) |= DLCTL_DLIMAGES;
 		else
+			V_I4(pvar) &= ~DLCTL_DLIMAGES;
+
+		if (theApp.m_bScript)
 			V_I4(pvar) &= ~DLCTL_NO_SCRIPTS;
-
-
-		if (theApp.m_NoActiveX)
-			V_I4(pvar) |= (DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS);
 		else
+			V_I4(pvar) |= DLCTL_NO_SCRIPTS;
+
+		if (theApp.m_bJava)
+			V_I4(pvar) &= ~DLCTL_NO_JAVA;
+		else
+			V_I4(pvar) |= DLCTL_NO_JAVA;
+
+		if (theApp.m_bActiveX)
 			V_I4(pvar) &= ~(DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS);
+		else
+			V_I4(pvar) |= (DLCTL_NO_DLACTIVEXCTLS | DLCTL_NO_RUNACTIVEXCTLS);
 
 
 		//set what ambient i am
@@ -458,21 +470,6 @@ void CSimpBrowserView::OnOpenClipboard()
 
 
 
-void CSimpBrowserView::OnBrowserSilent()
-{
-	theApp.m_bSilent = !theApp.m_bSilent;
-
-	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_SILENT, theApp.m_bSilent ? 1 : 0))
-	{
-		AfxMessageBox(I18N(_T("Failed save to ini.")));
-		return;
-	}
-}
-
-void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(theApp.m_bSilent);
-}
 
 bstr_t CSimpBrowserView::GetLocationURL() const
 {
@@ -501,7 +498,9 @@ void CSimpBrowserView::updateTitle()
 		titleToSet = (LPCWSTR)GetLocationURL();
 	}
 	
-	titleToSet += L" - ";
+	if (!titleToSet.IsEmpty())
+		titleToSet += L" - ";
+
 	titleToSet += theApp.m_pszAppName;
 	m_pMyFrame->SetWindowText(titleToSet);
 }
@@ -565,27 +564,11 @@ void CSimpBrowserView::OnDropFiles(HDROP hDropInfo)
 }
 
 
-void CSimpBrowserView::OnUpdateBrowserNoscript(CCmdUI *pCmdUI)
-{
-	pCmdUI->SetCheck(theApp.m_bNoScript);
-}
-
-
-void CSimpBrowserView::OnBrowserNoscript()
-{
-	theApp.m_bNoScript = !theApp.m_bNoScript;
-
-	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOSCRIPT, theApp.m_bNoScript ? 1 : 0))
-	{
-		AfxMessageBox(I18N(_T("Failed save to ini.")));
-		return;
-	}
-}
 
 
 int CSimpBrowserView::ShowUrlDialog(CString& str)
 {
-	CEnterUrlDialog dlg;// (this);
+	CEnterUrlDialog dlg(this);
 	dlg.m_strUrl = str;
 	int nRet = dlg.DoModal();
 	if (IDOK != nRet)
@@ -643,22 +626,75 @@ void CSimpBrowserView::OnUrl()
 }
 
 
-void CSimpBrowserView::OnUpdateBrowserNoactivex(CCmdUI *pCmdUI)
+
+
+
+void CSimpBrowserView::OnBrowserSilent()
 {
-	pCmdUI->SetCheck(theApp.m_NoActiveX);
-}
+	theApp.m_bSilent = !theApp.m_bSilent;
 
-
-void CSimpBrowserView::OnBrowserNoactivex()
-{
-	theApp.m_NoActiveX.toggle();
-
-	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_NOACTIVEX, theApp.m_NoActiveX ? 1 : 0))
+	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_SILENT, theApp.m_bSilent ? 1 : 0))
 	{
 		AfxMessageBox(I18N(_T("Failed save to ini.")));
 		return;
 	}
 }
+void CSimpBrowserView::OnUpdateBrowserSilent(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bSilent);
+}
+
+
+void CSimpBrowserView::onAmbientChangeCommon(CBool& boolval, LPCTSTR pKey)
+{
+	boolval.toggle();
+
+	ASSERT(pKey);
+	if (!theApp.WriteProfileInt(SEC_OPTION, pKey, boolval ? 1 : 0))
+	{
+		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		return;
+	}
+}
+
+void CSimpBrowserView::OnBrowserImage()
+{
+	onAmbientChangeCommon(theApp.m_bImage, KEY_IMAGE);
+}
+void CSimpBrowserView::OnUpdateBrowserImage(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bImage);
+}
+
+void CSimpBrowserView::OnBrowserScript()
+{
+	onAmbientChangeCommon(theApp.m_bScript, KEY_SCRIPT);
+}
+void CSimpBrowserView::OnUpdateBrowserScript(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bScript);
+}
+
+void CSimpBrowserView::OnBrowserJava()
+{
+	onAmbientChangeCommon(theApp.m_bJava, KEY_JAVA);
+}
+void CSimpBrowserView::OnUpdateBrowserJava(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bJava);
+}
+
+void CSimpBrowserView::OnBrowserActivex()
+{
+	onAmbientChangeCommon(theApp.m_bActiveX, KEY_ACTIVEX);
+}
+void CSimpBrowserView::OnUpdateBrowserActivex(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_bActiveX);
+}
+
+
+
 
 
 void CSimpBrowserView::OnDownloadComplete()
@@ -671,7 +707,7 @@ void CSimpBrowserView::OnDownloadComplete()
 void CSimpBrowserView::OnNavigateComplete2(LPCTSTR strURL)
 {
 	CHtmlView::OnNavigateComplete2(strURL);
-	m_pMyFrame->SetUrl(GetLocationURL());
+	m_pMyFrame->SetUrl((LPCWSTR)GetLocationURL());
 }
 
 
@@ -685,3 +721,7 @@ void CSimpBrowserView::OnForward()
 {
 	GoForward();
 }
+
+
+
+

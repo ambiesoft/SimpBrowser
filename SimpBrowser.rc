@@ -102,8 +102,10 @@ BEGIN
     POPUP "&Edit"
     BEGIN
         MENUITEM "&Silent",                     IDM_BROWSER_SILENT
-        MENUITEM "&No Script",                  IDM_BROWSER_NOSCRIPT
-        MENUITEM "No &ActiveX",                 IDM_BROWSER_NOACTIVEX
+        MENUITEM "&Image",                      IDM_BROWSER_IMAGE
+        MENUITEM "&Script",                     IDM_BROWSER_SCRIPT
+        MENUITEM "&Java",                       IDM_BROWSER_JAVA
+        MENUITEM "&ActiveX",                    IDM_BROWSER_ACTIVEX
         POPUP "&Browser Emulation"
         BEGIN
             MENUITEM "&Nothing",                    ID_BROWSEREMULATION_NOTHING

@@ -31,6 +31,7 @@ private:
 	CBool m_bScriptAmbient;
 	CBool m_bActivexAmbient;
 
+	void onAmbientChangeCommon(CBool& boolval, LPCTSTR pKey);
 public:
 	CString GetAmbientString();
 	// 
@@ -83,17 +84,21 @@ public:
 	afx_msg void OnBrowseremulation11000();
 	afx_msg void OnUpdateBrowseremulation11000(CCmdUI *pCmdUI);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
-	afx_msg void OnUpdateBrowserNoscript(CCmdUI *pCmdUI);
-	afx_msg void OnBrowserNoscript();
+	afx_msg void OnUpdateBrowserScript(CCmdUI *pCmdUI);
+	afx_msg void OnBrowserScript();
 	afx_msg void OnFileNew();
 	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
 	afx_msg void OnUrl();
-	afx_msg void OnUpdateBrowserNoactivex(CCmdUI *pCmdUI);
-	afx_msg void OnBrowserNoactivex();
+	afx_msg void OnUpdateBrowserActivex(CCmdUI *pCmdUI);
+	afx_msg void OnBrowserActivex();
 	virtual void OnDownloadComplete();
 	virtual void OnNavigateComplete2(LPCTSTR strURL);
 	afx_msg void OnBack();
 	afx_msg void OnForward();
+	afx_msg void OnBrowserJava();
+	afx_msg void OnUpdateBrowserJava(CCmdUI *pCmdUI);
+	afx_msg void OnBrowserImage();
+	afx_msg void OnUpdateBrowserImage(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 
