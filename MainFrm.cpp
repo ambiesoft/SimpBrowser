@@ -32,7 +32,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_STATUS_AMBIENT, OnUpdateAmbient)
 //	ON_WM_SIZE()
 	ON_WM_SIZING()
-	ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
+//	ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
+ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
+//ON_UPDATE_COMMAND_UI(ID_URL, &CMainFrame::OnUpdateUrl)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -248,7 +250,19 @@ void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 }
 
 
+//void CMainFrame::OnUrl()
+//{
+//	m_pMyView->OnUrl();
+//}
+
+
 void CMainFrame::OnUrl()
 {
-	m_pMyView->OnUrl();
+	m_pMyView->OnViewUrl();
 }
+
+
+//void CMainFrame::OnUpdateUrl(CCmdUI *pCmdUI)
+//{
+//	// m_pMyView->OnUpdateViewUrl(pCmdUI);
+//}

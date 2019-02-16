@@ -61,7 +61,9 @@ public:
 //	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
 	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
+//	afx_msg void OnUrl();
 	afx_msg void OnUrl();
+//	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
 };
 
 /////////////////////////////////////////////////////////////////////////////

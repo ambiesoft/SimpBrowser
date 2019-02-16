@@ -21,6 +21,9 @@ protected:
 public:
 	CSimpBrowserDoc* GetDocument();
 
+	// void OnUpdateViewUrl(CCmdUI *pCmdUI);
+	void OnViewUrl();
+
 private:
 	int ShowUrlDialog(CString& str);
 	bool NavigateOrSearch(const CString& url);
@@ -87,8 +90,8 @@ public:
 	afx_msg void OnUpdateBrowserScript(CCmdUI *pCmdUI);
 	afx_msg void OnBrowserScript();
 	afx_msg void OnFileNew();
-	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
-	afx_msg void OnUrl();
+//	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
+//	afx_msg void OnUrl();
 	afx_msg void OnUpdateBrowserActivex(CCmdUI *pCmdUI);
 	afx_msg void OnBrowserActivex();
 	virtual void OnDownloadComplete();

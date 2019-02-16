@@ -46,8 +46,8 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_SCRIPT, &CSimpBrowserView::OnUpdateBrowserScript)
 	ON_COMMAND(IDM_BROWSER_SCRIPT, &CSimpBrowserView::OnBrowserScript)
 	ON_COMMAND(ID_FILE_NEW, &CSimpBrowserView::OnFileNew)
-	ON_UPDATE_COMMAND_UI(ID_URL, &CSimpBrowserView::OnUpdateUrl)
-	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
+//	ON_UPDATE_COMMAND_UI(ID_URL, &CSimpBrowserView::OnUpdateUrl)
+//	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_ACTIVEX, &CSimpBrowserView::OnUpdateBrowserActivex)
 	ON_COMMAND(IDM_BROWSER_ACTIVEX, &CSimpBrowserView::OnBrowserActivex)
 	ON_COMMAND(ID_BACK, &CSimpBrowserView::OnBack)
@@ -568,7 +568,7 @@ void CSimpBrowserView::OnDropFiles(HDROP hDropInfo)
 
 int CSimpBrowserView::ShowUrlDialog(CString& str)
 {
-	CEnterUrlDialog dlg(this);
+	CEnterUrlDialog dlg; // (this);
 	dlg.m_strUrl = str;
 	int nRet = dlg.DoModal();
 	if (IDOK != nRet)
@@ -604,19 +604,20 @@ void CSimpBrowserView::OnFileNew()
 }
 
 
-void CSimpBrowserView::OnUpdateUrl(CCmdUI *pCmdUI)
-{
-	static _bstr_t lastUrl;
-	_bstr_t url = GetLocationURL();
-	if (url == lastUrl)
-		return;
+//void CSimpBrowserView::OnUpdateViewUrl(CCmdUI *pCmdUI)
+//{
+//	//static _bstr_t lastUrl;
+//	//_bstr_t url = GetLocationURL();
+//	//if (url == lastUrl)
+//	//	return;
+//
+//	pCmdUI->SetText(GetLocationURL());
+//	
+//	// lastUrl = url;
+//}
 
-	pCmdUI->SetText(url);
-	lastUrl = url;
-}
 
-
-void CSimpBrowserView::OnUrl()
+void CSimpBrowserView::OnViewUrl()
 {
 	CString url = (LPCWSTR)GetLocationURL();
 	if (IDOK != ShowUrlDialog(url))
