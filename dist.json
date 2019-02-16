@@ -1,7 +1,7 @@
 {
     "name": "SimpBrowser",
-    "solution": "SimpBrowser2013.sln",
-    "targetproject": "SimpBrowser2013",
+    "solution": "SimpBrowser.sln",
+    "targetproject": "SimpBrowser",
     "configuration": "Release",
     "targets": [
         {

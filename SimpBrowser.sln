@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpBrowser2013", "SimpBrowser2013.vcxproj", "{5F91C6A1-9F72-4B6E-8B1E-1A40D41D7E80}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpBrowser", "SimpBrowser.vcxproj", "{5F91C6A1-9F72-4B6E-8B1E-1A40D41D7E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
