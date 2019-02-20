@@ -321,10 +321,16 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 
 BOOL CSimpBrowserApp::SaveIni()
 {
-	BOOL bFailed = FALSE;
-	
-	
-	return !bFailed;
+	BOOL bSaveOK = true;
+	bSaveOK &= WriteProfileInt(SEC_OPTION, KEY_WIDTH, currentSize_.cx);
+	bSaveOK &= WriteProfileInt(SEC_OPTION, KEY_HEIGHT, currentSize_.cy);
+
+	if (!bSaveOK)
+	{
+		AfxMessageBox(I18N(_T("Failed to save ini.")));
+	}
+
+	return bSaveOK;
 }
 BOOL CSimpBrowserApp::LoadIni()
 {
@@ -735,7 +741,7 @@ BOOL CSimpBrowserApp::InitInstance()
 
 	OnFileNew();
 
-	((CMainFrame*)m_pMainWnd)->m_bMainWin = TRUE;
+	// ((CMainFrame*)m_pMainWnd)->m_bMainWin = TRUE;
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
 
@@ -948,4 +954,21 @@ void CSimpBrowserApp::RestartApp()
 {
 	m_bRestart = true;
 	AfxGetMainWnd()->SendMessage(WM_CLOSE);
+}
+
+void CSimpBrowserApp::AddFrame(CMainFrame* pFrame)
+{
+	mainFrames_.insert(pFrame);
+}
+
+void CSimpBrowserApp::RemoveFrame(CMainFrame* pFrame)
+{
+	mainFrames_.erase(pFrame);
+	if (m_pMainWnd == pFrame)
+	{
+		if (!mainFrames_.empty())
+		{
+			m_pMainWnd = *mainFrames_.begin();
+		}
+	}
 }

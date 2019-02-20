@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by SimpBrowser.rc
+// Microsoft Visual C++ で生成されたインクルード ファイル。
+// SimpBrowser.rc で使用
 //
 #define IDD_ABOUTBOX                    100
 #define ID_DEBUG_TEST                   101
@@ -37,6 +37,7 @@
 #define IDM_BROWSER_JAVA                32788
 #define ID_EDIT_IMAGE                   32789
 #define IDM_BROWSER_IMAGE               32790
+#define ID_REFRESH                      32791
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -45,7 +46,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
-#define _APS_NEXT_COMMAND_VALUE         32791
+#define _APS_NEXT_COMMAND_VALUE         32792
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           105
 #endif

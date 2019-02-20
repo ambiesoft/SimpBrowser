@@ -19,6 +19,8 @@
 //  SimpBrowser.cpp 
 //
 
+class CMainFrame;
+
 #define SEC_OPTION _T("option")
 #define KEY_SILENT _T("silent")
 #define KEY_IMAGE _T("image")
@@ -34,7 +36,12 @@ class CSimpBrowserApp : public CWinApp
 	CPoint m_startPos;
 	CSize m_startSize;
 
+	std::set<CMainFrame*> mainFrames_;
+
 public:
+	void AddFrame(CMainFrame* pFrame);
+	void RemoveFrame(CMainFrame* pFrame);
+
 	CPoint currentPos_;
 	CSize currentSize_;
 

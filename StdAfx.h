@@ -14,9 +14,9 @@
 #include <afxcmn.h>
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxhtml.h>
-#include <mshtmdid.h>
-
 #include <AFXINET.H>
+#include <afxcontrolbars.h>
+#include <mshtmdid.h>
 #include <comdef.h>
 #include <mshtml.h>
 
@@ -24,9 +24,10 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
-#include "../lsMisc/CBool.h"
-#include "../lsMisc/CInt.h"
+#include "../lsMisc/stdosd/CBool.h"
+#include "../lsMisc/stdosd/CNativeValue.h"
 #include "../lsMisc/GetClipboardText.h"
 #include "../lsMisc/tstring.h"
 #include "../lsMisc/GetFileNameFromHwnd.h"
@@ -40,12 +41,13 @@
 
 #include "../profile/cpp/Profile/include/ambiesoft.profile.h"
 
-#include <afxcontrolbars.h>
+
 
 #define I18N(t) t
 
 using namespace std;
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ 

@@ -19,9 +19,9 @@ protected: //
 
 	// 
 protected:
-	static int m_nFrameCount;
+	// static int m_nFrameCount;
 public:
-	CBool m_bMainWin;
+	/// CBool m_bMainWin;
 	CSimpBrowserView* m_pMyView;
 	// 
 public:
@@ -62,8 +62,9 @@ public:
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
 	virtual void OnUpdateFrameTitle(BOOL bAddToTitle);
 //	afx_msg void OnUrl();
-	afx_msg void OnUrl();
+//	afx_msg void OnUrl();
 //	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
+	afx_msg void OnDestroy();
 };
 
 /////////////////////////////////////////////////////////////////////////////

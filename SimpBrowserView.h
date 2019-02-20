@@ -22,7 +22,7 @@ public:
 	CSimpBrowserDoc* GetDocument();
 
 	// void OnUpdateViewUrl(CCmdUI *pCmdUI);
-	void OnViewUrl();
+	// void OnViewUrl();
 
 private:
 	int ShowUrlDialog(CString& str);
@@ -102,6 +102,8 @@ public:
 	afx_msg void OnUpdateBrowserJava(CCmdUI *pCmdUI);
 	afx_msg void OnBrowserImage();
 	afx_msg void OnUpdateBrowserImage(CCmdUI *pCmdUI);
+	afx_msg void OnRefresh();
+	afx_msg void OnUrl();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

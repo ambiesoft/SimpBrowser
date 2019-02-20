@@ -33,8 +33,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 //	ON_WM_SIZE()
 	ON_WM_SIZING()
 //	ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
-ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
+//ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
 //ON_UPDATE_COMMAND_UI(ID_URL, &CMainFrame::OnUpdateUrl)
+ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -79,19 +80,21 @@ void CMainFrame::OnUpdateAmbient(CCmdUI* pCmdUI)
 	pCmdUI->SetText(str);
 }
 
-int CMainFrame::m_nFrameCount;
+//int CMainFrame::m_nFrameCount;
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame
 
 CMainFrame::CMainFrame()
 {
 	m_pMyView = NULL;
-	m_nFrameCount++;
+	// m_nFrameCount++;
 }
 
 CMainFrame::~CMainFrame()
 {
-	m_nFrameCount--;
+	// m_nFrameCount--;
+	// For sure this is removed
+	theApp.RemoveFrame(this);
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -117,6 +120,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 #endif
 
 	DragAcceptFiles();
+
+	theApp.AddFrame(this);
 
 	return 0;
 }
@@ -175,31 +180,35 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 		if(!m_pMyView)
 			return FALSE;
 		((CSimpBrowserView*)m_pMyView)->m_pMyFrame = this;
+
+		SetActiveView(m_pMyView);
 	}
 	return TRUE;
 }
 
 void CMainFrame::OnClose() 
 {
-	if ( m_bMainWin )
-	{
-		if ( m_nFrameCount > 1 )
-		{
-			CString strMessage;
-			strMessage.LoadString(IDS_MESSAGE_OTHERWINEXISTCLOSE);
-			if ( IDYES != MessageBox(strMessage, _T("SimpBrowser"), MB_ICONQUESTION|MB_YESNO) )
-				return;
-		}
+	theApp.RemoveFrame(this);
 
-		BOOL bSaveOK = true;
-		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_WIDTH, theApp.currentSize_.cx);
-		bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_HEIGHT, theApp.currentSize_.cy);
+	//if ( m_bMainWin )
+	//{
+	//	if ( m_nFrameCount > 1 )
+	//	{
+	//		CString strMessage;
+	//		strMessage.LoadString(IDS_MESSAGE_OTHERWINEXISTCLOSE);
+	//		if ( IDYES != MessageBox(strMessage, _T("SimpBrowser"), MB_ICONQUESTION|MB_YESNO) )
+	//			return;
+	//	}
 
-		if (!bSaveOK)
-		{
-			AfxMessageBox(I18N(_T("Failed to save ini.")));
-		}
-	}
+	//	BOOL bSaveOK = true;
+	//	bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_WIDTH, theApp.currentSize_.cx);
+	//	bSaveOK &= theApp.WriteProfileInt(SEC_OPTION, KEY_HEIGHT, theApp.currentSize_.cy);
+
+	//	if (!bSaveOK)
+	//	{
+	//		AfxMessageBox(I18N(_T("Failed to save ini.")));
+	//	}
+	//}
 	
 	CFrameWnd::OnClose();
 }
@@ -256,13 +265,22 @@ void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 //}
 
 
-void CMainFrame::OnUrl()
-{
-	m_pMyView->OnViewUrl();
-}
+//void CMainFrame::OnUrl()
+//{
+//	m_pMyView->OnViewUrl();
+//}
 
 
 //void CMainFrame::OnUpdateUrl(CCmdUI *pCmdUI)
 //{
 //	// m_pMyView->OnUpdateViewUrl(pCmdUI);
 //}
+
+
+void CMainFrame::OnDestroy()
+{
+	// For sure this is removed
+	theApp.RemoveFrame(this);
+
+	CFrameWnd::OnDestroy();
+}

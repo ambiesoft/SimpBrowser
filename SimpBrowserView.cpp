@@ -56,6 +56,8 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_JAVA, &CSimpBrowserView::OnUpdateBrowserJava)
 	ON_COMMAND(IDM_BROWSER_IMAGE, &CSimpBrowserView::OnBrowserImage)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_IMAGE, &CSimpBrowserView::OnUpdateBrowserImage)
+	ON_COMMAND(ID_REFRESH, &CSimpBrowserView::OnRefresh)
+	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -617,14 +619,10 @@ void CSimpBrowserView::OnFileNew()
 //}
 
 
-void CSimpBrowserView::OnViewUrl()
-{
-	CString url = (LPCWSTR)GetLocationURL();
-	if (IDOK != ShowUrlDialog(url))
-		return;
-
-	NavigateOrSearch(url);
-}
+//void CSimpBrowserView::OnViewUrl()
+//{
+//
+//}
 
 
 
@@ -716,8 +714,10 @@ void CSimpBrowserView::OnBack()
 {
 	GoBack();
 }
-
-
+void CSimpBrowserView::OnRefresh()
+{
+	Refresh();
+}
 void CSimpBrowserView::OnForward()
 {
 	GoForward();
@@ -726,3 +726,15 @@ void CSimpBrowserView::OnForward()
 
 
 
+
+
+
+
+void CSimpBrowserView::OnUrl()
+{
+	CString url = (LPCWSTR)GetLocationURL();
+	if (IDOK != ShowUrlDialog(url))
+		return;
+
+	NavigateOrSearch(url);
+}
