@@ -114,6 +114,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	for(int i=1 ; i < _countof(indicators); ++i)
 		m_wndStatusBar.SetPaneInfo(i, indicators[i], SBPS_NORMAL, 100);
 
+	// Internationalize menu
+	i18nChangeMenuText(*GetMenu());
+
 #ifdef _DEBUG
 	CMenu* pMenu = GetMenu();
 	pMenu->AppendMenu(MF_STRING, ID_DEBUG_TEST, _T("Debug"));

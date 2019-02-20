@@ -84,9 +84,14 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)History.txt" "$(TargetDir)"
+
 copy "$(SolutionDir)README.md" "$(TargetDir)"
+
 copy "$(SolutionDir)LICENSE" "$(TargetDir)"
 
+
+mkdir "$(TargetDir)lang"
+copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -127,9 +132,14 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)History.txt" "$(TargetDir)"
+
 copy "$(SolutionDir)README.md" "$(TargetDir)"
+
 copy "$(SolutionDir)LICENSE" "$(TargetDir)"
 
+
+mkdir "$(TargetDir)lang"
+copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -154,6 +164,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\lsMisc\GetSpecialFolderPath.cpp" />
+    <ClCompile Include="..\lsMisc\I18N.cpp" />
     <ClCompile Include="..\lsMisc\OpenCommon.cpp" />
     <ClCompile Include="..\lsMisc\Registory.cpp" />
     <ClCompile Include="..\lsMisc\SetClipboardText.cpp" />
@@ -193,6 +204,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
     <ClInclude Include="..\lsMisc\GetFileNameFromHwnd.h" />
     <ClInclude Include="..\lsMisc\GetLastErrorString.h" />
     <ClInclude Include="..\lsMisc\GetSpecialFolderPath.h" />
+    <ClInclude Include="..\lsMisc\I18N.h" />
     <ClInclude Include="..\lsMisc\OpenCommon.h" />
     <ClInclude Include="..\lsMisc\Registory.h" />
     <ClInclude Include="..\lsMisc\SetClipboardText.h" />
@@ -218,6 +230,7 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
   </ItemGroup>
   <ItemGroup>
     <Text Include="History.txt" />
+    <Text Include="lang\jpn.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />

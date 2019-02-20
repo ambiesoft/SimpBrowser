@@ -518,7 +518,7 @@ void CSimpBrowserView::OnBrowserEmulationCommon(int mode)
 {
 	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_BROWSEREMULATION, mode))
 	{
-		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		AfxMessageBox(I18N(_T("Failed save ini")));
 		return;
 	}
 
@@ -634,7 +634,7 @@ void CSimpBrowserView::OnBrowserSilent()
 
 	if (!theApp.WriteProfileInt(SEC_OPTION, KEY_SILENT, theApp.m_bSilent ? 1 : 0))
 	{
-		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		AfxMessageBox(I18N(_T("Failed to save ini.")));
 		return;
 	}
 }
@@ -651,7 +651,7 @@ void CSimpBrowserView::onAmbientChangeCommon(CBool& boolval, LPCTSTR pKey)
 	ASSERT(pKey);
 	if (!theApp.WriteProfileInt(SEC_OPTION, pKey, boolval ? 1 : 0))
 	{
-		AfxMessageBox(I18N(_T("Failed save to ini.")));
+		AfxMessageBox(I18N(_T("Failed to save ini.")));
 		return;
 	}
 }

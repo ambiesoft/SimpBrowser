@@ -16,6 +16,9 @@
     <Filter Include="4 Dist Files">
       <UniqueIdentifier>{62227d55-13ef-4639-b6e0-4bd7aa769e77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="5 lang">
+      <UniqueIdentifier>{08f6fecd-773b-4bce-9746-804509fdb493}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -85,6 +88,9 @@
       <Filter>2 Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AboutDialog.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\I18N.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,6 +167,9 @@
     <ClInclude Include="AboutDialog.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\lsMisc\I18N.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\SimpBrowser.ico">
@@ -178,6 +187,9 @@
   <ItemGroup>
     <Text Include="History.txt">
       <Filter>4 Dist Files</Filter>
+    </Text>
+    <Text Include="lang\jpn.txt">
+      <Filter>5 lang</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

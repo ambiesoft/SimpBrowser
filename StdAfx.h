@@ -20,8 +20,6 @@
 #include <comdef.h>
 #include <mshtml.h>
 
-
-
 #include <string>
 #include <vector>
 #include <set>
@@ -38,12 +36,11 @@
 #include "../lsMisc/BrowserEmulation.h"
 #include "../lsMisc/OpenCommon.h"
 #include "../lsMisc/CreateProcessCommon.h"
+#include "../lsMisc/I18N.h"
 
 #include "../profile/cpp/Profile/include/ambiesoft.profile.h"
 
 
-
-#define I18N(t) t
 
 using namespace std;
 using namespace Ambiesoft;

@@ -500,7 +500,7 @@ BOOL CSimpBrowserApp::InitInstance()
 
 	if(!LoadIni())
 	{
-		AfxMessageBox(I18N(_T("Failed to load ini")));
+		AfxMessageBox(I18N(_T("Failed to load ini.")));
 		return FALSE;
 	}
 
@@ -932,7 +932,7 @@ int CSimpBrowserApp::ExitInstance()
 {
 	WaitDownloadWindow();
 	if(!SaveIni())
-		AfxMessageBox(I18N(_T("Failed to save ini")));
+		AfxMessageBox(I18N(_T("Failed to save ini.")));
 
 	if (m_bRestart)
 	{
@@ -953,7 +953,10 @@ int CSimpBrowserApp::ExitInstance()
 void CSimpBrowserApp::RestartApp()
 {
 	m_bRestart = true;
-	AfxGetMainWnd()->SendMessage(WM_CLOSE);
+
+	std::set<CMainFrame*> all = mainFrames_;
+	for (CMainFrame* pFrame : all)
+		pFrame->SendMessage(WM_CLOSE);
 }
 
 void CSimpBrowserApp::AddFrame(CMainFrame* pFrame)
