@@ -151,6 +151,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\lsMisc\CreateProcessCommon.cpp" />
+    <ClCompile Include="..\lsMisc\CreateSimpleWindow.cpp" />
     <ClCompile Include="..\lsMisc\GetClipboardText.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -200,6 +201,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClInclude Include="..\lsMisc\CreateCompleteDirectory.h" />
     <ClInclude Include="..\lsMisc\CreateFolderIniPath.h" />
     <ClInclude Include="..\lsMisc\CreateProcessCommon.h" />
+    <ClInclude Include="..\lsMisc\CreateSimpleWindow.h" />
     <ClInclude Include="..\lsMisc\GetClipboardText.h" />
     <ClInclude Include="..\lsMisc\GetFileNameFromHwnd.h" />
     <ClInclude Include="..\lsMisc\GetLastErrorString.h" />

@@ -58,6 +58,22 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_UPDATE_COMMAND_UI(IDM_BROWSER_IMAGE, &CSimpBrowserView::OnUpdateBrowserImage)
 	ON_COMMAND(ID_REFRESH, &CSimpBrowserView::OnRefresh)
 	ON_COMMAND(ID_URL, &CSimpBrowserView::OnUrl)
+	ON_COMMAND(ID_BROWSEREMULATION_10000, &CSimpBrowserView::OnBrowseremulation10000)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_10000, &CSimpBrowserView::OnUpdateBrowseremulation10000)
+	ON_COMMAND(ID_BROWSEREMULATION_10001, &CSimpBrowserView::OnBrowseremulation10001)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_10001, &CSimpBrowserView::OnUpdateBrowseremulation10001)
+	ON_COMMAND(ID_BROWSEREMULATION_11001, &CSimpBrowserView::OnBrowseremulation11001)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_11001, &CSimpBrowserView::OnUpdateBrowseremulation11001)
+	ON_COMMAND(ID_BROWSEREMULATION_7000, &CSimpBrowserView::OnBrowseremulation7000)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_7000, &CSimpBrowserView::OnUpdateBrowseremulation7000)
+	ON_COMMAND(ID_BROWSEREMULATION_8000, &CSimpBrowserView::OnBrowseremulation8000)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_8000, &CSimpBrowserView::OnUpdateBrowseremulation8000)
+	ON_COMMAND(ID_BROWSEREMULATION_8888, &CSimpBrowserView::OnBrowseremulation8888)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_8888, &CSimpBrowserView::OnUpdateBrowseremulation8888)
+	ON_COMMAND(ID_BROWSEREMULATION_9000, &CSimpBrowserView::OnBrowseremulation9000)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_9000, &CSimpBrowserView::OnUpdateBrowseremulation9000)
+	ON_COMMAND(ID_BROWSEREMULATION_9999, &CSimpBrowserView::OnBrowseremulation9999)
+	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_9999, &CSimpBrowserView::OnUpdateBrowseremulation9999)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -529,28 +545,6 @@ void CSimpBrowserView::OnBrowserEmulationCommon(int mode)
 		return;
 	}
 }
-void CSimpBrowserView::OnBrowseremulationNothing()
-{
-	OnBrowserEmulationCommon(-1);
-}
-
-
-void CSimpBrowserView::OnUpdateBrowseremulationNothing(CCmdUI *pCmdUI)
-{
-	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == -1 ? 1:0);
-}
-
-
-void CSimpBrowserView::OnBrowseremulation11000()
-{
-	OnBrowserEmulationCommon(11000);
-}
-
-
-void CSimpBrowserView::OnUpdateBrowseremulation11000(CCmdUI *pCmdUI)
-{
-	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == 11000 ? 1 : 0);
-}
 
 
 void CSimpBrowserView::OnDropFiles(HDROP hDropInfo)
@@ -738,3 +732,45 @@ void CSimpBrowserView::OnUrl()
 
 	NavigateOrSearch(url);
 }
+
+
+
+void CSimpBrowserView::OnBrowseremulationNothing()
+{
+	OnBrowserEmulationCommon(-1);
+}
+void CSimpBrowserView::OnUpdateBrowseremulationNothing(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == -1 ? 1 : 0);
+}
+
+#define BROWSER_EMULATION_HANDLER(emuver) \
+void CSimpBrowserView::OnBrowseremulation##emuver() \
+{ \
+	OnBrowserEmulationCommon(emuver); \
+} \
+void CSimpBrowserView::OnUpdateBrowseremulation##emuver(CCmdUI *pCmdUI) \
+{ \
+	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == emuver ? 1 : 0); \
+} \
+
+BROWSER_EMULATION_HANDLER(7000)
+BROWSER_EMULATION_HANDLER(8000)
+BROWSER_EMULATION_HANDLER(8888)
+BROWSER_EMULATION_HANDLER(9000)
+BROWSER_EMULATION_HANDLER(9999)
+BROWSER_EMULATION_HANDLER(10000)
+BROWSER_EMULATION_HANDLER(10001)
+BROWSER_EMULATION_HANDLER(11000)
+BROWSER_EMULATION_HANDLER(11001)
+
+//void CSimpBrowserView::OnBrowseremulation11000()
+//{
+//	OnBrowserEmulationCommon(11000);
+//}
+//void CSimpBrowserView::OnUpdateBrowseremulation11000(CCmdUI *pCmdUI)
+//{
+//	pCmdUI->SetCheck(theApp.m_nBrowserEmulation == 11000 ? 1 : 0);
+//}
+
+

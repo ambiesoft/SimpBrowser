@@ -38,6 +38,8 @@ BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	//        
 	//}}AFX_MSG_MAP
 	//  
+	ON_COMMAND(ID_VIEW_TRAYICON, &CSimpBrowserApp::OnViewTrayicon)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAYICON, &CSimpBrowserApp::OnUpdateViewTrayicon)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -93,6 +95,8 @@ enum COMMAND_OPTIONS {
 	
 	BROWSEREMULATION_ARG,
 	
+	SHOWNOTIFYICON_ARG,
+
 	HELP_ARG,
 };
 
@@ -313,6 +317,12 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 			strArgValue1 = *pp;
 			return BROWSEREMULATION_ARG;
 		}
+		else if (memcmp(p + 1, _T("shownotifyicon"), lstrlen(_T("shownotifyicon")) * sizeof(TCHAR)) == 0)
+		{
+			++pp;
+			strArgValue1 = *pp;
+			return SHOWNOTIFYICON_ARG;
+		}
 	}
 
 
@@ -343,6 +353,9 @@ BOOL CSimpBrowserApp::LoadIni()
 		GetProfileInt(SEC_OPTION, KEY_HEIGHT, 0));
 
 	m_nBrowserEmulation = GetProfileInt(SEC_OPTION, KEY_BROWSEREMULATION, 11000);
+
+	m_bShowNotifyIcon = !!GetProfileInt(SEC_OPTION, KEY_SHOW_NOTIFY_ICON, 1);
+
 	return TRUE;
 }
 
@@ -702,6 +715,18 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			break;
 
+			case SHOWNOTIFYICON_ARG:
+			{
+				if (strArgValue1.IsEmpty())
+				{
+					AfxMessageBox(I18N(L"shownotifyicon value must be specified."),
+						MB_ICONERROR);
+					return FALSE;
+				}
+				m_bShowNotifyIcon = StrToInt(strArgValue1) != 0;
+			}
+			break;
+
 			case HELP_ARG:
 			{
 				AfxMessageBox(GetHelpString(), MB_ICONINFORMATION);
@@ -713,6 +738,8 @@ BOOL CSimpBrowserApp::InitInstance()
 		}
 	}
 
+	if (m_bShowNotifyIcon)
+		updateTrayIcon();
 
 	wstring exe = stdwin32::stdGetModuleFileName();
 	exe = stdGetFileName(exe);
@@ -741,6 +768,7 @@ BOOL CSimpBrowserApp::InitInstance()
 
 	OnFileNew();
 
+	
 	// ((CMainFrame*)m_pMainWnd)->m_bMainWin = TRUE;
 	m_pMainWnd->ShowWindow(SW_SHOW);
 	m_pMainWnd->UpdateWindow();
@@ -947,6 +975,9 @@ int CSimpBrowserApp::ExitInstance()
 			AfxMessageBox(message);
 		}
 	}
+
+	updateTrayIcon(true);
+
 	return CWinApp::ExitInstance();
 }
 
@@ -974,4 +1005,88 @@ void CSimpBrowserApp::RemoveFrame(CMainFrame* pFrame)
 			m_pMainWnd = *mainFrames_.begin();
 		}
 	}
+}
+
+
+
+
+void CSimpBrowserApp::updateTrayIcon(bool bClose)
+{
+	enum {
+		TRAY_NONE,
+		TRAY_OPEN,
+		TRAY_CLOSE,
+	} action = TRAY_NONE;
+
+	// deside action
+	if (bClose)
+	{
+		if (m_bShowNotifyIcon)
+			action = TRAY_CLOSE;
+	}
+	else
+	{
+		action = m_bShowNotifyIcon ? TRAY_OPEN : TRAY_CLOSE;
+	}
+
+	if (action==TRAY_OPEN)
+	{
+		if (!m_hTrayIcon)
+			m_hTrayIcon = this->LoadIconW(IDR_MAINFRAME);
+		if (!m_hTrayWnd)
+			m_hTrayWnd = CreateSimpleWindow();
+		ASSERT(m_hTrayWnd);
+
+		NOTIFYICONDATA tnd = { 0 };
+		tnd.cbSize = sizeof(tnd);
+		tnd.hWnd = m_hTrayWnd;
+		tnd.uID = WM_APP_TRAY;
+		tnd.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+		tnd.uCallbackMessage = WM_APP_TRAY;
+		tnd.hIcon = m_hTrayIcon;
+
+		lstrcpyn(tnd.szTip, AfxGetAppName(), _countof(tnd.szTip) - 1);
+
+		VERIFY(Shell_NotifyIcon(NIM_ADD, &tnd));
+	}
+	else if (action==TRAY_CLOSE)
+	{
+		NOTIFYICONDATA tnd = { 0 };
+		tnd.cbSize = sizeof(tnd);
+		tnd.hWnd = m_hTrayWnd;
+		tnd.uID = WM_APP_TRAY;
+		tnd.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+		tnd.uCallbackMessage = WM_APP_TRAY;
+
+		Shell_NotifyIcon(NIM_DELETE, &tnd);
+	}
+
+
+	if (bClose)
+	{
+		if (m_hTrayIcon)
+		{
+			DestroyIcon(m_hTrayIcon);
+			m_hTrayIcon = NULL;
+		}
+		if (m_hTrayWnd)
+		{
+			VERIFY(DestroyWindow(m_hTrayWnd));
+			m_hTrayWnd = NULL;
+		}
+	}
+}
+
+void CSimpBrowserApp::OnUpdateViewTrayicon(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_bShowNotifyIcon);
+}
+void CSimpBrowserApp::OnViewTrayicon()
+{
+	m_bShowNotifyIcon.toggle();
+	if(!WriteProfileInt(SEC_OPTION, KEY_SHOW_NOTIFY_ICON, m_bShowNotifyIcon ? 1 : 0))
+	{
+		AfxMessageBox(I18N(_T("Failed to save ini.")));
+	}
+	updateTrayIcon();
 }

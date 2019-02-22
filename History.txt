@@ -1,3 +1,7 @@
+2019/02/22 ver1.8.3
+Tray Icon
+More browser emulation mode
+
 2019/02/20 ver1.8.2
 Any Windows can alive if the parent closes.
 I18N

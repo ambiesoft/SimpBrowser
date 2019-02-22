@@ -104,6 +104,24 @@ public:
 	afx_msg void OnUpdateBrowserImage(CCmdUI *pCmdUI);
 	afx_msg void OnRefresh();
 	afx_msg void OnUrl();
+	afx_msg void OnBrowseremulation10000();
+	afx_msg void OnUpdateBrowseremulation10000(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation10001();
+	afx_msg void OnUpdateBrowseremulation10001(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation11001();
+	afx_msg void OnUpdateBrowseremulation11001(CCmdUI *pCmdUI);
+//	afx_msg void OnBrowseremulation11002();
+//	afx_msg void OnUpdateBrowseremulation11002(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation7000();
+	afx_msg void OnUpdateBrowseremulation7000(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation8000();
+	afx_msg void OnUpdateBrowseremulation8000(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation8888();
+	afx_msg void OnUpdateBrowseremulation8888(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation9000();
+	afx_msg void OnUpdateBrowseremulation9000(CCmdUI *pCmdUI);
+	afx_msg void OnBrowseremulation9999();
+	afx_msg void OnUpdateBrowseremulation9999(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

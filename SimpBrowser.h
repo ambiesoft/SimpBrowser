@@ -14,6 +14,8 @@
 
 #include "resource.h"       //  
 
+#include "../lsMisc/CreateSimpleWindow.h"
+
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp:
 //  SimpBrowser.cpp 
@@ -30,13 +32,21 @@ class CMainFrame;
 #define KEY_WIDTH _T("width")
 #define KEY_HEIGHT _T("Height")
 #define KEY_BROWSEREMULATION _T("BrowserEmulation")
+#define KEY_SHOW_NOTIFY_ICON _T("ShowNotifyIcon")
 
+enum {
+	WM_APP_TRAY = WM_APP + 1,
+};
 class CSimpBrowserApp : public CWinApp
 {
 	CPoint m_startPos;
 	CSize m_startSize;
 
 	std::set<CMainFrame*> mainFrames_;
+	
+	CNativeValue<HICON> m_hTrayIcon;
+	CNativeValue<HWND> m_hTrayWnd;
+	void updateTrayIcon(bool bClose=false);
 
 public:
 	void AddFrame(CMainFrame* pFrame);
@@ -52,6 +62,8 @@ public:
 	} m_dwBoolCommands;
 
 	int m_nBrowserEmulation;
+
+	CBool m_bShowNotifyIcon;
 
 	CInt m_nNewWin;
 	CString m_strProxy;
@@ -120,6 +132,8 @@ public:
 	void setStartSize(const CSize& size) {
 		m_startSize = size;
 	}
+	afx_msg void OnViewTrayicon();
+	afx_msg void OnUpdateViewTrayicon(CCmdUI *pCmdUI);
 };
 
 extern CSimpBrowserApp theApp;
