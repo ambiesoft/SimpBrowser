@@ -134,6 +134,7 @@ public:
 	}
 	afx_msg void OnViewTrayicon();
 	afx_msg void OnUpdateViewTrayicon(CCmdUI *pCmdUI);
+	afx_msg void OnAppExit();
 };
 
 extern CSimpBrowserApp theApp;

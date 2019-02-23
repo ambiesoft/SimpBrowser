@@ -5,9 +5,14 @@
     "configuration": "Release",
     "targets": [
         {
-            "outdir": "C:\\Linkout\\SimpBrowser",
-            "setoutdirforbuild": true,
+            "outdir": "Release\\v120_xp\\SimpBrowser",
+            "setoutdirforbuild": false,
             "platform": "Win32"
+        },
+        {
+            "outdir": "Release\\v120_xp\\SimpBrowser",
+            "setoutdirforbuild": false,
+            "platform": "x64"
         }
     ],
     "ShouldBeFiles": [
@@ -16,7 +21,9 @@
         "README.md",
         "lang\\jpn.txt",
         "SimpBrowser.pdb",
-        "SimpBrowser.exe"
+        "SimpBrowser.exe",
+        "SimpBrowser64.pdb",
+        "SimpBrowser64.exe"
     ],
     "TotalFileCount": "exact",
     "archivedir": "C:\\Linkout",

@@ -451,7 +451,7 @@ void CSimpBrowserView::OnAboutBlank()
 	Navigate2(_T("about:blank"));
 }
 
-void CSimpBrowserView::OnTimer(UINT nIDEvent)
+void CSimpBrowserView::OnTimer(UINT_PTR nIDEvent)
 {
 	if (GetDocument()->m_bDone)
 	{
@@ -562,11 +562,11 @@ void CSimpBrowserView::OnDropFiles(HDROP hDropInfo)
 
 
 
-int CSimpBrowserView::ShowUrlDialog(CString& str)
+INT_PTR CSimpBrowserView::ShowUrlDialog(CString& str)
 {
 	CEnterUrlDialog dlg; // (this);
 	dlg.m_strUrl = str;
-	int nRet = dlg.DoModal();
+	INT_PTR nRet = dlg.DoModal();
 	if (IDOK != nRet)
 		return nRet;
 

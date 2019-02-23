@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	//  
 	ON_COMMAND(ID_VIEW_TRAYICON, &CSimpBrowserApp::OnViewTrayicon)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAYICON, &CSimpBrowserApp::OnUpdateViewTrayicon)
+	ON_COMMAND(ID_APP_EXIT, &CSimpBrowserApp::OnAppExit)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -158,6 +159,11 @@ CString CSimpBrowserApp::GetHelpString()
 
 	ret += L"  -startsize" L"\r\n";
 	ret += L"    Start size of the window, ex) 640,480" L"\r\n";
+
+
+	ret += L"  -browseremulation" L"\r\n";
+	ret += L"    Specify emulation number or 'nothing'" L"\r\n";
+
 
 	ret += L"\r\n";
 	wstring t = (L"ex) " + stdGetFileName(stdGetModuleFileName()) +L" -silent -noscript http://example.com" + L"\r\n");
@@ -711,7 +717,18 @@ BOOL CSimpBrowserApp::InitInstance()
 						MB_ICONERROR);
 					return FALSE;
 				}
-				m_nBrowserEmulation = StrToInt(strArgValue1);
+				if (strArgValue1.CompareNoCase(L"nothing") == 0)
+					m_nBrowserEmulation = -1;
+				else
+				{
+					if (!stdIsAsciiDigit((LPCWSTR)strArgValue1, strArgValue1.GetLength()))
+					{	
+						AfxMessageBox(I18N(L"browseremulation value must be a number or 'nothing'."),
+							MB_ICONERROR);
+							return FALSE;
+					}
+					m_nBrowserEmulation = StrToInt(strArgValue1);
+				}
 			}
 			break;
 
@@ -857,7 +874,7 @@ BOOL CALLBACK ewproc(HWND hwnd,  LPARAM lParam)
 	return TRUE;
 }
 
-int CALLBACK DialogProc(
+INT_PTR CALLBACK DialogProc(
 	HWND hwndDlg,
 	UINT uMsg,
 	WPARAM wParam,
@@ -985,9 +1002,7 @@ void CSimpBrowserApp::RestartApp()
 {
 	m_bRestart = true;
 
-	std::set<CMainFrame*> all = mainFrames_;
-	for (CMainFrame* pFrame : all)
-		pFrame->SendMessage(WM_CLOSE);
+	OnAppExit();
 }
 
 void CSimpBrowserApp::AddFrame(CMainFrame* pFrame)
@@ -1089,4 +1104,11 @@ void CSimpBrowserApp::OnViewTrayicon()
 		AfxMessageBox(I18N(_T("Failed to save ini.")));
 	}
 	updateTrayIcon();
+}
+
+void CSimpBrowserApp::OnAppExit()
+{
+	std::set<CMainFrame*> all = mainFrames_;
+	for (CMainFrame* pFrame : all)
+		pFrame->SendMessage(WM_CLOSE);
 }

@@ -25,9 +25,9 @@ public:
 	// void OnViewUrl();
 
 private:
-	int ShowUrlDialog(CString& str);
+	INT_PTR ShowUrlDialog(CString& str);
 	bool NavigateOrSearch(const CString& url);
-	CInt m_nTimerID;
+	CNativeValue<UINT_PTR> m_nTimerID;
 	
 	CBool m_bImageAmbient;
 	CBool m_bJavaAmbient;
@@ -75,7 +75,7 @@ protected:
 	//{{AFX_MSG(CSimpBrowserView)
 	afx_msg void OnFileReopen();
 	afx_msg void OnAboutBlank();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnOpenClipboard();
 	afx_msg void OnBrowserSilent();
 	afx_msg void OnUpdateBrowserSilent(CCmdUI* pCmdUI);
