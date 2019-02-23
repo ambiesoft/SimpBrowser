@@ -10,12 +10,9 @@
 #define IDR_MAINFRAME                   128
 #define IDR_SIMPBRTYPE                  129
 #define IDD_DIALOG_WAIT                 130
-#define IDD_DIALOG1                     131
 #define IDD_DIALOG_ENTERURL             131
 #define IDC_EDIT_URL                    1000
-#define IDC_BUTTON1                     1001
 #define IDC_BUTTON_COPY                 1001
-#define IDC_EDIT1                       1002
 #define IDC_EDIT_HELP                   1002
 #define ID_FILE_REOPEN                  32771
 #define ID_ABOUT_BLANK                  32772
@@ -25,10 +22,8 @@
 #define ID_BROWSEREMULATION_NOTHING     32776
 #define ID_BROWSEREMULATION_11000       32777
 #define ID_EDIT_NOSCRIPT                32778
-#define IDM_BROWSER_NOSCRIPT_OBSOLETE   32779
 #define ID_URL                          32780
 #define ID_EDIT_NOACTIVEX               32781
-#define IDM_BROWSER_NOACTIVEX_OBSOLETE  32782
 #define ID_FORWARD                      32783
 #define ID_BACK                         32784
 #define IDM_BROWSER_SCRIPT              32785
