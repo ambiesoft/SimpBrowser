@@ -1108,7 +1108,14 @@ void CSimpBrowserApp::OnViewTrayicon()
 
 void CSimpBrowserApp::OnAppExit()
 {
+	CloseAllWindows(nullptr);
+}
+
+void CSimpBrowserApp::CloseAllWindows(CMainFrame* pFrameException)
+{
 	std::set<CMainFrame*> all = mainFrames_;
 	for (CMainFrame* pFrame : all)
-		pFrame->SendMessage(WM_CLOSE);
+		if (pFrame != pFrameException)
+			pFrame->SendMessage(WM_CLOSE);
+
 }

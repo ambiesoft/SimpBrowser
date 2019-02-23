@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 //ON_COMMAND(ID_URL, &CMainFrame::OnUrl)
 //ON_UPDATE_COMMAND_UI(ID_URL, &CMainFrame::OnUpdateUrl)
 ON_WM_DESTROY()
+ON_COMMAND(ID_WINDOW_CLOSEBUTTHIS, &CMainFrame::OnWindowClosebutthis)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -255,29 +256,9 @@ void CMainFrame::SetUrl(CString strURL)
 
 void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 {
-	// TODO: Add your specialized code here and/or call the base class
-
-	// prevent title change
-	// CFrameWnd::OnUpdateFrameTitle(bAddToTitle);
 }
 
 
-//void CMainFrame::OnUrl()
-//{
-//	m_pMyView->OnUrl();
-//}
-
-
-//void CMainFrame::OnUrl()
-//{
-//	m_pMyView->OnViewUrl();
-//}
-
-
-//void CMainFrame::OnUpdateUrl(CCmdUI *pCmdUI)
-//{
-//	// m_pMyView->OnUpdateViewUrl(pCmdUI);
-//}
 
 
 void CMainFrame::OnDestroy()
@@ -286,4 +267,10 @@ void CMainFrame::OnDestroy()
 	theApp.RemoveFrame(this);
 
 	CFrameWnd::OnDestroy();
+}
+
+
+void CMainFrame::OnWindowClosebutthis()
+{
+	theApp.CloseAllWindows(this);
 }

@@ -65,6 +65,7 @@ public:
 //	afx_msg void OnUrl();
 //	afx_msg void OnUpdateUrl(CCmdUI *pCmdUI);
 	afx_msg void OnDestroy();
+	afx_msg void OnWindowClosebutthis();
 };
 
 /////////////////////////////////////////////////////////////////////////////

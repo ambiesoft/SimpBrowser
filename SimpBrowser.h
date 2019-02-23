@@ -51,6 +51,7 @@ class CSimpBrowserApp : public CWinApp
 public:
 	void AddFrame(CMainFrame* pFrame);
 	void RemoveFrame(CMainFrame* pFrame);
+	void CloseAllWindows(CMainFrame* pFrameException);
 
 	CPoint currentPos_;
 	CSize currentSize_;
