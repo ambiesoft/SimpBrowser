@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "../lsMisc/UrlEncode.h"
+#include "../lsMisc/SetTridentRawFocus.h"
 
 #include "SimpBrowser.h"
 
@@ -701,6 +702,9 @@ void CSimpBrowserView::OnNavigateComplete2(LPCTSTR strURL)
 {
 	CHtmlView::OnNavigateComplete2(strURL);
 	m_pMyFrame->SetUrl((LPCWSTR)GetLocationURL());
+	
+	IWebBrowser2Ptr pBrowser = this->GetBrowserApp();
+	SetTridentRawFocus(pBrowser);
 }
 
 
