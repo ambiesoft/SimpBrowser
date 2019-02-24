@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "../lsMisc/stdosd/stdosd.h"
+#include "../lsMisc/CommandLineString.h"
 
 #include "SimpBrowser.h"
 
@@ -758,20 +759,26 @@ BOOL CSimpBrowserApp::InitInstance()
 	if (m_bShowNotifyIcon)
 		updateTrayIcon();
 
-	wstring exe = stdwin32::stdGetModuleFileName();
-	exe = stdGetFileName(exe);
-	if (m_nBrowserEmulation == -1)
+	wstring exe = stdGetFileName(stdGetModuleFileName());
+	DWORD currentBrowserEmulation = -1;
+	GetBrowserEmulation(exe.c_str(), currentBrowserEmulation);
+	if (currentBrowserEmulation != m_nBrowserEmulation)
 	{
-		UnsetBrowserEmulation(exe.c_str());
-	}
-	else if (m_nBrowserEmulation >= 0)
-	{
-		if (!SetBrowserEmulation(exe.c_str(), m_nBrowserEmulation))
+		if (m_nBrowserEmulation == -1)
+		{
+			UnsetBrowserEmulation(exe.c_str());
+		}
+		else if (m_nBrowserEmulation >= 0)
+		{
+			SetBrowserEmulation(exe.c_str(), m_nBrowserEmulation);
+		}
+
+		GetBrowserEmulation(exe.c_str(), currentBrowserEmulation);
+		if (currentBrowserEmulation != m_nBrowserEmulation)
 		{
 			AfxMessageBox(I18N(L"Failed to set browser emulation."));
 		}
 	}
-
 	m_pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
 		RUNTIME_CLASS(CSimpBrowserDoc),
@@ -998,10 +1005,31 @@ int CSimpBrowserApp::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
-void CSimpBrowserApp::RestartApp()
+void CSimpBrowserApp::RestartApp(bool bNoEmulationArg)
 {
 	m_bRestart = true;
 
+	if (bNoEmulationArg)
+	{
+		CCommandLineString cmdline;
+		CString strCmdLine;
+		for (int i = 1; i < cmdline.getCount(); ++i)
+		{
+			if (cmdline.getArg(i) == L"-browseremulation")
+			{
+				++i;
+				continue;
+			}
+			
+			if (!strCmdLine.IsEmpty())
+				strCmdLine += L" ";
+			
+			strCmdLine += stdAddDQIfNecessary(cmdline.getArg(i)).c_str();
+		}
+		wchar_t* p = new wchar_t[strCmdLine.GetLength() + 1];
+		wcscpy(p, (LPCWSTR)strCmdLine);
+		m_pRestartArg.reset(p);
+	}
 	OnAppExit();
 }
 

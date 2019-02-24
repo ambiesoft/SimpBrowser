@@ -541,7 +541,7 @@ void CSimpBrowserView::OnBrowserEmulationCommon(int mode)
 	if (IDYES == AfxMessageBox(I18N(_T("Restart the application for the change to take effect. Do you want to restart now?")),
 		MB_ICONQUESTION | MB_YESNO))
 	{
-		theApp.RestartApp();
+		theApp.RestartApp(true);
 		return;
 	}
 }

@@ -1,3 +1,6 @@
+2019/02/24 ver1.8.6
+Remove -browseremulation arg when it has been changed and restarted
+
 2019/02/23 ver1.8.5
 Window menu
 

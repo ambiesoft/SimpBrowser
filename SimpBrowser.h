@@ -43,7 +43,8 @@ class CSimpBrowserApp : public CWinApp
 	CSize m_startSize;
 
 	std::set<CMainFrame*> mainFrames_;
-	
+	std::unique_ptr<wchar_t[]> m_pRestartArg;
+
 	CNativeValue<HICON> m_hTrayIcon;
 	CNativeValue<HWND> m_hTrayWnd;
 	void updateTrayIcon(bool bClose=false);
@@ -95,7 +96,7 @@ public:
 		return m_strProxy;
 	}
 
-	void RestartApp();
+	void RestartApp(bool bNoEmulationArg=false);
 private:
 	void WaitDownloadWindow();
 	BOOL SaveIni();
