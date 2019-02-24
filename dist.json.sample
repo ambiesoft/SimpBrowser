@@ -5,12 +5,12 @@
     "configuration": "Release",
     "targets": [
         {
-            "outdir": "Release\\v120_xp\\SimpBrowser",
+            "outdir": "Release/v120_xp/SimpBrowser",
             "setoutdirforbuild": false,
             "platform": "Win32"
         },
         {
-            "outdir": "Release\\v120_xp\\SimpBrowser",
+            "outdir": "Release/v120_xp/SimpBrowser",
             "setoutdirforbuild": false,
             "platform": "x64"
         }
@@ -19,14 +19,14 @@
         "History.txt",
         "LICENSE",
         "README.md",
-        "lang\\jpn.txt",
+        "lang/jpn.txt",
         "SimpBrowser.pdb",
         "SimpBrowser.exe",
         "SimpBrowser64.pdb",
         "SimpBrowser64.exe"
     ],
     "TotalFileCount": "exact",
-    "archivedir": "C:\\Linkout",
+    "archivedir": "C:/Linkout",
     "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/SimpBrowser/",
     "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=SimpBrowser/{}",
     "ShouldNotBeFiles": [],

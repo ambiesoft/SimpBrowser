@@ -11,4 +11,5 @@ ipch/
 
 *.vcxproj.user
 
+dist.json
 
