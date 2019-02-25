@@ -302,6 +302,8 @@ void CSimpBrowserView::OnDocumentComplete(LPCTSTR lpszURL)
 		OnSetForm();
 
 	updateTitle();
+
+	SetTridentRawFocus(GetBrowserApp());
 }
 
 
@@ -693,7 +695,7 @@ void CSimpBrowserView::OnUpdateBrowserActivex(CCmdUI *pCmdUI)
 
 void CSimpBrowserView::OnDownloadComplete()
 {
-	// m_pMyFrame->SetUrl(GetLocationURL());
+	SetTridentRawFocus(GetBrowserApp());
 	CHtmlView::OnDownloadComplete();
 }
 
