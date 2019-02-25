@@ -1,4 +1,5 @@
-﻿"&11000"="&11000"
+﻿# menu
+"&11000"="&11000"
 "&About SimpBrowser..."="SimpBrowserについて(&A)..."
 "&ActiveX"="&ActiveX"
 "&Browser Emulation"="ブラウザエミュレーション(&B)"
@@ -25,6 +26,10 @@
 "Reset to Blank"="ブランクにリセット"
 "Save &As..."="名前を付けて保存(&A)"
 "Sc&ript"="スクリプト(R)"
+"&Close but This"="これ以外を閉じる(&C)"
+"&Open with default web browser"="デフォルトのブラウザで開く(&)"
+"&Tray icon"="トレイアイコン(&T)"
+"&Window"="ウインドウ(&W)"
 
 "Restart the application for the change to take effect. Do you want to restart now?"="変更を反映するためアプリケーションの再起動が必要です。今再起動しますか？"
 
@@ -38,3 +43,8 @@
 "browseremulation value must be specified."="ブラウザエミュレーションの値を指定する必要があります。"
 "Failed to set browser emulation."="ブラウザエミュレーションの設定に失敗しました。"
 "Failed to launch app."="アプリの軌道に失敗しました。"
+
+"Failed to open URL. (%s)"="URLを開けませんでした。 (%s)"
+"Lang must be \"ENU\" or \"JPN\"."="Langは\"ENU\"か\"JPN\"でなければなりません。"
+
+

@@ -122,6 +122,7 @@ public:
 	afx_msg void OnUpdateBrowseremulation9000(CCmdUI *pCmdUI);
 	afx_msg void OnBrowseremulation9999();
 	afx_msg void OnUpdateBrowseremulation9999(CCmdUI *pCmdUI);
+	afx_msg void OnViewOpenwithdefaultwebbrowser();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

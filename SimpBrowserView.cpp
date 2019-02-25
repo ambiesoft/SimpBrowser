@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "../lsMisc/UrlEncode.h"
 #include "../lsMisc/SetTridentRawFocus.h"
+#include "../lsMisc/stdosd/stdosd.h"
 
 #include "SimpBrowser.h"
 
@@ -23,6 +24,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 using namespace Ambiesoft;
+using namespace Ambiesoft::stdosd;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserView
@@ -75,6 +77,7 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_9000, &CSimpBrowserView::OnUpdateBrowseremulation9000)
 	ON_COMMAND(ID_BROWSEREMULATION_9999, &CSimpBrowserView::OnBrowseremulation9999)
 	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_9999, &CSimpBrowserView::OnUpdateBrowseremulation9999)
+	ON_COMMAND(ID_VIEW_OPENWITHDEFAULTWEBBROWSER, &CSimpBrowserView::OnViewOpenwithdefaultwebbrowser)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -780,3 +783,20 @@ BROWSER_EMULATION_HANDLER(11001)
 //}
 
 
+
+
+void CSimpBrowserView::OnViewOpenwithdefaultwebbrowser()
+{
+	bstr_t url = GetLocationURL();
+	if (!url)
+	{
+		AfxMessageBox(L"URL is null.");
+		return;
+	}
+	
+	if (!OpenCommon(m_hWnd, url))
+	{
+		DWORD dwLE = GetLastError();
+		AfxMessageBox(stdFormat(I18N(L"Failed to open URL. (%s)"), GetLastErrorString(dwLE).c_str()).c_str());
+	}
+}

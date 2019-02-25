@@ -68,6 +68,9 @@ CSimpBrowserApp theApp;
 enum COMMAND_OPTIONS {
 	UNKNOWN_OPTION = -1,
 	MAIN_ARG,
+
+	LANG_ARG,
+
 	INPUTTEXT_ARG,
 	INPUTPASSWORD_ARG,
 	INPUTCHECKBOX_ARG,
@@ -119,6 +122,7 @@ CString CSimpBrowserApp::GetHelpString()
 
 
 	ret += 
+		L"[-lang LANG] "
 		L"[-it:A=B] [-ip:A=B] [-ic:A=L] "
 		L"[-image|-no-image] "
 		L"[-silent|-no-silent] "
@@ -134,6 +138,9 @@ CString CSimpBrowserApp::GetHelpString()
 		L"[-browseremulation BE]";
 	ret += L"\r\n";
 	ret += L"\r\n";
+
+	ret += L"  -lang" L"\r\n";
+	ret += L"    \"ENU\" or \"JPN\"" L"\r\n";
 
 	ret += L"  -it" L"\r\n";
 	ret += L"    Put text in input area on page." L"\r\n";
@@ -186,7 +193,15 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 	if (p[0] == _T('/') || p[0] == _T('-'))
 	{
 		LPCTSTR pCur = NULL;
-		if ((pCur = strStartWith(p + 1, _T("it:"))) != NULL)
+		if (false)
+		{ }
+		else if (memcmp(p + 1, _T("lang"), lstrlen(_T("lang")) * sizeof(TCHAR)) == 0)
+		{
+			++pp;
+			strArgValue1 = *pp;
+			return LANG_ARG;
+		}
+		else if ((pCur = strStartWith(p + 1, _T("it:"))) != NULL)
 		{
 			for (; *pCur != 0 && *pCur != _T('=') && *pCur != _T(' ') && *pCur != _T('\t'); ++pCur)
 			{
@@ -544,6 +559,17 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			break;
 
+			case LANG_ARG:
+			{
+				m_strLang = *pArg;
+				if (m_strLang.CompareNoCase(L"ENU") != 0 && m_strLang.CompareNoCase(L"JPN") != 0)
+				{
+					AfxMessageBox(I18N(L"Lang must be \"ENU\" or \"JPN\"."));
+					return -1;
+				}
+			}
+			break;
+
 			case MAIN_ARG:
 			{
 				m_strUrl = *pArg;
@@ -755,6 +781,9 @@ BOOL CSimpBrowserApp::InitInstance()
 			} // switch
 		}
 	}
+
+	if (!m_strLang.IsEmpty())
+		i18nInitLangmap(NULL, m_strLang);
 
 	if (m_bShowNotifyIcon)
 		updateTrayIcon();

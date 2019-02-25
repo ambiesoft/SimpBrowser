@@ -39,6 +39,8 @@ enum {
 };
 class CSimpBrowserApp : public CWinApp
 {
+	CString m_strLang;
+
 	CPoint m_startPos;
 	CSize m_startSize;
 
