@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 //ON_UPDATE_COMMAND_UI(ID_URL, &CMainFrame::OnUpdateUrl)
 ON_WM_DESTROY()
 ON_COMMAND(ID_WINDOW_CLOSEBUTTHIS, &CMainFrame::OnWindowClosebutthis)
+ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -273,4 +274,12 @@ void CMainFrame::OnDestroy()
 void CMainFrame::OnWindowClosebutthis()
 {
 	theApp.CloseAllWindows(this);
+}
+
+
+void CMainFrame::OnSetFocus(CWnd* pOldWnd)
+{
+	CFrameWnd::OnSetFocus(pOldWnd);
+
+	m_pMyView->SetBrowserFocus();
 }

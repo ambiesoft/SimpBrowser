@@ -56,6 +56,7 @@ public:
 	void OnSetForm();
 	void updateTitle();
 	bstr_t GetLocationURL() const;
+	
 
 public:
 	virtual ~CSimpBrowserView();
@@ -70,7 +71,9 @@ protected:
 	}
 	void OnBrowserEmulationCommon(int mode);
 
-	  
+public:
+	void SetBrowserFocus();
+
 protected:
 	//{{AFX_MSG(CSimpBrowserView)
 	afx_msg void OnFileReopen();

@@ -306,7 +306,8 @@ void CSimpBrowserView::OnDocumentComplete(LPCTSTR lpszURL)
 
 	updateTitle();
 
-	SetTridentRawFocus(GetBrowserApp());
+	if (GetActiveWindow() == m_pMyFrame)
+		SetTridentRawFocus(GetBrowserApp());
 }
 
 
@@ -698,7 +699,9 @@ void CSimpBrowserView::OnUpdateBrowserActivex(CCmdUI *pCmdUI)
 
 void CSimpBrowserView::OnDownloadComplete()
 {
-	SetTridentRawFocus(GetBrowserApp());
+	if (GetActiveWindow() == m_pMyFrame)
+		SetTridentRawFocus(GetBrowserApp());
+
 	CHtmlView::OnDownloadComplete();
 }
 
@@ -708,10 +711,15 @@ void CSimpBrowserView::OnNavigateComplete2(LPCTSTR strURL)
 	CHtmlView::OnNavigateComplete2(strURL);
 	m_pMyFrame->SetUrl((LPCWSTR)GetLocationURL());
 	
-	IWebBrowser2Ptr pBrowser = this->GetBrowserApp();
-	SetTridentRawFocus(pBrowser);
+	if (GetActiveWindow() == m_pMyFrame)
+		SetTridentRawFocus(GetBrowserApp());
 }
 
+void CSimpBrowserView::SetBrowserFocus()
+{
+	// called after frame got focus
+	SetTridentRawFocus(GetBrowserApp());
+}
 
 void CSimpBrowserView::OnBack()
 {
