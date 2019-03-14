@@ -66,6 +66,7 @@ public:
 	} m_dwBoolCommands;
 
 	int m_nBrowserEmulation;
+	CString m_strUserAgent;
 
 	CBool m_bShowNotifyIcon;
 
@@ -136,9 +137,17 @@ public:
 	void setStartSize(const CSize& size) {
 		m_startSize = size;
 	}
+	void setUA(LPCSTR pUA);
+	void setUAasBrowser(LPCSTR browser);
+
 	afx_msg void OnViewTrayicon();
 	afx_msg void OnUpdateViewTrayicon(CCmdUI *pCmdUI);
 	afx_msg void OnAppExit();
+	afx_msg void OnUseragentIe7();
+	afx_msg void OnUseragentIe8();
+	afx_msg void OnUseragentCustom();
+	afx_msg void OnUpdateUseragentIe7(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateUseragentIe8(CCmdUI *pCmdUI);
 };
 
 extern CSimpBrowserApp theApp;

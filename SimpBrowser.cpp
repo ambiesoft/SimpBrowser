@@ -2,6 +2,8 @@
 
 #include "../lsMisc/stdosd/stdosd.h"
 #include "../lsMisc/CommandLineString.h"
+#include "../lsMisc/SetUserAgent.h"
+#include "../lsMisc/UTF16toUTF8.h"
 
 #include "SimpBrowser.h"
 
@@ -42,6 +44,11 @@ BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	ON_COMMAND(ID_VIEW_TRAYICON, &CSimpBrowserApp::OnViewTrayicon)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAYICON, &CSimpBrowserApp::OnUpdateViewTrayicon)
 	ON_COMMAND(ID_APP_EXIT, &CSimpBrowserApp::OnAppExit)
+	ON_COMMAND(ID_USERAGENT_IE7, &CSimpBrowserApp::OnUseragentIe7)
+	ON_COMMAND(ID_USERAGENT_IE8, &CSimpBrowserApp::OnUseragentIe8)
+	ON_COMMAND(ID_USERAGENT_CUSTOM, &CSimpBrowserApp::OnUseragentCustom)
+	ON_UPDATE_COMMAND_UI(ID_USERAGENT_IE7, &CSimpBrowserApp::OnUpdateUseragentIe7)
+	ON_UPDATE_COMMAND_UI(ID_USERAGENT_IE8, &CSimpBrowserApp::OnUpdateUseragentIe8)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -99,7 +106,9 @@ enum COMMAND_OPTIONS {
 	PROXY_ARG,
 	
 	BROWSEREMULATION_ARG,
-	
+	USERAGENT_ARG,
+	UAASBROW_ARG,
+
 	SHOWNOTIFYICON_ARG,
 
 	HELP_ARG,
@@ -116,12 +125,12 @@ LPCTSTR strStartWith(LPCTSTR p1, LPCTSTR p2)
 CString CSimpBrowserApp::GetHelpString()
 {
 	CString ret;
-	wstring exe = stdGetFileName(stdGetModuleFileName());
+	wstring exe = stdGetFileName(stdGetModuleFileName<wchar_t>());
 	ret += exe.c_str();
 	ret += L" ";
 
 
-	ret += 
+	ret +=
 		L"[-lang LANG] "
 		L"[-it:A=B] [-ip:A=B] [-ic:A=L] "
 		L"[-image|-no-image] "
@@ -135,7 +144,10 @@ CString CSimpBrowserApp::GetHelpString()
 		L"[-startsize SIZE] "
 		L"[-newwin NEWWIN] "
 		L"[-proxy PROXY] "
-		L"[-browseremulation BE]";
+		L"[-browseremulation BE]"
+		L"[-useragent UA]"
+		L"[-uaasbrow BROWSER]"
+		L"";
 	ret += L"\r\n";
 	ret += L"\r\n";
 
@@ -172,9 +184,12 @@ CString CSimpBrowserApp::GetHelpString()
 	ret += L"  -browseremulation" L"\r\n";
 	ret += L"    Specify emulation number or 'nothing'" L"\r\n";
 
+	ret += L"  -uaasbrow" L"\r\n";
+	ret += L"    Specify IE7 or IE8" L"\r\n";
+
 
 	ret += L"\r\n";
-	wstring t = (L"ex) " + stdGetFileName(stdGetModuleFileName()) +L" -silent -noscript http://example.com" + L"\r\n");
+	wstring t = (L"ex) " + stdGetFileName(stdGetModuleFileName<wchar_t>()) +L" -silent -noscript http://example.com" + L"\r\n");
 	ret += CString(t.c_str());
 	ret += L"  Open http://example.com with no script errors and no script." L"\r\n";
 
@@ -338,6 +353,18 @@ COMMAND_OPTIONS GetOption(LPTSTR*& pp, CString& strArgValue1, CString& strArgVal
 			++pp;
 			strArgValue1 = *pp;
 			return BROWSEREMULATION_ARG;
+		}
+		else if (memcmp(p + 1, _T("useragent"), lstrlen(_T("useragent")) * sizeof(TCHAR)) == 0)
+		{
+			++pp;
+			strArgValue1 = *pp;
+			return USERAGENT_ARG;
+		}
+		else if (memcmp(p + 1, _T("uaasbrow"), lstrlen(_T("uaasbrow")) * sizeof(TCHAR)) == 0)
+		{
+			++pp;
+			strArgValue1 = *pp;
+			return UAASBROW_ARG;
 		}
 		else if (memcmp(p + 1, _T("shownotifyicon"), lstrlen(_T("shownotifyicon")) * sizeof(TCHAR)) == 0)
 		{
@@ -759,6 +786,40 @@ BOOL CSimpBrowserApp::InitInstance()
 			}
 			break;
 
+			case USERAGENT_ARG:
+			{
+				if (strArgValue1.IsEmpty())
+				{
+					AfxMessageBox(I18N(L"useragent value must be specified."),
+						MB_ICONERROR);
+					return FALSE;
+				}
+				m_strUserAgent = strArgValue1;
+			}
+			break;
+
+			case UAASBROW_ARG:
+			{
+				if (strArgValue1.IsEmpty())
+				{
+					AfxMessageBox(I18N(L"uaasbrow value must be specified."),
+						MB_ICONERROR);
+					return FALSE;
+				}
+				if (strArgValue1 != L"IE7" && strArgValue1 != L"IE8")
+				{
+					AfxMessageBox(I18N(L"uaasbrow must be 'IE7' or 'IE8'."),
+						MB_ICONERROR);
+					return FALSE;
+				}
+				m_strUserAgent = toStdWstringFromUtf8(
+					CUserAgentMap::GetInstance().GetUA(
+						toStdUtf8String(wstring(strArgValue1).c_str())
+						)
+					).c_str();
+			}
+			break;
+
 			case SHOWNOTIFYICON_ARG:
 			{
 				if (strArgValue1.IsEmpty())
@@ -785,10 +846,12 @@ BOOL CSimpBrowserApp::InitInstance()
 	if (!m_strLang.IsEmpty())
 		i18nInitLangmap(NULL, m_strLang);
 
+	
+
 	if (m_bShowNotifyIcon)
 		updateTrayIcon();
 
-	wstring exe = stdGetFileName(stdGetModuleFileName());
+	wstring exe = stdGetFileName(stdGetModuleFileName<wchar_t>());
 	DWORD currentBrowserEmulation = -1;
 	GetBrowserEmulation(exe.c_str(), currentBrowserEmulation);
 	if (currentBrowserEmulation != m_nBrowserEmulation)
@@ -807,6 +870,11 @@ BOOL CSimpBrowserApp::InitInstance()
 		{
 			AfxMessageBox(I18N(L"Failed to set browser emulation."));
 		}
+	}
+
+	if (!m_strUserAgent.IsEmpty())
+	{
+		setUA(toStdUtf8String(wstring(m_strUserAgent)).c_str());
 	}
 	m_pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
@@ -1042,7 +1110,7 @@ void CSimpBrowserApp::RestartApp(bool bNoEmulationArg)
 	{
 		CCommandLineString cmdline;
 		CString strCmdLine;
-		for (int i = 1; i < cmdline.getCount(); ++i)
+		for (size_t i = 1; i < cmdline.getCount(); ++i)
 		{
 			if (cmdline.getArg(i) == L"-browseremulation")
 			{
@@ -1175,4 +1243,48 @@ void CSimpBrowserApp::CloseAllWindows(CMainFrame* pFrameException)
 		if (pFrame != pFrameException)
 			pFrame->SendMessage(WM_CLOSE);
 
+}
+
+void CSimpBrowserApp::setUA(LPCSTR pUA)
+{
+	if (!SetUserAgent(pUA))
+	{
+		AfxMessageBox((wstring() + I18N(L"Failed to set UserAgent") + L":" + toStdWstringFromUtf8(pUA)).c_str());
+		return;
+	}
+	m_strUserAgent = pUA;
+}
+void CSimpBrowserApp::setUAasBrowser(LPCSTR browser)
+{
+	setUA(CUserAgentMap::GetInstance().GetUA(browser).c_str());
+}
+void CSimpBrowserApp::OnUseragentIe7()
+{
+	setUAasBrowser("IE7");
+}
+
+
+void CSimpBrowserApp::OnUseragentIe8()
+{
+	setUAasBrowser("IE8");
+}
+
+
+void CSimpBrowserApp::OnUseragentCustom()
+{
+
+}
+
+
+void CSimpBrowserApp::OnUpdateUseragentIe7(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_strUserAgent ==
+		toStdWstringFromUtf8(CUserAgentMap::GetInstance().GetUA("IE7")).c_str());
+}
+
+
+void CSimpBrowserApp::OnUpdateUseragentIe8(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_strUserAgent ==
+		toStdWstringFromUtf8(CUserAgentMap::GetInstance().GetUA("IE8")).c_str());
 }

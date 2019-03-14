@@ -19,6 +19,9 @@
     <Filter Include="5 lang">
       <UniqueIdentifier>{08f6fecd-773b-4bce-9746-804509fdb493}</UniqueIdentifier>
     </Filter>
+    <Filter Include="6 testdata">
+      <UniqueIdentifier>{bfd582d1-f0d8-43c3-baf8-5b9acf7987a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -182,6 +185,9 @@
     <ClInclude Include="..\lsMisc\SetTridentRawFocus.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\lsMisc\SetUserAgent.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\SimpBrowser.ico">
@@ -202,6 +208,9 @@
     </Text>
     <Text Include="lang\jpn.txt">
       <Filter>5 lang</Filter>
+    </Text>
+    <Text Include="testdata\data.txt">
+      <Filter>6 testdata</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

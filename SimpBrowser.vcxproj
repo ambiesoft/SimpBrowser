@@ -363,6 +363,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClInclude Include="..\lsMisc\Registory.h" />
     <ClInclude Include="..\lsMisc\SetClipboardText.h" />
     <ClInclude Include="..\lsMisc\SetTridentRawFocus.h" />
+    <ClInclude Include="..\lsMisc\SetUserAgent.h" />
     <ClInclude Include="..\lsMisc\stdosd\stdosd.h" />
     <ClInclude Include="..\lsMisc\stdwin32\stdwin32.h" />
     <ClInclude Include="..\lsMisc\UrlEncode.h" />
@@ -386,6 +387,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
   <ItemGroup>
     <Text Include="History.txt" />
     <Text Include="lang\jpn.txt" />
+    <Text Include="testdata\data.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />
