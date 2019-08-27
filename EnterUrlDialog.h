@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // CEnterUrlDialog dialog
@@ -25,4 +26,6 @@ public:
 		return m_strUrl;
 	}
 	afx_msg void OnBnClickedButtonCopy();
+	virtual BOOL OnInitDialog();
+	CEdit m_editUrl;
 };

@@ -285,6 +285,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     </ClCompile>
     <ClCompile Include="..\lsMisc\CreateProcessCommon.cpp" />
     <ClCompile Include="..\lsMisc\CreateSimpleWindow.cpp" />
+    <ClCompile Include="..\lsMisc\EnableTextTripleClickSelectAll.cpp" />
     <ClCompile Include="..\lsMisc\GetClipboardText.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
@@ -354,6 +355,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClInclude Include="..\lsMisc\CreateFolderIniPath.h" />
     <ClInclude Include="..\lsMisc\CreateProcessCommon.h" />
     <ClInclude Include="..\lsMisc\CreateSimpleWindow.h" />
+    <ClInclude Include="..\lsMisc\EnableTextTripleClickSelectAll.h" />
     <ClInclude Include="..\lsMisc\GetClipboardText.h" />
     <ClInclude Include="..\lsMisc\GetFileNameFromHwnd.h" />
     <ClInclude Include="..\lsMisc\GetLastErrorString.h" />

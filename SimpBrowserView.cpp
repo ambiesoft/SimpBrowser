@@ -592,7 +592,7 @@ bool CSimpBrowserView::NavigateOrSearch(const CString& url)
 	else
 	{
 		CString nav;
-		nav.Format(L"https://google.com/search?q=%s", UrlDecodeWstd((LPCTSTR)url).c_str());
+		nav.Format(L"https://google.com/search?q=%s", UrlDecodeStd<wstring>((LPCTSTR)url).c_str());
 		Navigate2(nav);
 	}
 	return true;
