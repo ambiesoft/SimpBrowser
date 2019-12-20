@@ -448,12 +448,12 @@ typedef struct {
 } INTERNET_PROXY_INFOA;
 
 
-BOOL ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
+BOOL ChangeProxySetting(PROXYTYPE useproxy, LPCSTR server, LPCSTR bypass)
 {
 	tstring error;
 	switch (useproxy)
 	{
-	case 0:
+	case PROXY_PRECONFIG:
 	{
 		INTERNET_PROXY_INFOA pi = { 0 };
 		pi.dwAccessType = INTERNET_OPEN_TYPE_PRECONFIG;
@@ -464,7 +464,7 @@ BOOL ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 	}
 	break;
 
-	case 1:
+	case PROXY_DIRECT:
 	{
 		INTERNET_PROXY_INFOA pi = { 0 };
 		pi.dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
@@ -475,7 +475,7 @@ BOOL ChangeProxySetting(int useproxy, LPCSTR server, LPCSTR bypass)
 	}
 	break;
 
-	case 2:
+	case PROXY_USEPROXY:
 	{
 		INTERNET_PROXY_INFOA pi = { 0 };
 		pi.dwAccessType = INTERNET_OPEN_TYPE_PROXY;
@@ -751,7 +751,7 @@ BOOL CSimpBrowserApp::InitInstance()
 				if(!strArgValue1.IsEmpty())
 				{
 					m_strProxy = (LPCTSTR)strArgValue1;
-					if (!ChangeProxySetting(2, bstr_t(m_strProxy), ""))
+					if (!ChangeProxySetting(PROXY_USEPROXY, bstr_t(m_strProxy), ""))
 					{
 						CString message;
 						message.Format(I18N(L"Failed to set proxy as %s"), (LPCTSTR)m_strProxy);

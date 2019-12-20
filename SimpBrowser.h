@@ -37,6 +37,13 @@ class CMainFrame;
 enum {
 	WM_APP_TRAY = WM_APP + 1,
 };
+
+enum PROXYTYPE {
+	PROXY_PRECONFIG = 0,
+	PROXY_DIRECT = 1,
+	PROXY_USEPROXY,
+};
+
 class CSimpBrowserApp : public CWinApp
 {
 	CString m_strLang;
