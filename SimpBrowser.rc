@@ -133,6 +133,9 @@ BEGIN
         MENUITEM "&Tray icon",                  ID_VIEW_TRAYICON
         MENUITEM SEPARATOR
         MENUITEM "&Open with default web browser", ID_VIEW_OPENWITHDEFAULTWEBBROWSER
+        MENUITEM SEPARATOR
+        MENUITEM "Go to &Prev page",            ID_VIEW_GOTOPREVPAGE
+        MENUITEM "Go to &Next page",            ID_VIEW_GOTONEXTPAGE
     END
     MENUITEM "<-",                          ID_BACK
     MENUITEM "&Refresh",                    ID_REFRESH

@@ -78,6 +78,8 @@ BEGIN_MESSAGE_MAP(CSimpBrowserView, CHtmlView)
 	ON_COMMAND(ID_BROWSEREMULATION_9999, &CSimpBrowserView::OnBrowseremulation9999)
 	ON_UPDATE_COMMAND_UI(ID_BROWSEREMULATION_9999, &CSimpBrowserView::OnUpdateBrowseremulation9999)
 	ON_COMMAND(ID_VIEW_OPENWITHDEFAULTWEBBROWSER, &CSimpBrowserView::OnViewOpenwithdefaultwebbrowser)
+	ON_COMMAND(ID_VIEW_GOTONEXTPAGE, &CSimpBrowserView::OnViewGotonextpage)
+	ON_COMMAND(ID_VIEW_GOTOPREVPAGE, &CSimpBrowserView::OnViewGotoprevpage)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -807,4 +809,61 @@ void CSimpBrowserView::OnViewOpenwithdefaultwebbrowser()
 		DWORD dwLE = GetLastError();
 		AfxMessageBox(stdFormat(I18N(L"Failed to open URL. (%s)"), GetLastErrorString(dwLE).c_str()).c_str());
 	}
+}
+
+
+void CSimpBrowserView::OnGotoNextOrPrevPage(const bool bNext)
+{
+	wstring url = (LPCWSTR)GetLocationURL();
+	if (url.empty())
+	{
+		AfxMessageBox(I18N(L"URL is empty."));
+		return;
+	}
+
+	// Find pos of last number
+	size_t lastNPos = url.find_last_of(L"0123456789");
+	if (lastNPos == wstring::npos)
+	{
+		AfxMessageBox(I18N(L"Number not found in URL."));
+		return;
+	}
+
+	// Extract Number
+	wstring strNumber;
+	size_t curNPos = lastNPos;
+	for (; curNPos != (size_t)-1 ; --curNPos)
+	{
+		wchar_t cNumber = url[curNPos];
+		if (!(L'0' <= cNumber && cNumber <= L'9'))
+			break;
+
+		strNumber = cNumber + strNumber;
+	} 
+	size_t startNPos = curNPos;
+
+	if (strNumber.empty())
+	{
+		AfxMessageBox(I18N(L"Failed to extract number."));
+		return;
+	}
+
+	// remove starting 0
+	size_t nDigit = strNumber.size();
+	strNumber = stdTrimStart(strNumber, L"0");
+	LONGLONG llNumber = _wtoi64(strNumber.c_str()) + (bNext ? 1 : -1);
+
+
+	wstring newUrl = url.substr(0, startNPos + 1) + stdFillWithZero(to_wstring(llNumber), nDigit) + url.substr(lastNPos + 1);
+	Navigate2(newUrl.c_str());
+}
+
+void CSimpBrowserView::OnViewGotonextpage()
+{
+	OnGotoNextOrPrevPage(true);
+}
+
+void CSimpBrowserView::OnViewGotoprevpage()
+{
+	OnGotoNextOrPrevPage(false);
 }

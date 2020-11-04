@@ -70,6 +70,7 @@ protected:
 		return m_pBrowserApp;
 	}
 	void OnBrowserEmulationCommon(int mode);
+	void OnGotoNextOrPrevPage(const bool bNext);
 
 public:
 	void SetBrowserFocus();
@@ -126,6 +127,8 @@ public:
 	afx_msg void OnBrowseremulation9999();
 	afx_msg void OnUpdateBrowseremulation9999(CCmdUI *pCmdUI);
 	afx_msg void OnViewOpenwithdefaultwebbrowser();
+	afx_msg void OnViewGotonextpage();
+	afx_msg void OnViewGotoprevpage();
 };
 
 #ifndef _DEBUG  // SimpBrowserView.cpp 

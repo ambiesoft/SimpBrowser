@@ -48,6 +48,8 @@
 #define ID_USERAGENT_IE8                32804
 #define ID_USERAGENT_CUSTOM             32805
 #define ID_USERAGENT_IE7                32806
+#define ID_VIEW_GOTONEXTPAGE            32807
+#define ID_VIEW_GOTOPREVPAGE            32808
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -56,7 +58,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
-#define _APS_NEXT_COMMAND_VALUE         32807
+#define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
