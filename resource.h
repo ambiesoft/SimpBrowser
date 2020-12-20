@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by SimpBrowser.rc
+// Microsoft Visual C++ で生成されたインクルード ファイル。
+// SimpBrowser.rc で使用
 //
 #define IDD_ABOUTBOX                    100
 #define ID_DEBUG_TEST                   101
@@ -11,9 +11,11 @@
 #define IDR_SIMPBRTYPE                  129
 #define IDD_DIALOG_WAIT                 130
 #define IDD_DIALOG_ENTERURL             131
+#define IDD_DIALOG_PROXY                132
 #define IDC_EDIT_URL                    1000
 #define IDC_BUTTON_COPY                 1001
 #define IDC_EDIT_HELP                   1002
+#define IDC_EDIT_PROXYSERVER            1003
 #define ID_FILE_REOPEN                  32771
 #define ID_ABOUT_BLANK                  32772
 #define ID_OPEN_CLIPBOARD               32773
@@ -50,6 +52,10 @@
 #define ID_USERAGENT_IE7                32806
 #define ID_VIEW_GOTONEXTPAGE            32807
 #define ID_VIEW_GOTOPREVPAGE            32808
+#define ID_EDIT_PROXY                   32809
+#define ID_PROXY_DIRECT                 32810
+#define ID_PROXY_PRECONFIG              32811
+#define ID_PROXY_NEWPROXYSERVER         32812
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -57,9 +63,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        132
-#define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1003
+#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_COMMAND_VALUE         32813
+#define _APS_NEXT_CONTROL_VALUE         1004
 #define _APS_NEXT_SYMED_VALUE           105
 #endif
 #endif

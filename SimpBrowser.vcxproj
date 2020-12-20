@@ -307,6 +307,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClCompile Include="..\lsMisc\GetSpecialFolderPath.cpp" />
     <ClCompile Include="..\lsMisc\I18N.cpp" />
     <ClCompile Include="..\lsMisc\OpenCommon.cpp" />
+    <ClCompile Include="..\lsMisc\ProxySetting.cpp" />
     <ClCompile Include="..\lsMisc\Registory.cpp" />
     <ClCompile Include="..\lsMisc\SetClipboardText.cpp" />
     <ClCompile Include="..\lsMisc\SetTridentRawFocus.cpp">
@@ -333,6 +334,8 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="EnterUrlDialog.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="ProxyDialog.cpp" />
+    <ClCompile Include="ProxyInfo.cpp" />
     <ClCompile Include="SimpBrowser.cpp" />
     <ClCompile Include="SimpBrowserDoc.cpp" />
     <ClCompile Include="SimpBrowserView.cpp" />
@@ -362,6 +365,7 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClInclude Include="..\lsMisc\GetSpecialFolderPath.h" />
     <ClInclude Include="..\lsMisc\I18N.h" />
     <ClInclude Include="..\lsMisc\OpenCommon.h" />
+    <ClInclude Include="..\lsMisc\ProxySetting.h" />
     <ClInclude Include="..\lsMisc\Registory.h" />
     <ClInclude Include="..\lsMisc\SetClipboardText.h" />
     <ClInclude Include="..\lsMisc\SetTridentRawFocus.h" />
@@ -373,6 +377,8 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
     <ClInclude Include="AboutDialog.h" />
     <ClInclude Include="EnterUrlDialog.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="ProxyDialog.h" />
+    <ClInclude Include="ProxyInfo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SimpBrowser.h" />
     <ClInclude Include="SimpBrowserDoc.h" />

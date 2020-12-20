@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <memory>
 
 #include "../lsMisc/stdosd/CBool.h"
 #include "../lsMisc/stdosd/CNativeValue.h"
@@ -37,9 +38,13 @@
 #include "../lsMisc/OpenCommon.h"
 #include "../lsMisc/CreateProcessCommon.h"
 #include "../lsMisc/I18N.h"
+#include "../lsMisc/ProxySetting.h"
 
 #include "../profile/cpp/Profile/include/ambiesoft.profile.h"
 
+enum {
+	WM_APP_TRAY = WM_APP + 1,
+};
 
 
 using namespace std;

@@ -15,6 +15,7 @@
 #include "resource.h"       //  
 
 #include "../lsMisc/CreateSimpleWindow.h"
+#include "ProxyInfo.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp:
@@ -24,6 +25,7 @@
 class CMainFrame;
 
 #define SEC_OPTION _T("option")
+#define SEC_PROXY "proxy"
 #define KEY_SILENT _T("silent")
 #define KEY_IMAGE _T("image")
 #define KEY_SCRIPT _T("script")
@@ -34,15 +36,7 @@ class CMainFrame;
 #define KEY_BROWSEREMULATION _T("BrowserEmulation")
 #define KEY_SHOW_NOTIFY_ICON _T("ShowNotifyIcon")
 
-enum {
-	WM_APP_TRAY = WM_APP + 1,
-};
 
-enum PROXYTYPE {
-	PROXY_PRECONFIG = 0,
-	PROXY_DIRECT = 1,
-	PROXY_USEPROXY,
-};
 
 class CSimpBrowserApp : public CWinApp
 {
@@ -78,7 +72,8 @@ public:
 	CBool m_bShowNotifyIcon;
 
 	CInt m_nNewWin;
-	CString m_strProxy;
+	//CString m_strProxy;
+	CProxyInfo proxyInfo_;
 
 	CBool m_bRestart;
 
@@ -101,9 +96,7 @@ public:
 	CSimpBrowserApp();
 
 	CString GetProxyString() const {
-		if(m_strProxy.IsEmpty())
-			return _T("PreConfig");
-		return m_strProxy;
+		return proxyInfo_.toString();
 	}
 
 	void RestartApp(bool bNoEmulationArg=false);
@@ -111,6 +104,8 @@ private:
 	void WaitDownloadWindow();
 	BOOL SaveIni();
 	BOOL LoadIni();
+
+	
 
 	// 
 	// ClassWizard 
@@ -155,6 +150,11 @@ public:
 	afx_msg void OnUseragentCustom();
 	afx_msg void OnUpdateUseragentIe7(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateUseragentIe8(CCmdUI *pCmdUI);
+	afx_msg void OnProxyDirect();
+	afx_msg void OnUpdateProxyDirect(CCmdUI *pCmdUI);
+	afx_msg void OnProxyPreconfig();
+	afx_msg void OnUpdateProxyPreconfig(CCmdUI *pCmdUI);
+	afx_msg void OnProxyNewproxyserver();
 };
 
 extern CSimpBrowserApp theApp;

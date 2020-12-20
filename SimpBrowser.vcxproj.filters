@@ -105,6 +105,15 @@
     <ClCompile Include="..\lsMisc\EnableTextTripleClickSelectAll.cpp">
       <Filter>2 Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProxyInfo.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyDialog.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lsMisc\ProxySetting.cpp">
+      <Filter>2 Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainFrm.h">
@@ -192,6 +201,15 @@
       <Filter>1 Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\lsMisc\EnableTextTripleClickSelectAll.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyInfo.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyDialog.h">
+      <Filter>1 Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lsMisc\ProxySetting.h">
       <Filter>1 Header Files</Filter>
     </ClInclude>
   </ItemGroup>

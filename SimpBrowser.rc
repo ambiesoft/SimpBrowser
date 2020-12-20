@@ -13,59 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Japanese (Japan) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
-LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
-#pragma code_page(932)
-
-#ifdef APSTUDIO_INVOKED
-/////////////////////////////////////////////////////////////////////////////
-//
-// TEXTINCLUDE
-//
-
-1 TEXTINCLUDE 
-BEGIN
-    "resource.h\0"
-END
-
-2 TEXTINCLUDE 
-BEGIN
-    "#include ""afxres.h""\r\n"
-    "\0"
-END
-
-3 TEXTINCLUDE 
-BEGIN
-    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
-    "#define _AFX_NO_OLE_RESOURCES\r\n"
-    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
-    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
-    "\r\n"
-    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-    "#ifdef _WIN32\r\n"
-    "LANGUAGE 9, 1\r\n"
-    "#pragma code_page(1252)\r\n"
-    "#endif //_WIN32\r\n"
-    "#include ""res\\SimpBrowser.rc2""  // Microsoft Visual C++ ?E?O?I?c?[???A?O?W?3?e?????\\?[?X\r\n"
-    "#include ""afxres.rc""         // ?W???I?R??g?|?[?l??g?g\r\n"
-    "#endif\r\n"
-    "\0"
-END
-
-#endif    // APSTUDIO_INVOKED
-
-#endif    // Japanese (Japan) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Neutral resources
+// ニュートラル resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-#pragma code_page(1252)
+#pragma code_page(932)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -125,6 +77,14 @@ BEGIN
             MENUITEM "IE8",                         ID_USERAGENT_IE8
             MENUITEM SEPARATOR
             MENUITEM "&Custom...",                  ID_USERAGENT_CUSTOM
+        END
+        POPUP "&Proxy"
+        BEGIN
+            MENUITEM "&PreConfig",                  ID_PROXY_PRECONFIG
+            MENUITEM "&Direct",                     ID_PROXY_DIRECT
+            MENUITEM SEPARATOR
+            MENUITEM "&New Proxy Server",           ID_PROXY_NEWPROXYSERVER
+            MENUITEM SEPARATOR
         END
     END
     POPUP "&View"
@@ -186,8 +146,8 @@ CAPTION "About SimpBrowser"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "SimpBrowser Version 1.8.12",IDC_STATIC,40,10,119,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2019",IDC_STATIC,40,25,119,8
+    LTEXT           "SimpBrowser Version 1.8.13",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2020",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
     EDITTEXT        IDC_EDIT_HELP,7,41,221,116,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
 END
@@ -197,6 +157,27 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Sans Serif"
 BEGIN
+END
+
+IDD_DIALOG_ENTERURL DIALOGEX 0, 0, 366, 74
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "URL"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_URL,7,7,352,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Copy and Close",IDC_BUTTON_COPY,173,53,78,14
+    DEFPUSHBUTTON   "&Go",IDOK,255,53,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,309,53,50,14
+END
+
+IDD_DIALOG_PROXY DIALOGEX 0, 0, 467, 170
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,333,149,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,410,149,50,14
+    EDITTEXT        IDC_EDIT_PROXYSERVER,27,41,380,14,ES_AUTOHSCROLL
 END
 
 
@@ -225,10 +206,10 @@ BEGIN
             VALUE "FileDescription", "SimpBrowser MFC Application"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "SimpBrowser"
-            VALUE "LegalCopyright", "Copyright (C) 2019"
+            VALUE "LegalCopyright", "Copyright (C) 2020"
             VALUE "OriginalFilename", "SimpBrowser.EXE"
             VALUE "ProductName", "SimpBrowser Application"
-            VALUE "ProductVersion", "1.8.12.0"
+            VALUE "ProductVersion", "1.8.13.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -260,6 +241,22 @@ BEGIN
         RIGHTMARGIN, 179
         TOPMARGIN, 7
         BOTTOMMARGIN, 88
+    END
+
+    IDD_DIALOG_ENTERURL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 359
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 67
+    END
+
+    IDD_DIALOG_PROXY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 460
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 163
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -380,57 +377,59 @@ END
 STRINGTABLE
 BEGIN
     ID_STATUS_SETFORM       "             "
-    ID_STATUS_PROXY         "             "
+    ID_STATUS_PROXY         "Proxy: aaa.bbb.ccc.ddd:xxxxx    "
     ID_STATUS_AMBIENT       "       "
 END
 
-#endif    // Neutral resources
+#endif    // ニュートラル resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// 日本語 (日本) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_DIALOG_ENTERURL DIALOGEX 0, 0, 366, 74
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "URL"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    EDITTEXT        IDC_EDIT_URL,7,7,352,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "&Copy and Close",IDC_BUTTON_COPY,173,53,78,14
-    DEFPUSHBUTTON   "&Go",IDOK,255,53,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,309,53,50,14
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)
+LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT
+#pragma code_page(932)
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
 BEGIN
-    IDD_DIALOG_ENTERURL, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 359
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 67
-    END
+    "resource.h\0"
 END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\SimpBrowser.rc2""  // Microsoft Visual C++ ?E?O?I?c?[???A?O?W?3?e?????\\?[?X\r\n"
+    "#include ""afxres.rc""         // ?W???I?R??g?|?[?l??g?g\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
 #endif    // APSTUDIO_INVOKED
 
-#endif    // English (United States) resources
+#endif    // 日本語 (日本) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

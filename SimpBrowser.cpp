@@ -4,6 +4,7 @@
 #include "../lsMisc/CommandLineString.h"
 #include "../lsMisc/SetUserAgent.h"
 #include "../lsMisc/UTF16toUTF8.h"
+#include "../lsMisc/ProxySetting.h"
 
 #include "SimpBrowser.h"
 
@@ -15,6 +16,7 @@
 //#include "SubView.h"
 
 #include "AboutDialog.h"
+#include "ProxyDialog.h"
 
 #pragma comment(lib, "wininet.lib")
 
@@ -30,6 +32,7 @@ static char THIS_FILE[] = __FILE__;
 
 using namespace Ambiesoft::stdwin32;
 using namespace Ambiesoft::stdosd;
+using namespace Ambiesoft;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSimpBrowserApp
@@ -49,6 +52,11 @@ BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	ON_COMMAND(ID_USERAGENT_CUSTOM, &CSimpBrowserApp::OnUseragentCustom)
 	ON_UPDATE_COMMAND_UI(ID_USERAGENT_IE7, &CSimpBrowserApp::OnUpdateUseragentIe7)
 	ON_UPDATE_COMMAND_UI(ID_USERAGENT_IE8, &CSimpBrowserApp::OnUpdateUseragentIe8)
+	ON_COMMAND(ID_PROXY_DIRECT, &CSimpBrowserApp::OnProxyDirect)
+	ON_UPDATE_COMMAND_UI(ID_PROXY_DIRECT, &CSimpBrowserApp::OnUpdateProxyDirect)
+	ON_COMMAND(ID_PROXY_PRECONFIG, &CSimpBrowserApp::OnProxyPreconfig)
+	ON_UPDATE_COMMAND_UI(ID_PROXY_PRECONFIG, &CSimpBrowserApp::OnUpdateProxyPreconfig)
+	ON_COMMAND(ID_PROXY_NEWPROXYSERVER, &CSimpBrowserApp::OnProxyNewproxyserver)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -383,7 +391,7 @@ BOOL CSimpBrowserApp::SaveIni()
 	BOOL bSaveOK = true;
 	bSaveOK &= WriteProfileInt(SEC_OPTION, KEY_WIDTH, currentSize_.cx);
 	bSaveOK &= WriteProfileInt(SEC_OPTION, KEY_HEIGHT, currentSize_.cy);
-
+	bSaveOK &= !!proxyInfo_.Save(m_pszProfileName, SEC_PROXY);
 	if (!bSaveOK)
 	{
 		AfxMessageBox(I18N(_T("Failed to save ini.")));
@@ -405,6 +413,7 @@ BOOL CSimpBrowserApp::LoadIni()
 
 	m_bShowNotifyIcon = !!GetProfileInt(SEC_OPTION, KEY_SHOW_NOTIFY_ICON, 1);
 
+	proxyInfo_.Load(m_pszProfileName, SEC_PROXY);
 	return TRUE;
 }
 
@@ -422,86 +431,6 @@ BOOL CSimpBrowserApp::LoadIni()
 
 
 
-
-
-
-typedef struct {
-
-    //
-    // dwAccessType - INTERNET_OPEN_TYPE_DIRECT, INTERNET_OPEN_TYPE_PROXY, or
-    // INTERNET_OPEN_TYPE_PRECONFIG (set only)
-    //
-
-    DWORD dwAccessType;
-
-    //
-    // lpszProxy - proxy server list
-    //
-
-    LPCSTR lpszProxy;
-
-    //
-    // lpszProxyBypass - proxy bypass list
-    //
-
-    LPCSTR lpszProxyBypass;
-} INTERNET_PROXY_INFOA;
-
-
-BOOL ChangeProxySetting(PROXYTYPE useproxy, LPCSTR server, LPCSTR bypass)
-{
-	tstring error;
-	switch (useproxy)
-	{
-	case PROXY_PRECONFIG:
-	{
-		INTERNET_PROXY_INFOA pi = { 0 };
-		pi.dwAccessType = INTERNET_OPEN_TYPE_PRECONFIG;
-		if (!InternetSetOptionA(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
-		{
-			error = GetLastErrorString(GetLastError());
-		}
-	}
-	break;
-
-	case PROXY_DIRECT:
-	{
-		INTERNET_PROXY_INFOA pi = { 0 };
-		pi.dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
-		if (!InternetSetOptionA(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
-		{
-			error = GetLastErrorString(GetLastError());
-		}
-	}
-	break;
-
-	case PROXY_USEPROXY:
-	{
-		INTERNET_PROXY_INFOA pi = { 0 };
-		pi.dwAccessType = INTERNET_OPEN_TYPE_PROXY;
-		pi.lpszProxy = server;
-		pi.lpszProxyBypass = bypass;
-		if (!InternetSetOptionA(NULL, INTERNET_OPTION_PROXY, &pi, sizeof(pi)))
-		{
-			error = GetLastErrorString(GetLastError());
-		}
-	}
-	break;
-
-	default:
-		error = I18N(_T("Invalid Proxy Settings"));
-		break;
-	}
-
-	if (error.size() != 0)
-	{
-		tstring message = I18N(_T("Proxy Settings Failed."));
-		message += _T("\r\n") + error;
-		AfxMessageBox(message.c_str());
-	}
-
-	return error.size()==0;
-}
 
 
 
@@ -750,15 +679,7 @@ BOOL CSimpBrowserApp::InitInstance()
 			{
 				if(!strArgValue1.IsEmpty())
 				{
-					m_strProxy = (LPCTSTR)strArgValue1;
-					if (!ChangeProxySetting(PROXY_USEPROXY, bstr_t(m_strProxy), ""))
-					{
-						CString message;
-						message.Format(I18N(L"Failed to set proxy as %s"), (LPCTSTR)m_strProxy);
-						AfxMessageBox(message, MB_ICONERROR);
-
-						return FALSE;
-					}
+					proxyInfo_.SetProxyServer(strArgValue1);
 				}
 			}
 			break;
@@ -846,7 +767,16 @@ BOOL CSimpBrowserApp::InitInstance()
 	if (!m_strLang.IsEmpty())
 		i18nInitLangmap(NULL, m_strLang);
 
-	
+
+	if (!proxyInfo_.UpdateProxy())
+	{
+		CString message;
+		message.Format(I18N(L"Failed to set proxy as %s"), proxyInfo_.toString());
+		AfxMessageBox(message, MB_ICONERROR);
+
+		return FALSE;
+	}
+
 
 	if (m_bShowNotifyIcon)
 		updateTrayIcon();
@@ -1288,3 +1218,52 @@ void CSimpBrowserApp::OnUpdateUseragentIe8(CCmdUI *pCmdUI)
 	pCmdUI->SetCheck(m_strUserAgent ==
 		toStdWstringFromUtf8(CUserAgentMap::GetInstance().GetUA("IE8")).c_str());
 }
+
+
+void CSimpBrowserApp::OnProxyDirect()
+{
+	if (!ChangeProxySetting(PROXYTYPE::PROXY_DIRECT, NULL, NULL))
+		return;
+
+	proxyInfo_.SetDirect();
+	proxyInfo_.SetNeedSave();
+}
+
+
+void CSimpBrowserApp::OnUpdateProxyDirect(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(proxyInfo_.IsDirect());
+}
+
+
+void CSimpBrowserApp::OnProxyPreconfig()
+{
+	if (!ChangeProxySetting(PROXYTYPE::PROXY_PRECONFIG, NULL, NULL))
+		return;
+
+	proxyInfo_.SetPreConfigt();
+	proxyInfo_.SetNeedSave();
+
+}
+
+
+void CSimpBrowserApp::OnUpdateProxyPreconfig(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(proxyInfo_.IsPreConfig());
+}
+
+
+void CSimpBrowserApp::OnProxyNewproxyserver()
+{
+	CProxyDialog dlg;
+	if (IDOK != dlg.DoModal())
+		return;
+
+	if (!ChangeProxySetting(PROXYTYPE::PROXY_USEPROXY, bstr_t( dlg.m_strProxyServer), NULL))
+		return;
+
+	proxyInfo_.SetProxyServer(dlg.m_strProxyServer);
+	proxyInfo_.SetNeedSave();
+}
+
+
