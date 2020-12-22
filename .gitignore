@@ -12,5 +12,4 @@ ipch/
 *.vcxproj.user
 
 dist.json
-dist.json.sample
 
