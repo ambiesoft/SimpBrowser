@@ -1,3 +1,6 @@
+2020/12/22 ver1.8.14
+toVS2019
+
 2020/12/20 ver1.8.13
 Add Proxy onto menu
 

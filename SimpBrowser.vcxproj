@@ -24,11 +24,12 @@
     <Keyword>MFCProj</Keyword>
     <ProjectGuid>{5F91C6A1-9F72-4B6E-8B1E-1A40D41D7E80}</ProjectGuid>
     <ProjectName>SimpBrowser</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -40,7 +41,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <UseOfMfc>Dynamic</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -134,6 +135,15 @@ copy "$(SolutionDir)LICENSE" "$(TargetDir)"
 
 mkdir "$(TargetDir)lang"
 copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
+
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir)Redist\$(TargetPlatformVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+dir /B /s "$(UniversalCRTSdkDir)Redist\$(TargetPlatformVersion)\ucrt\DLLs\$(PlatformTarget)\" &gt;&gt; "$(OutDir)RedistCopied.txt"
+
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"
+
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).MFC\*" /to:"$(OutDir)"
+dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).MFC\" &gt;&gt; "$(OutDir)RedistCopied.txt"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -188,8 +198,6 @@ copy "$(SolutionDir)lang\jpn.txt" "$(TargetDir)lang\"
       <Optimization>Disabled</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
-      <MinimalRebuild>true</MinimalRebuild>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>

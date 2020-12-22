@@ -146,7 +146,7 @@ CAPTION "About SimpBrowser"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
-    LTEXT           "SimpBrowser Version 1.8.13",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "SimpBrowser Version 1.8.14",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2020",IDC_STATIC,40,25,119,8
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
     EDITTEXT        IDC_EDIT_HELP,7,41,221,116,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
@@ -209,7 +209,7 @@ BEGIN
             VALUE "LegalCopyright", "Copyright (C) 2020"
             VALUE "OriginalFilename", "SimpBrowser.EXE"
             VALUE "ProductName", "SimpBrowser Application"
-            VALUE "ProductVersion", "1.8.13.0"
+            VALUE "ProductVersion", "1.8.14.0"
         END
     END
     BLOCK "VarFileInfo"
