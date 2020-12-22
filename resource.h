@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ で生成されたインクルード ファイル。
-// SimpBrowser.rc で使用
+// Microsoft Visual C++ generated include file.
+// Used by SimpBrowser.rc
 //
 #define IDD_ABOUTBOX                    100
 #define ID_DEBUG_TEST                   101
@@ -15,6 +15,8 @@
 #define IDC_EDIT_URL                    1000
 #define IDC_BUTTON_COPY                 1001
 #define IDC_EDIT_HELP                   1002
+#define IDC_BUTTON_COPY2                1002
+#define IDC_BUTTON_PASTEANDGO           1002
 #define IDC_EDIT_PROXYSERVER            1003
 #define ID_FILE_REOPEN                  32771
 #define ID_ABOUT_BLANK                  32772
@@ -63,7 +65,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_RESOURCE_VALUE        134
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1004
 #define _APS_NEXT_SYMED_VALUE           105

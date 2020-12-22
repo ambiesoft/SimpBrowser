@@ -578,8 +578,10 @@ INT_PTR CSimpBrowserView::ShowUrlDialog(CString& str)
 	INT_PTR nRet = dlg.DoModal();
 	if (IDOK != nRet)
 		return nRet;
-
-	str = dlg.m_strUrl;
+	if(!dlg.m_strUrlToGo.empty())
+		str = dlg.m_strUrlToGo.c_str();
+	else
+		str = dlg.m_strUrl;
 	return nRet;
 }
 bool CSimpBrowserView::NavigateOrSearch(const CString& url)

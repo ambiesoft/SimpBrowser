@@ -26,8 +26,6 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-//  
-
 
 BOOL CAboutDlg::OnInitDialog()
 {
