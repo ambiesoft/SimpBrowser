@@ -173,7 +173,7 @@ void CSimpBrowserView::OnInitialUpdate()
 		else
 		{
 #ifdef _DEBUG
-			Navigate2(_T("http://ambiesoft.fam.cx/webapp/testclient/"));
+			Navigate2(_T("http://ambiesoft.mooo.com/webapp/testclient/"));
 #else
 			Navigate2(_T("http://google.com"));
 #endif

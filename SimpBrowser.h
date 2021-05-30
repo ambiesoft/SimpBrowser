@@ -62,6 +62,8 @@ public:
 	void AddFrame(CMainFrame* pFrame);
 	void RemoveFrame(CMainFrame* pFrame);
 	void CloseAllWindows(CMainFrame* pFrameException);
+	void OnTrayLButtonUp();
+	void OnTrayRButtonUp();
 
 	CPoint currentPos_;
 	CSize currentSize_;

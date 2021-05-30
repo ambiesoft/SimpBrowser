@@ -1079,7 +1079,50 @@ void CSimpBrowserApp::RemoveFrame(CMainFrame* pFrame)
 
 
 
+LRESULT CALLBACK trayProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+	switch (msg)
+	{
+	case WM_APP_TRAY:
+		switch (lparam)
+		{
+			case WM_LBUTTONUP:
+			{
+				theApp.OnTrayLButtonUp();
+			}
+			break;
 
+			case WM_RBUTTONUP:
+			{
+				theApp.OnTrayRButtonUp();
+			}
+			break;
+		}
+		break;
+	}
+	return DefWindowProc(hwnd, msg, wparam, lparam);
+}
+
+void CSimpBrowserApp::OnTrayLButtonUp()
+{
+	for (auto mf : mainFrames_)
+		SetForegroundWindow(*mf);
+}
+void CSimpBrowserApp::OnTrayRButtonUp()
+{
+	//POINT apos;
+	//HMENU hSubMenu = CreateTrayPopupMenu();
+
+
+	//SetForegroundWindow(hWnd);
+	//GetCursorPos((LPPOINT)&apos);
+
+	//TrackPopupMenu(hSubMenu,
+	//	TPM_TOPALIGN | TPM_RIGHTBUTTON | TPM_LEFTBUTTON,
+	//	apos.x, apos.y, 0, hWnd, NULL);
+
+	//DestroyMenu(hSubMenu);
+}
 void CSimpBrowserApp::updateTrayIcon(TRAYICON tray)
 {
 	enum {
@@ -1104,7 +1147,7 @@ void CSimpBrowserApp::updateTrayIcon(TRAYICON tray)
 		if (!m_hTrayIcon)
 			m_hTrayIcon = this->LoadIconW(IDR_MAINFRAME);
 		if (!m_hTrayWnd)
-			m_hTrayWnd = CreateSimpleWindow();
+			m_hTrayWnd = CreateSimpleWindow(trayProc);
 		ASSERT(m_hTrayWnd);
 
 		NOTIFYICONDATA tnd = { 0 };
