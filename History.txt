@@ -1,3 +1,7 @@
+2021/05/30 ver1.8.16
+I18N
+Goto Webpage
+
 2021/05/30 ver1.8.15
 Paste and Go
 Trayclick to setforeground windows

@@ -65,3 +65,9 @@
 "IE7"="IE7"
 "IE8"="IE8"
 "Number not found in URL."="URLに番号が見つかりません。"
+
+"&Direct"="ダイレクト(&D)"
+"&New Proxy Server"="新規プロキシサーバー"
+"&PreConfig"="プリコンフィグ(&P)"
+"&Proxy"="プロキシ(&P)"
+"Goto &Webpage"="ウェブページへいく(&W)"

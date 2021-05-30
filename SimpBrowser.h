@@ -163,6 +163,7 @@ public:
 	afx_msg void OnProxyPreconfig();
 	afx_msg void OnUpdateProxyPreconfig(CCmdUI *pCmdUI);
 	afx_msg void OnProxyNewproxyserver();
+	afx_msg void OnHelpGotowebpage();
 };
 
 extern CSimpBrowserApp theApp;

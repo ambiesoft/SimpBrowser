@@ -58,6 +58,7 @@
 #define ID_PROXY_DIRECT                 32810
 #define ID_PROXY_PRECONFIG              32811
 #define ID_PROXY_NEWPROXYSERVER         32812
+#define ID_HELP_GOTOWEBPAGE             32813
 #define IDS_UNKNOWN_OPTION              61204
 #define IDS_MESSAGE_OTHERWINEXISTCLOSE  61205
 
@@ -66,7 +67,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        134
-#define _APS_NEXT_COMMAND_VALUE         32813
+#define _APS_NEXT_COMMAND_VALUE         32814
 #define _APS_NEXT_CONTROL_VALUE         1004
 #define _APS_NEXT_SYMED_VALUE           105
 #endif

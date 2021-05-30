@@ -57,6 +57,7 @@ BEGIN_MESSAGE_MAP(CSimpBrowserApp, CWinApp)
 	ON_COMMAND(ID_PROXY_PRECONFIG, &CSimpBrowserApp::OnProxyPreconfig)
 	ON_UPDATE_COMMAND_UI(ID_PROXY_PRECONFIG, &CSimpBrowserApp::OnUpdateProxyPreconfig)
 	ON_COMMAND(ID_PROXY_NEWPROXYSERVER, &CSimpBrowserApp::OnProxyNewproxyserver)
+	ON_COMMAND(ID_HELP_GOTOWEBPAGE, &CSimpBrowserApp::OnHelpGotowebpage)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1310,3 +1311,9 @@ void CSimpBrowserApp::OnProxyNewproxyserver()
 }
 
 
+
+
+void CSimpBrowserApp::OnHelpGotowebpage()
+{
+	OpenCommon(NULL, L"https://ambiesoft.github.io/webjumper/?target=SimpBrowser");
+}
