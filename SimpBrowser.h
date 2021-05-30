@@ -40,6 +40,12 @@ class CMainFrame;
 
 class CSimpBrowserApp : public CWinApp
 {
+public:
+	enum TRAYICON {
+		TRAYTOGGLE,
+		TRAYCLOSE,
+	};
+private:
 	CString m_strLang;
 
 	CPoint m_startPos;
@@ -50,7 +56,7 @@ class CSimpBrowserApp : public CWinApp
 
 	CNativeValue<HICON> m_hTrayIcon;
 	CNativeValue<HWND> m_hTrayWnd;
-	void updateTrayIcon(bool bClose=false);
+	void updateTrayIcon(TRAYICON tray = TRAYTOGGLE);
 
 public:
 	void AddFrame(CMainFrame* pFrame);

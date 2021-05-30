@@ -1027,7 +1027,7 @@ int CSimpBrowserApp::ExitInstance()
 		}
 	}
 
-	updateTrayIcon(true);
+	updateTrayIcon(TRAYCLOSE);
 
 	return CWinApp::ExitInstance();
 }
@@ -1080,7 +1080,7 @@ void CSimpBrowserApp::RemoveFrame(CMainFrame* pFrame)
 
 
 
-void CSimpBrowserApp::updateTrayIcon(bool bClose)
+void CSimpBrowserApp::updateTrayIcon(TRAYICON tray)
 {
 	enum {
 		TRAY_NONE,
@@ -1089,7 +1089,7 @@ void CSimpBrowserApp::updateTrayIcon(bool bClose)
 	} action = TRAY_NONE;
 
 	// deside action
-	if (bClose)
+	if (tray==TRAYCLOSE)
 	{
 		if (m_bShowNotifyIcon)
 			action = TRAY_CLOSE;
@@ -1132,7 +1132,7 @@ void CSimpBrowserApp::updateTrayIcon(bool bClose)
 	}
 
 
-	if (bClose)
+	if (tray == TRAYCLOSE)
 	{
 		if (m_hTrayIcon)
 		{
