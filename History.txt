@@ -1,4 +1,6 @@
+2021/05/30 ver1.8.15
 Paste and Go
+Trayclick to setforeground windows
 
 2020/12/22 ver1.8.14
 toVS2019
