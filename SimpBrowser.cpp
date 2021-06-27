@@ -464,13 +464,11 @@ void CSimpBrowserApp::OnAppAbout()
 
 BOOL CSimpBrowserApp::InitInstance()
 {
-
 	{
 		TCHAR szT[MAX_PATH];
-
 		try
 		{
-			if (!GetFolderIniDir(NULL, szT, _countof(szT), _T("Ambiesoft"), AfxGetAppName()))
+			if (!GetFolderIniDirEx(NULL, szT, _countof(szT), _T("Ambiesoft"), AfxGetAppName()))
 			{
 				AfxMessageBox(I18N(L"Failed to get ini folder"));
 				return FALSE;
@@ -481,7 +479,6 @@ BOOL CSimpBrowserApp::InitInstance()
 
 			free((void*)m_pszProfileName);
 			m_pszProfileName = _tcsdup(full.c_str());
-			// CreateFolderIniPath(NULL, _T("SimpBrowser.ini"), szT, I18N(_T("%s is not found. Exiting.")));
 		}
 		catch(tstring& error)
 		{

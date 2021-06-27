@@ -1,3 +1,5 @@
+GetFolderIniDirEx
+
 2021/05/30 ver1.8.16
 I18N
 Goto Webpage
